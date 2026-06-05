@@ -1,398 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portfolio | Alam Al Kahaf</title>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.1);
+            --blur: saturate(180%) blur(20px);
+        }
 
-<title>Advertising Theory Portfolio | Alam Al Kahaf</title>
+        body.dark {
+            --bg: #000000;
+            --card-bg: rgba(28, 28, 30, 0.8);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --border: rgba(255, 255, 255, 0.15);
+        }
 
-<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-:root{
-    --bg:#ffffff;
-    --card:#f8f9fa;
-    --text:#202122;
-    --border:#a2a9b1;
-    --link:#0645ad;
-    --heading:#000;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-body.dark{
-    --bg:#111827;
-    --card:#1f2937;
-    --text:#f3f4f6;
-    --border:#4b5563;
-    --link:#60a5fa;
-    --heading:#ffffff;
-}
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            letter-spacing: -0.022em;
+            transition: background-color 0.5s ease;
+            -webkit-font-smoothing: antialiased;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        /* Fixed Premium Glassmorphic Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            transition: background 0.3s, border 0.3s;
+        }
 
-html{
-    scroll-behavior:smooth;
-}
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:Georgia, serif;
-    line-height:1.8;
-    transition:0.3s;
-}
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-left: 24px;
+            transition: opacity 0.2s;
+        }
 
-.wrapper{
-    max-width:1200px;
-    margin:auto;
-    padding:20px;
-}
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
 
-header{
-    border-bottom:2px solid var(--border);
-    padding-bottom:20px;
-    margin-bottom:30px;
-}
+        .theme-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
 
-h1{
-    color:var(--heading);
-    font-size:2.8rem;
-}
+        .theme-btn:hover {
+            opacity: 1;
+        }
 
-.subtitle{
-    font-size:1.1rem;
-    margin-top:10px;
-}
+        /* Hero Layout Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 24px 60px 24px;
+        }
 
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:15px;
-}
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
 
-button{
-    border:none;
-    padding:10px 16px;
-    cursor:pointer;
-    background:var(--link);
-    color:white;
-    border-radius:6px;
-}
+        /* Apple-style typography hierarchy */
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+            line-height: 1.07;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
 
-.toc{
-    border:1px solid var(--border);
-    background:var(--card);
-    padding:20px;
-    width:320px;
-    margin-bottom:40px;
-}
+        .hero-gradient {
+            background: linear-gradient(90deg, #0071e3, #2997ff, #86868b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.toc h3{
-    margin-bottom:15px;
-}
+        .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 24px auto;
+        }
 
-.toc ul{
-    margin-left:20px;
-}
+        .meta-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-.toc li{
-    margin-bottom:8px;
-}
+        .badge {
+            background: var(--border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--text-primary);
+        }
 
-.toc a{
-    color:var(--link);
-    text-decoration:none;
-}
+        /* Section Headings */
+        section {
+            margin-bottom: 80px;
+        }
 
-.toc a:hover{
-    text-decoration:underline;
-}
+        h2 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: .004em;
+            margin-bottom: 32px;
+            text-align: center;
+        }
 
-section{
-    margin-bottom:60px;
-}
+        .intro-text {
+            font-size: 19px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
 
-section h2{
-    border-bottom:1px solid var(--border);
-    padding-bottom:8px;
-    margin-bottom:20px;
-    color:var(--heading);
-}
+        /* Apple Product Matrix Grid grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
 
-.project{
-    border:1px solid var(--border);
-    background:var(--card);
-    padding:20px;
-    margin-bottom:25px;
-}
+        /* Span 2 columns for a hero project card if desired */
+        .full-width {
+            grid-column: span 2;
+        }
 
-.project h3{
-    margin-bottom:10px;
-}
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s;
+            text-decoration: none;
+            color: inherit;
+        }
 
-.project p{
-    margin-bottom:15px;
-}
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-color: var(--accent);
+        }
 
-.project a{
-    color:var(--link);
-    text-decoration:none;
-    font-weight:bold;
-}
+        body.dark .card:hover {
+            box-shadow: 0 20px 40px rgba(255,255,255,0.02);
+        }
 
-.project a:hover{
-    text-decoration:underline;
-}
+        .card-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
 
-.reflection{
-    border:1px solid var(--border);
-    background:var(--card);
-    padding:25px;
-}
+        .card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
 
-.reflection h3{
-    margin-top:15px;
-    margin-bottom:10px;
-}
+        .card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
 
-footer{
-    margin-top:60px;
-    border-top:1px solid var(--border);
-    padding-top:20px;
-    text-align:center;
-}
+        .card-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-@media(max-width:768px){
+        /* Premium Bento-Style Presentation for Reflection */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
 
-h1{
-    font-size:2rem;
-}
+        .bento-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
 
-.toc{
-    width:100%;
-}
+        .bento-item.large {
+            grid-column: span 2;
+        }
 
-.topbar{
-    flex-direction:column;
-    align-items:flex-start;
-}
+        .bento-item h4 {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 8px;
+        }
 
-}
+        .bento-item p {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
 
-</style>
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .skills-list li {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            h1 { font-size: 38px; }
+            .subtitle { font-size: 18px; }
+            .grid, .bento { grid-template-columns: 1fr; }
+            .full-width, .bento-item.large { grid-column: span 1; }
+            .container { padding-top: 80px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="wrapper">
-
-<header>
-
-<div class="topbar">
-
-<div>
-<h1>Advertising Theory Portfolio</h1>
-<p class="subtitle">
-Alam Al Kahaf (2417735)
-</p>
-</div>
-
-<button onclick="toggleTheme()">
-🌙 Dark Mode
-</button>
-
-</div>
-
-</header>
-
-<div class="toc">
-
-<h3>Contents</h3>
-
-<ul>
-<li><a href="#intro">1. Introduction</a></li>
-<li><a href="#portfolio">2. Portfolio Projects</a></li>
-<li><a href="#reflection">3. Final Reflection</a></li>
-</ul>
-
-</div>
-
-<section id="intro">
-
-<h2>Introduction</h2>
-
-<p>
-This portfolio showcases five major concepts learned throughout the Advertising Theory course.
-Rather than displaying assignments, this website demonstrates the concepts through interactive
-activities, visual explanations, and personal reflections.
-</p>
-
-<p>
-Each project focuses on a different advertising principle and explains how the concept can be
-applied in real-world marketing situations.
-</p>
-
-</section>
-
-<section id="portfolio">
-
-<h2>Portfolio Projects</h2>
-
-<div class="project">
-
-<h3>Project 1 — AIDA Model Simulator</h3>
-
-<p>
-Explore how Attention, Interest, Desire, and Action work together to influence customer behavior.
-</p>
-
-<a href="project1.html">
-Open Project →
-</a>
-
-</div>
-
-<div class="project">
-
-<h3>Project 2 — Target Audience Builder</h3>
-
-<p>
-Learn how advertisers use segmentation to identify and understand their ideal customers.
-</p>
-
-<a href="project2.html">
-Open Project →
-</a>
-
-</div>
-
-<div class="project">
-
-<h3>Project 3 — Media Selection Tool</h3>
-
-<p>
-Understand how advertising budgets influence media planning decisions.
-</p>
-
-<a href="project3.html">
-Open Project →
-</a>
-
-</div>
-
-<div class="project">
-
-<h3>Project 4 — Consumer Decision Journey</h3>
-
-<p>
-Visualize how consumers move from awareness to loyalty through different stages.
-</p>
-
-<a href="project4.html">
-Open Project →
-</a>
-
-</div>
-
-<div class="project">
-
-<h3>Project 5 — Advertising Ethics Analyzer</h3>
-
-<p>
-Evaluate ethical dilemmas in advertising and understand responsible marketing practices.
-</p>
-
-<a href="project5.html">
-Open Project →
-</a>
-
-</div>
-
-</section>
-
-<section id="reflection">
-
-<h2>Final Reflection</h2>
-
-<div class="reflection">
-
-<h3>Most Interesting Project</h3>
-
-<p>
-The Advertising Ethics Analyzer was the most interesting because it explored how advertising
-can influence society and consumer trust.
-</p>
-
-<h3>Most Challenging Project</h3>
-
-<p>
-The Media Planning project was challenging because it required balancing campaign goals,
-audience reach, and budget limitations.
-</p>
-
-<h3>Most Valuable Project</h3>
-
-<p>
-The AIDA Model project demonstrated how effective advertisements guide customers through a
-structured decision-making process.
-</p>
-
-<h3>How My Understanding Changed</h3>
-
-<p>
-Before this course, I viewed advertising mainly as creativity and promotion.
-Through the semester, I learned that successful advertising relies on research,
-consumer psychology, strategic planning, and ethical responsibility.
-</p>
-
-<h3>Skills Developed</h3>
-
-<ul>
-<li>Advertising Analysis</li>
-<li>Market Segmentation</li>
-<li>Consumer Behavior Analysis</li>
-<li>Critical Thinking</li>
-<li>Media Planning</li>
-<li>Communication Skills</li>
-<li>Digital Presentation Skills</li>
-</ul>
-
-</div>
-
-</section>
-
-<footer>
-
-<p>
-Advertising Theory Portfolio • Alam Al Kahaf • Student ID 2417735
-</p>
-
-</footer>
-
-</div>
-
-<script>
-
-function toggleTheme(){
-
-document.body.classList.toggle('dark');
-
-localStorage.setItem(
-'theme',
-document.body.classList.contains('dark')
-);
-
-}
-
-if(localStorage.getItem('theme') === 'true'){
-document.body.classList.add('dark');
-}
-
-</script>
-
+    <nav>
+        <div class="nav-container">
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+            <div class="nav-links">
+                <a href="#intro">Overview</a>
+                <a href="#portfolio">Projects</a>
+                <a href="#reflection">Reflection</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <header>
+            <h1>Course Portfolio <br><span class="hero-gradient">Concepts & Execution</span></h1>
+            <p class="subtitle">A visual, interactive case exploration of structural models across core domains.</p>
+            <div class="meta-badges">
+                <span class="badge">Alam Al Kahaf (2417735)</span>
+                <span class="badge">Trade</span>
+                <span class="badge">Management Science</span>
+            </div>
+        </header>
+
+        <section id="intro">
+            <p class="intro-text">
+                This environment displays essential strategic and quantitative frameworks mastered over the semester. 
+                Instead of simple assignment printouts, each modular project presents structural systems translated into active, clear interfaces.
+            </p>
+        </section>
+
+        <section id="portfolio">
+            <h2>Selected Implementations</h2>
+            <div class="grid">
+
+                <a href="project1.html" class="card full-width">
+                    <div>
+                        <div class="card-tag">Management Science — Optimization</div>
+                        <h3>Project 1 — Pareto Matrix Simulator</h3>
+                        <p>Evaluate systemic operational variations to easily identify and isolate the vital 20% of core defects driving 80% of structural disruption.</p>
+                    </div>
+                    <div class="card-link">Launch Module ↗</div>
+                </a>
+
+                <a href="project2.html" class="card">
+                    <div>
+                        <div class="card-tag">Management Science — Diagnostics</div>
+                        <h3>Project 2 — 5 Whys Architecture</h3>
+                        <p>Isolate fundamental operational vulnerabilities from distracting surface symptoms through continuous root-cause parsing models.</p>
+                    </div>
+                    <div class="card-link">Launch Module ↗</div>
+                </a>
+
+                <a href="project3.html" class="card">
+                    <div>
+                        <div class="card-tag">Management Science — Quality</div>
+                        <h3>Project 3 — Statistical Process Control</h3>
+                        <p>Analyze random noise deviations against absolute upper and lower boundaries to maintain a stable, predictable workflow balance.</p>
+                    </div>
+                    <div class="card-link">Launch Module ↗</div>
+                </a>
+
+                <a href="project4.html" class="card">
+                    <div>
+                        <div class="card-tag">Trade — Logistics & Flow</div>
+                        <h3>Project 4 — Kanban Work-In-Progress Rules</h3>
+                        <p>Regulate continuous material flow and minimize resource allocation stress by setting hard capacity thresholds across transit lanes.</p>
+                    </div>
+                    <div class="card-link">Launch Module ↗</div>
+                </a>
+
+                <a href="project5.html" class="card">
+                    <div>
+                        <div class="card-tag">Trade — Risk & Compliance</div>
+                        <h3>Project 5 — Poka-Yoke Interface Design</h3>
+                        <p>Enforce clean transactional data validation at point-of-entry using error-proofing logic barriers that stop human error instantly.</p>
+                    </div>
+                    <div class="card-link">Launch Module ↗</div>
+                </a>
+
+            </div>
+        </section>
+
+        <section id="reflection">
+            <h2>Synthesis & Insights</h2>
+            <div class="bento">
+                
+                <div class="bento-item large">
+                    <h4>Evolution of Perspective</h4>
+                    <p>Previously, I approached Trade and Management Science as static documentation and unbending regulations. This interactive architecture proved that they are dynamic, deeply quantitative ecosystems that prioritize process optimization, error-reduction, and systematic logic modeling.</p>
+                </div>
+
+                <div class="bento-item">
+                    <h4>Highest Operational Value</h4>
+                    <p>The Pareto Simulator cleanly displays the immense financial and organizational value of strict resource targeting within any distribution network.</p>
+                </div>
+
+                <div class="bento-item">
+                    <h4>Core Challenges Overcome</h4>
+                    <p>Integrating multi-variable constraints within the Statistical Process Control limits required striking a fine mathematical balance between raw system flexibility and structural safety caps.</p>
+                </div>
+
+                <div class="bento-item large">
+                    <h4>Applied Competencies</h4>
+                    <ul class="skills-list">
+                        <li>Quantitative Data Grouping</li>
+                        <li>Root Cause Isolation</li>
+                        <li>Statistical Boundary Analysis</li>
+                        <li>Supply Chain Flow Control</li>
+                        <li>Fail-Safe Logic Design</li>
+                        <li>System Design</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <p>Trade & Management Science Portfolio • Alam Al Kahaf • ID 2417735</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('theme', isDark);
+            document.getElementById('themeBtn').innerText = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+        }
+
+        // Restore theme setting
+        if (localStorage.getItem('theme') === 'true') {
+            document.body.classList.add('dark');
+            document.getElementById('themeBtn').innerText = "☀️ Light Mode";
+        }
+    </script>
 </body>
 </html>
