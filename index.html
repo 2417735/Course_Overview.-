@@ -71,19 +71,39 @@
             align-items: center;
         }
 
-        .nav-links a {
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a, .main-portfolio-link {
             color: var(--text-primary);
             text-decoration: none;
             font-size: 13px;
             opacity: 0.7;
-            margin-left: 24px;
             transition: opacity 0.2s, color 0.2s;
             font-weight: 400;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover, .main-portfolio-link:hover {
             opacity: 1;
             color: var(--accent);
+        }
+
+        /* Clean styling button matching standard apple header links */
+        .main-portfolio-link {
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 12px;
+            background: var(--toggle-bg);
+            font-weight: 500;
         }
 
         .theme-btn {
@@ -291,7 +311,7 @@
             margin-top: 40px;
         }
 
-        .bento-box {
+        .bento-grid .bento-box {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -354,6 +374,8 @@
             .suite-panel.active { display: flex; flex-direction: column; }
             .bento-grid { grid-template-columns: 1fr; }
             .span-2 { grid-column: span 1; }
+            .nav-container { padding: 0 16px; }
+            .nav-right { gap: 12px; }
         }
     </style>
 </head>
@@ -362,10 +384,15 @@
     <!-- Apple Main Nav Strip -->
     <nav>
         <div class="nav-container">
-            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
-            <div class="nav-links">
-                <a href="#portfolio">Suites</a>
-                <a href="#reflection">Synthesis</a>
+            <div class="nav-left">
+                <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+                <div class="nav-links">
+                    <a href="#portfolio">Suites</a>
+                    <a href="#reflection">Synthesis</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="https://2417735.github.io/Study_Cafe/" target="_blank" class="main-portfolio-link">Study Cafe Hub ↗</a>
             </div>
         </div>
     </nav>
