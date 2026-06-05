@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Project 2: Factor Endowments</title>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.08);
+            --blur: saturate(180%) blur(20px);
+        }
+        body.dark {
+            --bg: #000000;
+            --card-bg: rgba(28, 28, 30, 0.8);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --border: rgba(255, 255, 255, 0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            line-height: 1.6;
+            padding: 80px 24px;
+        }
+        nav {
+            position: fixed;
+            top: 0; width: 100%; left: 0;
+            background: var(--card-bg);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 24px;
+        }
+        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; font-weight: 500; }
+        nav a:hover { color: var(--accent); }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 8px; }
+        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 24px; }
+        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
+        h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
+        p { color: var(--text-secondary); font-size: 16px; margin-bottom: 16px; }
+        .interactive-box { background: rgba(0, 113, 227, 0.05); border: 1px dashed var(--accent); border-radius: 12px; padding: 24px; }
+        select { background: var(--bg); border: 1px solid var(--border); color: var(--text-primary); padding: 10px; border-radius: 8px; font-size: 14px; width: 100%; max-width: 300px; margin-bottom: 16px; }
+        .result-panel { margin-top: 16px; padding: 16px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
+            <a href="index.html">← Back to Hub</a>
+            <div>
+                <a href="trade1.html">Reading 1</a>
+                <a href="trade2.html" style="color:var(--accent); font-weight:bold;">Reading 2</a>
+                <a href="trade3.html">Reading 3</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tag">Week 5 • Trade Reading 2</div>
+        <h1>Heckscher-Ohlin Factor Endowments</h1>
+        
+        <div class="section">
+            <h2>1. Structural Framework</h2>
+            <p>The Heckscher-Ohlin model moves beyond labor hours to explain how geographic resource concentrations shape trade. It asserts that a country will export goods that intensively use factors of production it has in abundance (such as machinery, technology, or arable land) and import goods that intensively use resources that are scarce domestically.</p>
+        </div>
+
+        <div class="section">
+            <h2>2. National Allocation Matrix</h2>
+            <p>Select a structural economic profile below to simulate national resource strengths and predict trade balance trajectories based on the H-O Theorem.</p>
+            
+            <div class="interactive-box">
+                <label style="display:block; margin-bottom:8px; font-weight:500;">Select Country Asset Profile:</label>
+                <select id="economySelect" onchange="runHOModel()">
+                    <option value="">-- Choose Profile --</option>
+                    <option value="capital">High Tech Capital Dominant (e.g., Micro-machinery, Servers)</option>
+                    <option value="labor">Dense Low-Cost Manufacturing Labor Force (e.g., Textiles, Manual Assembly)</option>
+                    <option value="land">Vast High-Acreage Agricultural Land Matrix (e.g., Wheat, Grains)</option>
+                </select>
+
+                <div id="hoOutput" class="result-panel">Select an economy to parse factor flows.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Structural Evidence Log</h2>
+            <p>Replicating standard trade accounts tracking factor concentration variables across industrial export divisions:</p>
+            <table style="width:100%; border-collapse:collapse; font-size:14px;">
+                <thead>
+                    <tr style="color:var(--text-secondary); text-align:left;">
+                        <th style="padding:12px; border-bottom:1px solid var(--border);">Sector Segment</th>
+                        <th style="padding:12px; border-bottom:1px solid var(--border);">Capital-Labor Ratio (K/L)</th>
+                        <th style="padding:12px; border-bottom:1px solid var(--border);">Primary Output Designation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding:12px; border-bottom:1px solid var(--border);">Semiconductors / Aerospace</td><td style="padding:12px; border-bottom:1px solid var(--border);">8.5 (Highly Capital Intensive)</td><td style="padding:12px; border-bottom:1px solid var(--border);">Advanced Nations Export</td></tr>
+                    <tr><td style="padding:12px; border-bottom:1px solid var(--border);">Commercial Apparel Manufacturing</td><td style="padding:12px; border-bottom:1px solid var(--border);">1.2 (Highly Labor Intensive)</td><td style="padding:12px; border-bottom:1px solid var(--border);">Developing Nations Export</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>4. Analytical Synthesis</h2>
+            <p><strong>Knowledge:</strong> Understood that trade policy must match a country's natural resource distribution. Artificial trade restrictions that ignore resource realities often misallocate capital.</p>
+            <p><strong>Skills:</strong> Learned to categorize manufacturing sectors based on their factor intensity indexes and identify production biases.</p>
+        </div>
+    </div>
+
+    <script>
+        function runHOModel() {
+            let selected = document.getElementById('economySelect').value;
+            let out = document.getElementById('hoOutput');
+            
+            if(selected === 'capital') {
+                out.innerHTML = "<strong>Predicted Strategy:</strong> This nation has a competitive edge in capital-intensive sectors.<br><span style='color:green;'>✔ Primary Exports:</span> Automated Avionics, Precision Medicine, Microprocessors.<br><span style='color:red;'>✕ Primary Imports:</span> Raw Textiles, Hand-Assembled Consumables.";
+            } else if(selected === 'labor') {
+                out.innerHTML = "<strong>Predicted Strategy:</strong> This nation excels in labor-abundant manufacturing loops.<br><span style='color:green;'>✔ Primary Exports:</span> Fast Fashion, Consumer Toy Lines, Mass Assembly Footwear.<br><span style='color:red;'>✕ Primary Imports:</span> High-End Heavy Machinery, Specialized Satellites.";
+            } else if(selected === 'land') {
+                out.innerHTML = "<strong>Predicted Strategy:</strong> This nation has an advantage in land-intensive primary sectors.<br><span style='color:green;'>✔ Primary Exports:</span> Bulk Cereal Grains, Soybean Supply, Timber Commodities.<br><span style='color:red;'>✕ Primary Imports:</span> Dense Urban Enterprise Software, Complex Industrial Automation.";
+            } else {
+                out.innerHTML = "Select an economy to parse factor flows.";
+            }
+        }
+        if (localStorage.getItem('theme') === 'true') { document.body.classList.add('dark'); }
+    </script>
+</body>
+</html>
