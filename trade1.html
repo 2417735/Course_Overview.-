@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricardian Trade Matrix | Trade Suite</title>
+    <title>Reading 1: Introduction & The Gravity Model</title>
     <style>
         :root {
             --bg: #f5f5f7;
@@ -13,7 +13,6 @@
             --accent: #0071e3;
             --border: rgba(0, 0, 0, 0.08);
             --blur: saturate(180%) blur(20px);
-            --success: #34c759;
         }
         body.dark {
             --bg: #000000;
@@ -21,178 +20,82 @@
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent: #2997ff;
-            --border: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.15);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            padding: 40px 24px;
-            display: flex;
-            justify-content: center;
+            background-color: var(--bg); color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            line-height: 1.6; padding: 60px 24px; display: flex; justify-content: center;
         }
-        .container { max-width: 1000px; width: 100%; }
-        .back-btn {
-            text-decoration: none; color: var(--accent); font-size: 14px; font-weight: 500;
-            display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px;
+        .container { max-width: 800px; width: 100%; }
+        nav {
+            position: fixed; top: 0; width: 100%; left: 0; background: var(--card-bg);
+            backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border); z-index: 100; padding: 12px 24px;
         }
-        header { margin-bottom: 32px; }
-        h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
-        .subtitle { color: var(--text-secondary); font-size: 17px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; }
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-        .panel {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
-            padding: 24px; backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
-        }
-        h2 { font-size: 19px; font-weight: 600; margin-bottom: 16px; }
-        .form-group { margin-bottom: 16px; }
-        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
-        input {
-            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border);
-            background: rgba(0,0,0,0.02); color: var(--text-primary); font-size: 15px;
-        }
-        body.dark input { background: rgba(255,255,255,0.05); }
-        .table-matrix { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        .table-matrix th, .table-matrix td {
-            padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px;
-        }
-        .table-matrix th { color: var(--text-secondary); font-weight: 600; }
-        .highlight { color: var(--accent); font-weight: 600; }
-        .badge {
-            display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 12px;
-            font-weight: 600; background: rgba(52, 199, 89, 0.15); color: var(--success);
-        }
-        .full-width { grid-column: span 2; }
-        @media (max-width: 768px) { .full-width { grid-column: span 1; } }
-        .explanation-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-top: 12px; }
+        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; font-weight: 500; }
+        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
+        h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+        h3 { font-size: 16px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; color: var(--text-primary); }
+        p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; text-align: justify; }
+        ul { margin-left: 20px; margin-bottom: 14px; color: var(--text-secondary); font-size: 15px; }
+        li { margin-bottom: 8px; }
+        .formula-box { background: rgba(0, 113, 227, 0.05); padding: 16px; border-radius: 12px; border: 1px dashed var(--accent); font-family: monospace; font-size: 16px; text-align: center; margin: 16px 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-btn">← Back to Executive Portfolio</a>
-        <header>
-            <h1>Ricardian Comparative Advantage Matrix</h1>
-            <p class="subtitle">Validating gains from trade between symmetric economies based on unit labor costs instead of absolute output efficiency metrics.</p>
-        </header>
-
-        <div class="grid">
-            <div class="panel">
-                <h2>1. System Input Parameters</h2>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-                    <div class="form-group">
-                        <label>Home Labor Force (L)</label>
-                        <input type="number" id="homeL" value="1000" oninput="calculateRicardian()">
-                    </div>
-                    <div class="form-group">
-                        <label>Foreign Labor Force (L*)</label>
-                        <input type="number" id="foreignL" value="1200" oninput="calculateRicardian()">
-                    </div>
-                    <div class="form-group">
-                        <label>Home Cloth ULR (aLC)</label>
-                        <input type="number" id="homeALC" value="2" oninput="calculateRicardian()">
-                    </div>
-                    <div class="form-group">
-                        <label>Home Wine ULR (aLW)</label>
-                        <input type="number" id="homeALW" value="4" oninput="calculateRicardian()">
-                    </div>
-                    <div class="form-group">
-                        <label>Foreign Cloth ULR (a*LC)</label>
-                        <input type="number" id="foreignALC" value="6" oninput="calculateRicardian()">
-                    </div>
-                    <div class="form-group">
-                        <label>Foreign Wine ULR (a*LW)</label>
-                        <input type="number" id="foreignALW" value="8" oninput="calculateRicardian()">
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <h2>2. Opportunity Cost Evaluation</h2>
-                <table class="table-matrix">
-                    <thead>
-                        <tr>
-                            <th>Metric / Country</th>
-                            <th>Home Nation</th>
-                            <th>Foreign Nation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Cloth Cost (in Wine)</td>
-                            <td id="homeCostC">-</td>
-                            <td id="foreignCostC">-</td>
-                        </tr>
-                        <tr>
-                            <td>Wine Cost (in Cloth)</td>
-                            <td id="homeCostW">-</td>
-                            <td id="foreignCostW">-</td>
-                        </tr>
-                        <tr>
-                            <td>Specialization</td>
-                            <td><span class="badge" id="homeSpec">-</span></td>
-                            <td><span class="badge" id="foreignSpec">-</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="panel full-width">
-                <h2>3. Strategic Trade Equilibrium Verification</h2>
-                <div id="equilibriumOutput"></div>
-                <p class="explanation-text" style="border-top: 1px solid var(--border); padding-top:12px;">
-                    <strong>Academic Insight:</strong> Even if one nation holds an absolute advantage across all sectors (lower ULR numbers everywhere), trade optimization is dictated by relative differences in opportunity cost ratios. This mathematical proof validates that lower-productivity countries remain competitive by specializing where their relative disadvantage is smallest.
-                </p>
+    <nav>
+        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
+            <a href="index.html">← Executive Portfolio Hub</a>
+            <div>
+                <a href="trade1.html" style="color:var(--accent); font-weight:bold;">Reading 1</a>
+                <a href="trade2.html">Reading 2</a>
+                <a href="trade3.html">Reading 3</a>
             </div>
         </div>
+    </nav>
+
+    <div class="container" style="margin-top: 40px;">
+        <div class="tag">Reading Assignment 1 • Textbook Chapters 1 & 2</div>
+        <h1>World Trade Overview & The Gravity Model</h1>
+
+        <div class="section">
+            <h2>1. Comprehensive Reading Notes</h2>
+            <p>International economics balances structural interactions between sovereign states. The text divides the discipline into trade relations (microeconomic focus on relative prices and resource allocation) and international macroeconomics (macroeconomic focus on monetary networks, balances of payments, and exchange rates).</p>
+            <h3>Key Concepts Identified:</h3>
+            <ul>
+                <li><strong>Trade Frictional Limits:</strong> Borders, differing regulatory hurdles, sovereign currencies, and physical distance impose structural transaction friction that prevents instantaneous market integration.</li>
+                <li><strong>Economic Mass Multipliers:</strong> Larger economic infrastructures inherently create more diverse supply networks and attract higher consumer baseline volumes, increasing trade velocity.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>2. Guiding Questions & Core Answers</h2>
+            
+            <h3>Q1: What are the seven recurring themes in international economics?</h3>
+            <ul>
+                <li><strong>1. Gains from Trade:</strong> Mutually beneficial expansion of production frontiers via specialized resource utility.</li>
+                <li><strong>2. Patterns of Trade:</strong> Tracking who sells what to whom based on localized resource availability and productivity.</li>
+                <li><strong>3. Protectionism:</strong> Assessing how government interventions shift consumer welfare to shielded corporate cartels.</li>
+                <li><strong>4. Balance of Payments:</strong> Evaluating national asset transactions against tangible good flows.</li>
+                <li><strong>5. Exchange Rate Determination:</strong> Navigating currency valuation shifts within international money markets.</li>
+                <li><strong>6. International Policy Coordination:</strong> Resolving cross-border trade conflicts through international frameworks.</li>
+                <li><strong>7. International Capital Market Integration:</strong> Managing systemic risks unique to cross-border financial asset lending.</li>
+            </ul>
+
+            <h3>Q2: According to the gravity model, which two factors most accurately predict the volume of trade between two countries?</h3>
+            <p>The structural volume of trade between any two sovereign nations is predicted by the <strong>economic sizes (GDP) of both countries</strong> and the <strong>geographic distance separating them</strong>. Economic size acts as a direct transactional magnet, while distance introduces freight, time, and cultural friction.</p>
+            <div class="formula-box">T_{ij} = A \times \frac{Y_i \times Y_j}{D_{ij}}</div>
+
+            <h3>Q3: How has the pattern of trade changed over the course of recorded history?</h3>
+            <p>Historically, international trade was dominated by raw commodities, agricultural goods, and minerals due to transport limits. In the modern era, global value chains have shifted trade heavily toward manufactured industrial goods and tradeable services. Trade as a percentage of global GDP surged during the pre-WWI globalization wave, collapsed during the interwar protectionist era, and expanded into highly integrated global supply chains by the late 20th century.</p>
+        </div>
     </div>
-
     <script>
-        function calculateRicardian() {
-            const hL = parseFloat(document.getElementById('homeL').value) || 1;
-            const fL = parseFloat(document.getElementById('foreignL').value) || 1;
-            const hALC = parseFloat(document.getElementById('homeALC').value) || 1;
-            const hALW = parseFloat(document.getElementById('homeALW').value) || 1;
-            const fALC = parseFloat(document.getElementById('foreignALC').value) || 1;
-            const fALW = parseFloat(document.getElementById('foreignALW').value) || 1;
-
-            const hCostC = hALC / hALW;
-            const hCostW = hALW / hALC;
-            const fCostC = fALC / fALW;
-            const fCostW = fALW / fALC;
-
-            document.getElementById('homeCostC').innerText = hCostC.toFixed(3) + " W";
-            document.getElementById('homeCostW').innerText = hCostW.toFixed(3) + " C";
-            document.getElementById('foreignCostC').innerText = fCostC.toFixed(3) + " W";
-            document.getElementById('foreignCostW').innerText = fCostW.toFixed(3) + " C";
-
-            let homeSpec = "";
-            let foreignSpec = "";
-
-            if (hCostC < fCostC) {
-                homeSpec = "Cloth (Exporters)";
-                foreignSpec = "Wine (Exporters)";
-            } else {
-                homeSpec = "Wine (Exporters)";
-                foreignSpec = "Cloth (Exporters)";
-            }
-
-            document.getElementById('homeSpec').innerText = homeSpec;
-            document.getElementById('foreignSpec').innerText = foreignSpec;
-
-            const intPriceC = ((hCostC + fCostC) / 2).toFixed(3);
-
-            document.getElementById('equilibriumOutput').innerHTML = `
-                <p style="margin-bottom:8px;">Estimated International Relative Price of Cloth (P<sub>C</sub>/P<sub>W</sub>): <span class="highlight">${intPriceC}</span></p>
-                <p class="explanation-text">With an intermediate world price settled, Home gains surplus by trading away Cloth for cheaper imported Wine. Simultaneously, Foreign profits by avoiding domestic production of high-opportunity-cost Cloth, successfully maximizing global output capabilities without direct structural conflicts.</p>
-            `;
-        }
-        
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.body.classList.add('dark');
-        }
-        calculateRicardian();
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.body.classList.add('dark'); }
     </script>
 </body>
 </html>
