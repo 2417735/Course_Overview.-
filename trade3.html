@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tariff Welfare Realignment Simulator</title>
+    <title>Reading 3: Resources & Trade (Heckscher-Ohlin)</title>
     <style>
         :root {
             --bg: #f5f5f7;
             --card-bg: rgba(255, 255, 255, 0.8);
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
-            --accent: #e30022;
+            --accent: #0071e3;
             --border: rgba(0, 0, 0, 0.08);
             --blur: saturate(180%) blur(20px);
         }
@@ -19,111 +19,63 @@
             --card-bg: rgba(28, 28, 30, 0.8);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
-            --accent: #ff453a;
-            --border: rgba(255, 255, 255, 0.12);
+            --accent: #2997ff;
+            --border: rgba(255, 255, 255, 0.15);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--bg); color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            padding: 40px 24px; display: flex; justify-content: center;
-        }
-        .container { max-width: 1040px; width: 100%; }
-        .back-btn { text-decoration: none; color: #0071e3; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px; }
-        header { margin-bottom: 32px; }
-        h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
-        .subtitle { color: var(--text-secondary); font-size: 17px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-        .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 24px; backdrop-filter: var(--blur); }
-        h2 { font-size: 19px; font-weight: 600; margin-bottom: 16px; }
-        .form-group { margin-bottom: 16px; }
-        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
-        input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: rgba(0,0,0,0.02); color: var(--text-primary); }
-        body.dark input { background: rgba(255,255,255,0.05); }
-        .metric-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-        .deadweight { color: var(--accent); font-weight: 700; }
-        .full-width { grid-column: span 2; }
-        @media (max-width: 768px) { .full-width { grid-column: span 1; } }
+        body { background-color: var(--bg); color: var(--text-primary); font-family: -apple-system, sans-serif; padding: 60px 24px; display: flex; justify-content: center; }
+        .container { max-width: 800px; width: 100%; }
+        nav { position: fixed; top: 0; width: 100%; left: 0; background: var(--card-bg); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border); z-index: 100; padding: 12px 24px; }
+        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; }
+        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
+        h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+        h3 { font-size: 16px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; }
+        p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; text-align: justify; }
+        ul { margin-left: 20px; color: var(--text-secondary); font-size: 15px; }
+        li { margin-bottom: 8px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-btn">← Back to Executive Portfolio</a>
-        <header>
-            <h1>Tariff Welfare Realignment Simulator</h1>
-            <p class="subtitle">Quantifying consumer surplus erosion, domestic protection deadweight distortion, and net economic impacts.</p>
-        </header>
-
-        <div class="grid">
-            <div class="panel">
-                <h2>1. Baseline Marketplace Parameters</h2>
-                <div class="form-group">
-                    <label>World Price baseline ($)</label>
-                    <input type="number" id="worldP" value="100" oninput="simulateTariff()">
-                </div>
-                <div class="form-group">
-                    <label>Specific Tariff Levy ($)</label>
-                    <input type="number" id="tariffLevy" value="15" oninput="simulateTariff()">
-                </div>
-                <div class="form-group">
-                    <label>Pre-Tariff Import Supply Volume</label>
-                    <input type="number" id="preImp" value="500" oninput="simulateTariff()">
-                </div>
-                <div class="form-group">
-                    <label>Post-Tariff Protection Import Volume</label>
-                    <input type="number" id="postImp" value="300" oninput="simulateTariff()">
-                </div>
-            </div>
-
-            <div class="panel">
-                <h2>2. Welfare Realignment Output</h2>
-                <div class="metric-row">
-                    <span>Consumer Surplus Loss (Area A+B+C+D)</span>
-                    <span id="lossCS" style="font-weight:600;">-</span>
-                </div>
-                <div class="metric-row">
-                    <span>Producer Surplus Expansion (Area A)</span>
-                    <span id="gainPS" style="font-weight:600; color:#34c759;">-</span>
-                </div>
-                <div class="metric-row">
-                    <span>Government Customs Revenue (Area C)</span>
-                    <span id="govRev" style="font-weight:600; color:#0071e3;">-</span>
-                </div>
-                <div class="metric-row">
-                    <span>Net Deadweight Economic Loss (B + D)</span>
-                    <span id="netDWL" class="deadweight">-</span>
-                </div>
-            </div>
-
-            <div class="panel full-width">
-                <h2>3. Strategic Market Analysis</h2>
-                <p style="font-size:14px; line-height:1.6; color:var(--text-secondary);">
-                    <strong>Economic Distortion Verdict:</strong> The calculations confirm that specific tariff levies generate structural deadweight inefficiencies. Area <em>B</em> isolates domestic production distortion (inefficient producers running higher costs than world baselines), while Area <em>D</em> tracks consumption distortion (consumers dropping out of the market due to inflated pricing structures)[cite: 212].
-                </p>
+    <nav>
+        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
+            <a href="index.html">← Executive Portfolio Hub</a>
+            <div>
+                <a href="trade1.html">Reading 1</a>
+                <a href="trade2.html">Reading 2</a>
+                <a href="trade3.html" style="color:var(--accent); font-weight:bold;">Reading 3</a>
             </div>
         </div>
+    </nav>
+
+    <div class="container" style="margin-top: 40px;">
+        <div class="tag">Reading Assignment 3 • Textbook Chapter 5</div>
+        <h1>Resources, Comparative Advantage, & Income Distribution</h1>
+
+        <div class="section">
+            <h2>1. Comprehensive Reading Notes</h2>
+            <p>The Heckscher-Ohlin framework expands on Ricardo's model by introducing multiple factors of production: **Capital (K)** and **Labor (L)**. It illustrates how relative resource scarcity across borders shapes global trade patterns and alters the internal distribution of national income.</p>
+        </div>
+
+        <div class="section">
+            <h2>2. Guiding Questions & Core Answers</h2>
+            
+            <h3>Q1: How does the Heckscher-Ohlin model differ from the Ricardian model in terms of construction and predictive potential?</h3>
+            <p>The Ricardian model assumes only **one factor of production (labor)** and attributes comparative advantage entirely to cross-border **technology and productivity differences**. The Heckscher-Ohlin model assumes **multiple factors (capital, labor, land)**, treats technologies as identical across countries, and attributes comparative advantage to differences in **national factor endowments**. This allows the Heckscher-Ohlin model to predict internal conflicts over income distribution among resource owners.</p>
+
+            <h3>Q2: Explain factor price equalization and why specific factors might not equalize in reality?</h3>
+            <p>The **Factor Price Equalization Theorem** states that international trade leads to the complete convergence of real returns to identical production factors (wages for labor, rental rates for capital) across trading nations. By trading goods, countries indirectly trade factor services, substituting for the physical migration of labor and capital.</p>
+            <h3>Frictional Realities Preventing Equalization:</h3>
+            <ul>
+                <li><strong>Pervasive Trade Barriers:</strong> Tariffs, quotas, and transport costs prevent international goods prices from equalizing completely.</li>
+                <li><strong>Technological Asymmetries:</strong> Contrary to the model's assumptions, countries do not use identical production technologies in practice.</li>
+                <li><strong>Specialization Boundaries:</strong> If factor endowment differences are extreme, countries may specialize completely in different goods, breaking the mathematical link required for price equalization.</li>
+            </ul>
+        </div>
     </div>
-
     <script>
-        function simulateTariff() {
-            const wP = parseFloat(document.getElementById('worldP').value) || 0;
-            const tL = parseFloat(document.getElementById('tariffLevy').value) || 0;
-            const q1 = parseFloat(document.getElementById('preImp').value) || 0;
-            const q2 = parseFloat(document.getElementById('postImp').value) || 0;
-
-            const totalImportsLost = q1 - q2;
-            const lossCS = (tL * q2) + (0.5 * tL * totalImportsLost);
-            const govRev = tL * q2;
-            const gainPS = lossCS - govRev - (0.5 * tL * totalImportsLost);
-            const netDWL = 0.5 * tL * totalImportsLost;
-
-            document.getElementById('lossCS').innerText = "-$" + lossCS.toFixed(2);
-            document.getElementById('gainPS').innerText = "+$" + gainPS.toFixed(2);
-            document.getElementById('govRev').innerText = "+$" + govRev.toFixed(2);
-            document.getElementById('netDWL').innerText = "-$" + netDWL.toFixed(2);
-        }
-        simulateTariff();
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.body.classList.add('dark'); }
     </script>
 </body>
 </html>
