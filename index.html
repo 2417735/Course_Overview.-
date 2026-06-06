@@ -3,616 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Executive Portfolio | Alam Al Kahaf</title>
+    <title>Executive Academic Portfolio Hub</title>
     <style>
         :root {
             --bg: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg: rgba(255, 255, 255, 0.8);
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --accent: #0071e3;
-            --accent-rgb: 0, 113, 227;
             --border: rgba(0, 0, 0, 0.08);
-            --toggle-bg: rgba(0, 0, 0, 0.05);
             --blur: saturate(180%) blur(20px);
         }
-
         body.dark {
             --bg: #000000;
-            --card-bg: rgba(28, 28, 30, 0.75);
+            --card-bg: rgba(28, 28, 30, 0.8);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent: #2997ff;
-            --accent-rgb: 41, 151, 255;
-            --border: rgba(255, 255, 255, 0.12);
-            --toggle-bg: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.15);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: var(--bg);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.47059;
-            letter-spacing: -0.022em;
-            transition: background-color 0.5s ease;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Glassmorphic Top Navbar */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
-            transition: background 0.3s, border 0.3s;
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-            height: 52px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .nav-links a, .main-portfolio-link {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 13px;
-            opacity: 0.7;
-            transition: opacity 0.2s, color 0.2s;
-            font-weight: 400;
-        }
-
-        .nav-links a:hover, .main-portfolio-link:hover {
-            opacity: 1;
-            color: var(--accent);
-        }
-
-        /* Clean styling button matching standard apple header links */
-        .main-portfolio-link {
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-            border-radius: 12px;
-            background: var(--toggle-bg);
-            font-weight: 500;
-        }
-
-        .theme-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 13px;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .theme-btn:hover {
-            opacity: 1;
-        }
-
-        /* Hero Layout Center Container */
-        .container {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: 140px 24px 60px 24px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        h1 {
-            font-size: 64px;
-            font-weight: 700;
-            letter-spacing: -0.015em;
-            line-height: 1.08;
-            margin-bottom: 16px;
-        }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, #0071e3, #86f9ff, #bd00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 24px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            max-width: 650px;
-            margin: 0 auto 28px auto;
-            letter-spacing: -0.01em;
-        }
-
-        .meta-badges {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            padding: 80px 24px;
             display: flex;
             justify-content: center;
-            gap: 8px;
-            font-size: 13px;
+            transition: background 0.3s ease;
+        }
+        .container { max-width: 1040px; width: 100%; }
+        
+        /* Header styling */
+        header { margin-bottom: 48px; position: relative; }
+        h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 8px; }
+        .subtitle { color: var(--text-secondary); font-size: 19px; font-weight: 400; }
+        
+        /* Theme toggle switch */
+        .theme-toggle {
+            position: absolute; top: 0; right: 0;
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer;
+            font-size: 12px; font-weight: 500; backdrop-filter: var(--blur);
         }
 
-        .badge {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 6px 16px;
-            border-radius: 30px;
-            color: var(--text-primary);
-            font-weight: 500;
-            backdrop-filter: var(--blur);
-        }
-
-        /* Segmented Controller (Apple Style Switch) */
-        .controls-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-
-        .segmented-control {
-            background: var(--toggle-bg);
-            padding: 4px;
-            border-radius: 30px;
-            display: inline-flex;
-            position: relative;
-            border: 1px solid var(--border);
-        }
-
-        .control-btn {
-            background: none;
-            border: none;
-            padding: 10px 32px;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            border-radius: 25px;
-            position: relative;
-            z-index: 2;
-            transition: color 0.3s ease;
-        }
-
-        .control-btn.active {
-            color: var(--text-primary);
-        }
-
-        .slider {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            height: calc(100% - 8px);
-            width: calc(50% - 4px);
-            background: #ffffff;
-            border-radius: 25px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04);
-            z-index: 1;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        body.dark .slider {
-            background: #2c2c2e;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-        }
-
-        /* Portfolio Suite Layout Panels */
-        .suite-panel {
-            display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .suite-panel.active {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 20px;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Premium Modular App Cards */
+        /* Matrix Section Layouts */
+        .matrix-section { margin-bottom: 40px; }
+        h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; color: var(--text-primary); }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        
+        /* Executive Project Cards */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 32px;
+            border-radius: 22px;
+            padding: 28px;
+            text-decoration: none;
+            color: var(--text-primary);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 260px;
-            text-decoration: none;
-            color: inherit;
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s;
         }
-
-        /* Dynamic Grid Layout Sizes */
-        .col-4 { grid-column: span 4; }
-        .col-2 { grid-column: span 2; }
-        .col-3 { grid-column: span 3; }
-        .col-6 { grid-column: span 6; }
-
         .card:hover {
-            transform: scale(1.015);
-            border-color: rgba(var(--accent-rgb), 0.4);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+            border-color: var(--accent);
         }
-
-        .card-tag {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-
-        .card h3 {
-            font-size: 26px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .card p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .card-footer {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 24px;
-        }
-
-        /* Bento-Style Reflection Module */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 40px;
-        }
-
-        .bento-grid .bento-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 28px;
-            backdrop-filter: var(--blur);
-        }
-
-        .span-2 { grid-column: span 2; }
-
-        .bento-box h4 {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 10px;
-        }
-
-        .bento-box p {
-            font-size: 16px;
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        .pill-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .pill {
-            background: var(--toggle-bg);
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        h2 {
-            font-size: 34px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin: 80px 0 30px 0;
-            text-align: center;
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 0 40px 0;
-            font-size: 13px;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border);
-            margin-top: 80px;
-        }
-
-        /* Responsive Flow Adjustments */
-        @media (max-width: 900px) {
-            h1 { font-size: 44px; }
-            .subtitle { font-size: 19px; }
-            .suite-panel.active { display: flex; flex-direction: column; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .span-2 { grid-column: span 1; }
-            .nav-container { padding: 0 16px; }
-            .nav-right { gap: 12px; }
-        }
+        body.dark .card:hover { box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+        
+        .card-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--text-secondary); margin-bottom: 12px; }
+        .card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+        .card p { color: var(--text-secondary); font-size: 14px; line-height: 1.5; margin-bottom: 20px; text-align: justify; }
+        
+        .card-footer { font-size: 13px; font-weight: 500; color: var(--accent); display: flex; align-items: center; }
+        .card-footer span { margin-left: 4px; transition: transform 0.2s ease; }
+        .card:hover .card-footer span { transform: translateX(3px); }
     </style>
 </head>
 <body>
-
-    <!-- Apple Main Nav Strip -->
-    <nav>
-        <div class="nav-container">
-            <div class="nav-left">
-                <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
-                <div class="nav-links">
-                    <a href="#portfolio">Suites</a>
-                    <a href="#reflection">Synthesis</a>
-                </div>
-            </div>
-            <div class="nav-right">
-                <a href="https://2417735.github.io/Study_Cafe/" target="_blank" class="main-portfolio-link">Study Cafe Hub ↗</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
-
-        <!-- Unified Hero Presentation -->
         <header>
-            <h1>Global Systems & <br><span class="hero-gradient">Management Analytics</span></h1>
-            <p class="subtitle">A strategic framework portfolio investigating modern logistics and analytical models.</p>
-            <div class="meta-badges">
-                <span class="badge">Alam Al Kahaf (2417735)</span>
-                <span class="badge">Dual Domain Case File</span>
-            </div>
+            <h1>Sovereign Knowledge Portfolio</h1>
+            <div class="subtitle">International Economics, Systems Analysis & Trade Theory Matrices</div>
+            <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
         </header>
 
-        <!-- Segmented Controls Container -->
-        <div class="controls-wrapper">
-            <div class="segmented-control">
-                <div class="slider" id="controlSlider"></div>
-                <button class="control-btn active" onclick="switchSuite('trade', 0)">Trade Suite</button>
-                <button class="control-btn" onclick="switchSuite('ms', 1)">Management Science</button>
+        <div class="matrix-section">
+            <h2>International Trade Theory Notes</h2>
+            <div class="grid">
+                
+                <a href="trade1.html" class="card">
+                    <div>
+                        <div class="card-tag" style="color: #0071e3;">Reading 1 • Chapters 1 & 2</div>
+                        <h3>World Trade & Gravity Model Matrix</h3>
+                        <p>Core textbook analysis investigating the seven recurring themes of international economics and evaluating the Gravity Model formula predicting global trade volumes based on GDP scale and geographic friction vectors.</p>
+                    </div>
+                    <div class="card-footer">Review Academic Sheet <span>→</span></div>
+                </a>
+
+                <a href="trade2.html" class="card">
+                    <div>
+                        <div class="card-tag" style="color: #0071e3;">Reading 2 • Chapters 3 & 4</div>
+                        <h3>Labor Productivity & Comparative Advantage</h3>
+                        <p>Differentiating absolute advantage from comparative advantage mechanics. Mathematically proves how low-productivity nations compete effectively with superpowers, paired with a visual breakdown of curved multi-factor PPFs.</p>
+                    </div>
+                    <div class="card-footer">Review Academic Sheet <span>→</span></div>
+                </a>
+
+                <a href="trade3.html" class="card">
+                    <div>
+                        <div class="card-tag" style="color: #0071e3;">Reading 3 • Chapter 5</div>
+                        <h3>Resources & Factor Price Equalization</h3>
+                        <p>Deconstruction of the Heckscher-Ohlin multi-factor model against Ricardian structures. Investigates factor endowment allocation paths and uncovers the market frictions preventing factor price convergence in the real world.</p>
+                    </div>
+                    <div class="card-footer">Review Academic Sheet <span>→</span></div>
+                </a>
+
             </div>
         </div>
 
-        <!-- Portfolio Work Matrix Section -->
-        <section id="portfolio">
+        <div class="matrix-section" style="margin-top: 16px;">
+            <h2>Creative Activity Implementations</h2>
+            <div class="grid">
 
-            <!-- SUITE A: TRADE DEPT (5 Projects) -->
-            <div id="tradeSuite" class="suite-panel active" style="display: grid;">
-                
-                <a href="trade1.html" class="card col-4">
+                <a href="creative1.html" class="card">
                     <div>
-                        <div class="card-tag">Trade • Reading 1</div>
-                        <h3>Project 1 — Ricardian Comparative Advantage Matrix</h3>
-                        <p>Analyze how nations maximize international trade yields through opportunity cost calculations rather than sheer absolute efficiency metrics.</p>
+                        <div class="card-tag" style="color: #bf5af2;">Creative Project 1</div>
+                        <h3>Beat the AI Debater! Case Study</h3>
+                        <p>Strategic deconstruction of an international economics debate against the autarkic artificial agent, DAH-Snarky. Outlines student vectors (Norman, Sarju, Jeremy) and the precise resource cascade break that forced the AI to cede.</p>
                     </div>
-                    <div class="card-footer">Execute Matrix Simulator ↗</div>
+                    <div class="card-footer" style="color: #bf5af2;">Explore Case Analysis <span>→</span></div>
                 </a>
 
-                <a href="trade2.html" class="card col-2">
+                <a href="creative2.html" class="card">
                     <div>
-                        <div class="card-tag">Trade • Reading 2</div>
-                        <h3>Project 2 — Heckscher-Ohlin Factor Endowments</h3>
-                        <p>Map structural production allocations to understand how national resource profiles dictate cross-border export advantages.</p>
+                        <div class="card-tag" style="color: #30d158;">Creative Project 2</div>
+                        <h3>Systems Thinking & Economies of Scale</h3>
+                        <p>A rigorous modeling matrix defining explicit system functional variables. Tracks the structural dynamics of a simple manufacturing system loop and details the balancing loops that place natural limits on internal scale expansion.</p>
                     </div>
-                    <div class="card-footer">Analyze Factor Flows ↗</div>
-                </a>
-
-                <a href="trade3.html" class="card col-3">
-                    <div>
-                        <div class="card-tag">Trade • Reading 3</div>
-                        <h3>Project 3 — Tariff Welfare Realignment</h3>
-                        <p>Calculate societal surplus shifts and unrecoverable economic deadweight loss caused by protectionist levies.</p>
-                    </div>
-                    <div class="card-footer">Launch Welfare Simulator ↗</div>
-                </a>
-
-                <a href="trade4.html" class="card col-3">
-                    <div>
-                        <div class="card-tag">Trade • Class Activity 1</div>
-                        <h3>Project 4 — Incoterms Risk Simulator</h3>
-                        <p>Map structural liability transfer check-points between buyers and sellers throughout global cargo shipping timelines.</p>
-                    </div>
-                    <div class="card-footer">Analyze System ↗</div>
-                </a>
-
-                <a href="trade5.html" class="card col-6">
-                    <div>
-                        <div class="card-tag">Trade • Class Activity 2</div>
-                        <h3>Project 5 — Gravity Model Optimization Hub</h3>
-                        <p>Calculate geographic trade balances between international borders using real-time economic weights and distance variables.</p>
-                    </div>
-                    <div class="card-footer">Analyze System ↗</div>
+                    <div class="card-footer" style="color: #30d158;">Explore System Framework <span>→</span></div>
                 </a>
 
             </div>
-
-            <!-- SUITE B: MANAGEMENT SCIENCE DEPT (5 Projects) -->
-            <div id="msSuite" class="suite-panel">
-                
-                <a href="ms1.html" class="card col-3">
-                    <div>
-                        <div class="card-tag">M/S • Optimization Metrics</div>
-                        <h3>Project 1 — Pareto Efficiency Engine</h3>
-                        <p>Isolate structural operational variances to discover the vital 20% of root defects driving 80% of systemic pipeline damage.</p>
-                    </div>
-                    <div class="card-footer">Execute Engine ↗</div>
-                </a>
-
-                <a href="ms2.html" class="card col-3">
-                    <div>
-                        <div class="card-tag">M/S • Problem Diagnostics</div>
-                        <h3>Project 2 — 5 Whys Layer Architecture</h3>
-                        <p>Drill deep through baseline process metrics past surface symptoms to pull out hidden operational root causes.</p>
-                    </div>
-                    <div class="card-footer">Execute Engine ↗</div>
-                </a>
-
-                <a href="ms3.html" class="card col-6">
-                    <div>
-                        <div class="card-tag">M/S • Quality Analytics</div>
-                        <h3>Project 3 — Statistical Process Control Boundaries</h3>
-                        <p>Track live production run deviations against mathematical Upper and Lower Control Limits to separate normal system noise from real faults.</p>
-                    </div>
-                    <div class="card-footer">Execute Engine ↗</div>
-                </a>
-
-                <a href="ms4.html" class="card col-2">
-                    <div>
-                        <div class="card-tag">M/S • Inventory Analysis</div>
-                        <h3>Project 4 — EOQ Balance Model</h3>
-                        <p>Minimize total overhead footprint values balancing holding parameters against ordering variables.</p>
-                    </div>
-                    <div class="card-footer">Execute Engine ↗</div>
-                </a>
-
-                <a href="ms5.html" class="card col-4">
-                    <div>
-                        <div class="card-tag">M/S • Predictive Tools</div>
-                        <h3>Project 5 — Monte Carlo Risk Runway Simulator</h3>
-                        <p>Run hundreds of randomized inventory probability runs to predict real-world pipeline shortages before they happen.</p>
-                    </div>
-                    <div class="card-footer">Execute Engine ↗</div>
-                </a>
-
-            </div>
-
-        </section>
-
-        <!-- Premium Unified Summary Modules -->
-        <section id="reflection">
-            <h2>Synthesis & Insights</h2>
-            <div class="bento-grid">
-                
-                <div class="bento-box span-2">
-                    <h4>Evolution of Perspective</h4>
-                    <p>Previously, I treated Trade as a system of regulations and Management Science as simple text summaries. Developing this interactive matrix proved that both fields are highly connected, quantitative ecosystems. Success relies entirely on process optimization, strict error control, and clear statistical guardrails.</p>
-                </div>
-
-                <div class="bento-box">
-                    <h4>Highest Operational Value</h4>
-                    <p>The combination of Trade's physical flow rules (Kanban) with Management Science's statistical control metrics creates an airtight framework for maximizing cross-border supply chain performance.</p>
-                </div>
-
-                <div class="bento-box">
-                    <h4>Core Challenges Overcome</h4>
-                    <p>Structuring complex algorithms like the Gravity Model and Monte Carlo logic strings using vanilla JavaScript required finding a fine balance between lightweight script execution and high data fidelity.</p>
-                </div>
-
-                <div class="bento-box span-2">
-                    <h4>Acquired Architecture Matrix</h4>
-                    <div class="pill-wrapper">
-                        <span class="pill">Supply Flow Management</span>
-                        <span class="pill">Statistical Quality Boundaries</span>
-                        <span class="pill">Risk Ingress Isolation</span>
-                        <span class="pill">Mathematical Gravity Modeling</span>
-                        <span class="pill">Probability Matrix Runs</span>
-                        <span class="pill">Defensive UI Fail-safes</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <footer>
-            <p>Trade & Management Science Portfolio Hub • Alam Al Kahaf • Student ID 2417735</p>
-        </footer>
+        </div>
 
     </div>
 
     <script>
-        // Apple Suite Segment Controller Interaction Logic
-        function switchSuite(suiteKey, indexNum) {
-            const btns = document.querySelectorAll('.control-btn');
-            const slider = document.getElementById('controlSlider');
-            const tradePanel = document.getElementById('tradeSuite');
-            const msPanel = document.getElementById('msSuite');
-
-            // Handle active slider physics animations 
-            btns.forEach(btn => btn.classList.remove('active'));
-            btns[indexNum].classList.add('active');
-            slider.style.transform = `translateX(${indexNum * 100}%)`;
-
-            // Clear display arrays smoothly
-            if(suiteKey === 'trade') {
-                msPanel.style.opacity = '0';
-                msPanel.style.transform = 'translateY(15px)';
-                setTimeout(() => {
-                    msPanel.style.display = 'none';
-                    tradePanel.style.display = 'grid';
-                    setTimeout(() => {
-                        tradePanel.style.opacity = '1';
-                        tradePanel.style.transform = 'translateY(0)';
-                    }, 50);
-                }, 350);
-            } else {
-                tradePanel.style.opacity = '0';
-                tradePanel.style.transform = 'translateY(15px)';
-                setTimeout(() => {
-                    tradePanel.style.display = 'none';
-                    msPanel.style.display = 'grid';
-                    setTimeout(() => {
-                        msPanel.style.opacity = '1';
-                        msPanel.style.transform = 'translateY(0)';
-                    }, 50);
-                }, 350);
-            }
-        }
-
-        // Theme Storage Control Configurations
+        // System wide theme caching architecture
         function toggleTheme() {
-            const isDark = document.body.classList.toggle('dark');
-            localStorage.setItem('theme', isDark);
-            document.getElementById('themeBtn').innerText = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark'));
         }
-
-        if (localStorage.getItem('theme') === 'true') {
+        if (localStorage.getItem('theme') === 'true' || 
+            (localStorage.getItem('theme') === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark');
-            document.getElementById('themeBtn').innerText = "☀️ Light Mode";
         }
     </script>
 </body>
