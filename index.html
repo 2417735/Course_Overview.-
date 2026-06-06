@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Executive Academic Portfolio Hub</title>
+    <title>Executive Portfolio Hub</title>
     <style>
         :root {
             --bg: #f5f5f7;
@@ -27,134 +27,173 @@
             background-color: var(--bg);
             color: var(--text-primary);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            padding: 80px 24px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 24px;
             transition: background 0.3s ease;
         }
-        .container { max-width: 1040px; width: 100%; }
-        
-        /* Header styling */
-        header { margin-bottom: 48px; position: relative; }
-        h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 8px; }
-        .subtitle { color: var(--text-secondary); font-size: 19px; font-weight: 400; }
-        
-        /* Theme toggle switch */
-        .theme-toggle {
-            position: absolute; top: 0; right: 0;
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 8px 16px; border-radius: 20px; cursor: pointer;
-            font-size: 12px; font-weight: 500; backdrop-filter: var(--blur);
+        .matrix-container {
+            max-width: 1040px;
+            width: 100%;
         }
-
-        /* Matrix Section Layouts */
-        .matrix-section { margin-bottom: 40px; }
-        h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; color: var(--text-primary); }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        
-        /* Executive Project Cards */
-        .card {
+        header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 19px;
+            font-weight: 400;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            color: var(--text-primary);
+        }
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .matrix-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 22px;
-            padding: 28px;
+            padding: 30px;
             text-decoration: none;
             color: var(--text-primary);
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
-            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-height: 240px;
         }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+        .matrix-card:hover {
+            transform: scale(1.02);
             border-color: var(--accent);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
         }
-        body.dark .card:hover { box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
-        
-        .card-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--text-secondary); margin-bottom: 12px; }
-        .card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
-        .card p { color: var(--text-secondary); font-size: 14px; line-height: 1.5; margin-bottom: 20px; text-align: justify; }
-        
-        .card-footer { font-size: 13px; font-weight: 500; color: var(--accent); display: flex; align-items: center; }
-        .card-footer span { margin-left: 4px; transition: transform 0.2s ease; }
-        .card:hover .card-footer span { transform: translateX(3px); }
+        body.dark .matrix-card:hover {
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+        .card-number {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+        .matrix-card h2 {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .matrix-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .card-action {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        .card-action span {
+            margin-left: 4px;
+            transition: transform 0.2s ease;
+        }
+        .matrix-card:hover .card-action span {
+            transform: translateX(4px);
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="matrix-container">
         <header>
-            <h1>Sovereign Knowledge Portfolio</h1>
-            <div class="subtitle">International Economics, Systems Analysis & Trade Theory Matrices</div>
+            <h1>Sovereign Knowledge Matrix</h1>
+            <div class="subtitle">International Economics, Systems Analysis & Trade Theory Systems</div>
             <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
         </header>
 
-        <div class="matrix-section">
-            <h2>International Trade Theory Notes</h2>
-            <div class="grid">
-                
-                <a href="trade1.html" class="card">
-                    <div>
-                        <div class="card-tag" style="color: #0071e3;">Reading 1 • Chapters 1 & 2</div>
-                        <h3>World Trade & Gravity Model Matrix</h3>
-                        <p>Core textbook analysis investigating the seven recurring themes of international economics and evaluating the Gravity Model formula predicting global trade volumes based on GDP scale and geographic friction vectors.</p>
-                    </div>
-                    <div class="card-footer">Review Academic Sheet <span>→</span></div>
-                </a>
+        <div class="matrix-grid">
+            <!-- Project 1: Trade 1 -->
+            <a href="trade1.html" class="matrix-card">
+                <div>
+                    <div class="card-number" style="color: #0071e3;">Reading Module 01</div>
+                    <h2>World Trade & Gravity Model Matrix</h2>
+                    <p>Core textbook analysis investigating the seven recurring themes of international economics and evaluating the Gravity Model formula predicting global trade volumes based on GDP scale and geographic friction vectors.</p>
+                </div>
+                <div class="card-action">Review Academic Sheet <span>→</span></div>
+            </a>
 
-                <a href="trade2.html" class="card">
-                    <div>
-                        <div class="card-tag" style="color: #0071e3;">Reading 2 • Chapters 3 & 4</div>
-                        <h3>Labor Productivity & Comparative Advantage</h3>
-                        <p>Differentiating absolute advantage from comparative advantage mechanics. Mathematically proves how low-productivity nations compete effectively with superpowers, paired with a visual breakdown of curved multi-factor PPFs.</p>
-                    </div>
-                    <div class="card-footer">Review Academic Sheet <span>→</span></div>
-                </a>
+            <!-- Project 2: Trade 2 -->
+            <a href="trade2.html" class="matrix-card">
+                <div>
+                    <div class="card-number" style="color: #0071e3;">Reading Module 02</div>
+                    <h2>Labor Productivity & Comparative Advantage</h2>
+                    <p>Differentiating absolute advantage from comparative advantage mechanics. Mathematically proves how low-productivity nations compete effectively with superpowers, paired with a visual breakdown of curved multi-factor PPFs.</p>
+                </div>
+                <div class="card-action">Review Academic Sheet <span>→</span></div>
+            </a>
 
-                <a href="trade3.html" class="card">
-                    <div>
-                        <div class="card-tag" style="color: #0071e3;">Reading 3 • Chapter 5</div>
-                        <h3>Resources & Factor Price Equalization</h3>
-                        <p>Deconstruction of the Heckscher-Ohlin multi-factor model against Ricardian structures. Investigates factor endowment allocation paths and uncovers the market frictions preventing factor price convergence in the real world.</p>
-                    </div>
-                    <div class="card-footer">Review Academic Sheet <span>→</span></div>
-                </a>
+            <!-- Project 3: Trade 3 -->
+            <a href="trade3.html" class="matrix-card">
+                <div>
+                    <div class="card-number" style="color: #0071e3;">Reading Module 03</div>
+                    <h2>Resources & Factor Price Equalization</h2>
+                    <p>Deconstruction of the Heckscher-Ohlin multi-factor model against Ricardian structures. Investigates factor endowment allocation paths and uncovers the market frictions preventing factor price convergence in the real world.</p>
+                </div>
+                <div class="card-action">Review Academic Sheet <span>→</span></div>
+            </a>
 
-            </div>
+            <!-- Project 4: Creative 1 -->
+            <a href="creative1.html" class="matrix-card">
+                <div>
+                    <div class="card-number" style="color: #bf5af2;">Creative Project 01</div>
+                    <h2>Beat the AI Debater! Case Study</h2>
+                    <p>Strategic deconstruction of an international economics debate against the autarkic artificial agent, DAH-Snarky. Outlines student vectors (Norman, Sarju, Jeremy) and the precise resource cascade break that forced the AI to cede.</p>
+                </div>
+                <div class="card-action" style="color: #bf5af2;">Explore Case Analysis <span>→</span></div>
+            </a>
+
+            <!-- Project 5: Creative 2 -->
+            <a href="creative2.html" class="matrix-card">
+                <div>
+                    <div class="card-number" style="color: #30d158;">Creative Project 02</div>
+                    <h2>Systems Thinking & Economies of Scale</h2>
+                    <p>A rigorous modeling matrix defining explicit system functional variables. Tracks the structural dynamics of a simple manufacturing system loop and details the balancing loops that place natural limits on internal scale expansion.</p>
+                </div>
+                <div class="card-action" style="color: #30d158;">Explore System Framework <span>→</span></div>
+            </a>
         </div>
-
-        <div class="matrix-section" style="margin-top: 16px;">
-            <h2>Creative Activity Implementations</h2>
-            <div class="grid">
-
-                <a href="creative1.html" class="card">
-                    <div>
-                        <div class="card-tag" style="color: #bf5af2;">Creative Project 1</div>
-                        <h3>Beat the AI Debater! Case Study</h3>
-                        <p>Strategic deconstruction of an international economics debate against the autarkic artificial agent, DAH-Snarky. Outlines student vectors (Norman, Sarju, Jeremy) and the precise resource cascade break that forced the AI to cede.</p>
-                    </div>
-                    <div class="card-footer" style="color: #bf5af2;">Explore Case Analysis <span>→</span></div>
-                </a>
-
-                <a href="creative2.html" class="card">
-                    <div>
-                        <div class="card-tag" style="color: #30d158;">Creative Project 2</div>
-                        <h3>Systems Thinking & Economies of Scale</h3>
-                        <p>A rigorous modeling matrix defining explicit system functional variables. Tracks the structural dynamics of a simple manufacturing system loop and details the balancing loops that place natural limits on internal scale expansion.</p>
-                    </div>
-                    <div class="card-footer" style="color: #30d158;">Explore System Framework <span>→</span></div>
-                </a>
-
-            </div>
-        </div>
-
     </div>
 
     <script>
-        // System wide theme caching architecture
         function toggleTheme() {
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark'));
