@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Project 2: Factor Endowments</title>
+    <title>Heckscher-Ohlin Model | Trade Suite</title>
     <style>
         :root {
             --bg: #f5f5f7;
@@ -20,119 +20,109 @@
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent: #2997ff;
-            --border: rgba(255, 255, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.12);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            line-height: 1.6;
-            padding: 80px 24px;
+            background-color: var(--bg); color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            padding: 40px 24px; display: flex; justify-content: center;
         }
-        nav {
-            position: fixed;
-            top: 0; width: 100%; left: 0;
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
-            padding: 12px 24px;
-        }
-        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; font-weight: 500; }
-        nav a:hover { color: var(--accent); }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 8px; }
-        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 24px; }
-        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
-        h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
-        p { color: var(--text-secondary); font-size: 16px; margin-bottom: 16px; }
-        .interactive-box { background: rgba(0, 113, 227, 0.05); border: 1px dashed var(--accent); border-radius: 12px; padding: 24px; }
-        select { background: var(--bg); border: 1px solid var(--border); color: var(--text-primary); padding: 10px; border-radius: 8px; font-size: 14px; width: 100%; max-width: 300px; margin-bottom: 16px; }
-        .result-panel { margin-top: 16px; padding: 16px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); }
+        .container { max-width: 1000px; width: 100%; }
+        .back-btn { text-decoration: none; color: var(--accent); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px; }
+        header { margin-bottom: 32px; }
+        h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+        .subtitle { color: var(--text-secondary); font-size: 17px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 24px; backdrop-filter: var(--blur); }
+        h2 { font-size: 19px; font-weight: 600; margin-bottom: 16px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+        input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: rgba(0,0,0,0.02); color: var(--text-primary); }
+        body.dark input { background: rgba(255,255,255,0.05); }
+        .results-box { padding: 16px; border-radius: 12px; background: rgba(0, 113, 227, 0.05); border: 1px dashed var(--accent); margin-top: 16px; font-size: 14px; line-height: 1.6; }
+        .full-width { grid-column: span 2; }
+        @media (max-width: 768px) { .full-width { grid-column: span 1; } }
     </style>
 </head>
 <body>
-
-    <nav>
-        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
-            <a href="index.html">← Back to Hub</a>
-            <div>
-                <a href="trade1.html">Reading 1</a>
-                <a href="trade2.html" style="color:var(--accent); font-weight:bold;">Reading 2</a>
-                <a href="trade3.html">Reading 3</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
-        <div class="tag">Week 5 • Trade Reading 2</div>
-        <h1>Heckscher-Ohlin Factor Endowments</h1>
-        
-        <div class="section">
-            <h2>1. Structural Framework</h2>
-            <p>The Heckscher-Ohlin model moves beyond labor hours to explain how geographic resource concentrations shape trade. It asserts that a country will export goods that intensively use factors of production it has in abundance (such as machinery, technology, or arable land) and import goods that intensively use resources that are scarce domestically.</p>
-        </div>
+        <a href="index.html" class="back-btn">← Back to Executive Portfolio</a>
+        <header>
+            <h1>Heckscher-Ohlin Factor Endowments</h1>
+            <p class="subtitle">Analyzing the relationship between cross-border factor profiles and international structural export trends.</p>
+        </header>
 
-        <div class="section">
-            <h2>2. National Allocation Matrix</h2>
-            <p>Select a structural economic profile below to simulate national resource strengths and predict trade balance trajectories based on the H-O Theorem.</p>
-            
-            <div class="interactive-box">
-                <label style="display:block; margin-bottom:8px; font-weight:500;">Select Country Asset Profile:</label>
-                <select id="economySelect" onchange="runHOModel()">
-                    <option value="">-- Choose Profile --</option>
-                    <option value="capital">High Tech Capital Dominant (e.g., Micro-machinery, Servers)</option>
-                    <option value="labor">Dense Low-Cost Manufacturing Labor Force (e.g., Textiles, Manual Assembly)</option>
-                    <option value="land">Vast High-Acreage Agricultural Land Matrix (e.g., Wheat, Grains)</option>
-                </select>
-
-                <div id="hoOutput" class="result-panel">Select an economy to parse factor flows.</div>
+        <div class="grid">
+            <div class="panel">
+                <h2>1. National Factor Allocations</h2>
+                <div class="form-group">
+                    <label>Home Capital Stock (K)</label>
+                    <input type="number" id="homeK" value="80" oninput="runHOModel()">
+                </div>
+                <div class="form-group">
+                    <label>Home Labor Force (L)</label>
+                    <input type="number" id="homeL" value="40" oninput="runHOModel()">
+                </div>
+                <div class="form-group">
+                    <label>Foreign Capital Stock (K*)</label>
+                    <input type="number" id="foreignK" value="40" oninput="runHOModel()">
+                </div>
+                <div class="form-group">
+                    <label>Foreign Labor Force (L*)</label>
+                    <input type="number" id="foreignL" value="60" oninput="runHOModel()">
+                </div>
             </div>
-        </div>
 
-        <div class="section">
-            <h2>3. Structural Evidence Log</h2>
-            <p>Replicating standard trade accounts tracking factor concentration variables across industrial export divisions:</p>
-            <table style="width:100%; border-collapse:collapse; font-size:14px;">
-                <thead>
-                    <tr style="color:var(--text-secondary); text-align:left;">
-                        <th style="padding:12px; border-bottom:1px solid var(--border);">Sector Segment</th>
-                        <th style="padding:12px; border-bottom:1px solid var(--border);">Capital-Labor Ratio (K/L)</th>
-                        <th style="padding:12px; border-bottom:1px solid var(--border);">Primary Output Designation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td style="padding:12px; border-bottom:1px solid var(--border);">Semiconductors / Aerospace</td><td style="padding:12px; border-bottom:1px solid var(--border);">8.5 (Highly Capital Intensive)</td><td style="padding:12px; border-bottom:1px solid var(--border);">Advanced Nations Export</td></tr>
-                    <tr><td style="padding:12px; border-bottom:1px solid var(--border);">Commercial Apparel Manufacturing</td><td style="padding:12px; border-bottom:1px solid var(--border);">1.2 (Highly Labor Intensive)</td><td style="padding:12px; border-bottom:1px solid var(--border);">Developing Nations Export</td></tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="panel">
+                <h2>2. Sectoral Intensity Parameters</h2>
+                <div class="form-group">
+                    <label>Computers Capital-to-Labor Intensity Ratio (K/L)</label>
+                    <input type="number" id="compRatio" value="2.0" disabled style="opacity: 0.6;">
+                </div>
+                <div class="form-group">
+                    <label>Shoes Capital-to-Labor Intensity Ratio (K/L)</label>
+                    <input type="number" id="shoeRatio" value="0.5" disabled style="opacity: 0.6;">
+                </div>
+                <p style="font-size: 12px; color: var(--text-secondary);">Note: Computers are mathematically classified as Capital-Intensive; Shoes are classified as Labor-Intensive.</p>
+            </div>
 
-        <div class="section">
-            <h2>4. Analytical Synthesis</h2>
-            <p><strong>Knowledge:</strong> Understood that trade policy must match a country's natural resource distribution. Artificial trade restrictions that ignore resource realities often misallocate capital.</p>
-            <p><strong>Skills:</strong> Learned to categorize manufacturing sectors based on their factor intensity indexes and identify production biases.</p>
+            <div class="panel full-width">
+                <h2>3. Endowments and Trade Flow Alignment</h2>
+                <div id="hoOutput" class="results-box"></div>
+                <p style="font-size: 14px; color: var(--text-secondary); margin-top: 16px; line-height: 1.5;">
+                    <strong>Stolper-Samuelson Corollary Integration:</strong> As trade opens, the relative price of a nation's abundant-factor-export increases. This shifts real purchasing power toward owners of that abundant resource, while owners of the scarce factor experience relative returns compression.
+                </p>
+            </div>
         </div>
     </div>
 
     <script>
         function runHOModel() {
-            let selected = document.getElementById('economySelect').value;
-            let out = document.getElementById('hoOutput');
-            
-            if(selected === 'capital') {
-                out.innerHTML = "<strong>Predicted Strategy:</strong> This nation has a competitive edge in capital-intensive sectors.<br><span style='color:green;'>✔ Primary Exports:</span> Automated Avionics, Precision Medicine, Microprocessors.<br><span style='color:red;'>✕ Primary Imports:</span> Raw Textiles, Hand-Assembled Consumables.";
-            } else if(selected === 'labor') {
-                out.innerHTML = "<strong>Predicted Strategy:</strong> This nation excels in labor-abundant manufacturing loops.<br><span style='color:green;'>✔ Primary Exports:</span> Fast Fashion, Consumer Toy Lines, Mass Assembly Footwear.<br><span style='color:red;'>✕ Primary Imports:</span> High-End Heavy Machinery, Specialized Satellites.";
-            } else if(selected === 'land') {
-                out.innerHTML = "<strong>Predicted Strategy:</strong> This nation has an advantage in land-intensive primary sectors.<br><span style='color:green;'>✔ Primary Exports:</span> Bulk Cereal Grains, Soybean Supply, Timber Commodities.<br><span style='color:red;'>✕ Primary Imports:</span> Dense Urban Enterprise Software, Complex Industrial Automation.";
+            const hK = parseFloat(document.getElementById('homeK').value) || 1;
+            const hL = parseFloat(document.getElementById('homeL').value) || 1;
+            const fK = parseFloat(document.getElementById('foreignK').value) || 1;
+            const fL = parseFloat(document.getElementById('foreignL').value) || 1;
+
+            const homeAbundance = hK / hL;
+            const foreignAbundance = fK / fL;
+
+            let outputText = "";
+
+            if (homeAbundance > foreignAbundance) {
+                outputText = `<strong>Home Capital/Labor Ratio:</strong> ${homeAbundance.toFixed(2)} vs <strong>Foreign Capital/Labor Ratio:</strong> ${foreignAbundance.toFixed(2)}.<br><br>
+                <strong>System Outcome:</strong> Home is mathematically <strong>Capital-Abundant</strong> and holds a clear comparative advantage in manufacturing <strong>Computers</strong>. Foreign is <strong>Labor-Abundant</strong> and will export <strong>Shoes</strong>. Opening trade paths shifts domestic wealth toward Capital yields at Home and toward real wage rates across Foreign manufacturing grids.`;
+            } else if (homeAbundance < foreignAbundance) {
+                outputText = `<strong>Home Capital/Labor Ratio:</strong> ${homeAbundance.toFixed(2)} vs <strong>Foreign Capital/Labor Ratio:</strong> ${foreignAbundance.toFixed(2)}.<br><br>
+                <strong>System Outcome:</strong> Home is mathematically <strong>Labor-Abundant</strong> and holds a clear comparative advantage in manufacturing <strong>Shoes</strong>. Foreign is <strong>Capital-Abundant</strong> and will export <strong>Computers</strong>. Opening trade paths shifts domestic wealth toward real wage rates at Home and toward Capital yields across Foreign manufacturing grids.`;
             } else {
-                out.innerHTML = "Select an economy to parse factor flows.";
+                outputText = "The factor endowment profiles are perfectly symmetrical. Trade gains are mathematically stagnant without variance in resource scarcity.";
             }
+
+            document.getElementById('hoOutput').innerHTML = outputText;
         }
-        if (localStorage.getItem('theme') === 'true') { document.body.classList.add('dark'); }
+        runHOModel();
     </script>
 </body>
 </html>
