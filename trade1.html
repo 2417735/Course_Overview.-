@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Project 1: Comparative Advantage</title>
+    <title>Ricardian Trade Matrix | Trade Suite</title>
     <style>
         :root {
             --bg: #f5f5f7;
@@ -13,6 +13,7 @@
             --accent: #0071e3;
             --border: rgba(0, 0, 0, 0.08);
             --blur: saturate(180%) blur(20px);
+            --success: #34c759;
         }
         body.dark {
             --bg: #000000;
@@ -20,149 +21,178 @@
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent: #2997ff;
-            --border: rgba(255, 255, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.12);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: var(--bg);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            line-height: 1.6;
-            padding: 80px 24px;
-            -webkit-font-smoothing: antialiased;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: center;
         }
-        nav {
-            position: fixed;
-            top: 0; width: 100%; left: 0;
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
-            padding: 12px 24px;
+        .container { max-width: 1000px; width: 100%; }
+        .back-btn {
+            text-decoration: none; color: var(--accent); font-size: 14px; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px;
         }
-        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; font-weight: 500; }
-        nav a:hover { color: var(--accent); }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 8px; }
-        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 24px; }
-        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; backdrop-filter: var(--blur); }
-        h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; }
-        p { color: var(--text-secondary); font-size: 16px; margin-bottom: 16px; }
-        .interactive-box { background: rgba(0, 113, 227, 0.05); border: 1px dashed var(--accent); border-radius: 12px; padding: 24px; margin-top: 16px; }
-        input { background: var(--bg); border: 1px solid var(--border); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; width: 80px; margin: 4px; font-size: 14px; }
-        button { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 12px; font-size: 14px; }
-        button:hover { opacity: 0.9; }
-        table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
-        th, td { border-bottom: 1px solid var(--border); padding: 12px; text-align: left; }
-        th { color: var(--text-secondary); font-weight: 500; }
-        .highlight { color: var(--accent); font-weight: bold; }
+        header { margin-bottom: 32px; }
+        h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+        .subtitle { color: var(--text-secondary); font-size: 17px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        .panel {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+            padding: 24px; backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+        }
+        h2 { font-size: 19px; font-weight: 600; margin-bottom: 16px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+        input {
+            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border);
+            background: rgba(0,0,0,0.02); color: var(--text-primary); font-size: 15px;
+        }
+        body.dark input { background: rgba(255,255,255,0.05); }
+        .table-matrix { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        .table-matrix th, .table-matrix td {
+            padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px;
+        }
+        .table-matrix th { color: var(--text-secondary); font-weight: 600; }
+        .highlight { color: var(--accent); font-weight: 600; }
+        .badge {
+            display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 12px;
+            font-weight: 600; background: rgba(52, 199, 89, 0.15); color: var(--success);
+        }
+        .full-width { grid-column: span 2; }
+        @media (max-width: 768px) { .full-width { grid-column: span 1; } }
+        .explanation-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-top: 12px; }
     </style>
 </head>
 <body>
-
-    <nav>
-        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
-            <a href="index.html">← Back to Hub</a>
-            <div>
-                <a href="trade1.html" class="highlight">Reading 1</a>
-                <a href="trade2.html">Reading 2</a>
-                <a href="trade3.html">Reading 3</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
-        <div class="tag">Week 3 • Trade Reading 1</div>
-        <h1>Comparative Advantage Matrix</h1>
-        
-        <div class="section">
-            <h2>1. Structural Framework</h2>
-            <p>David Ricardo's classical theory argues that international trade patterns are not determined by absolute efficiency, but by variations in <strong>relative opportunity cost</strong>. Even if a highly developed nation produces all commodities more efficiently than its trading partner, mutual macroeconomic gains are unlocked if each country specializes exclusively in the sector where their relative margin of superiority is highest.</p>
-        </div>
+        <a href="index.html" class="back-btn">← Back to Executive Portfolio</a>
+        <header>
+            <h1>Ricardian Comparative Advantage Matrix</h1>
+            <p class="subtitle">Validating gains from trade between symmetric economies based on unit labor costs instead of absolute output efficiency metrics.</p>
+        </header>
 
-        <div class="section">
-            <h2>2. Trade Specialization Simulator</h2>
-            <p>Adjust the labor hours required to produce 1 unit of a commodity to calculate real-time domestic opportunity costs and discover optimal terms of trade balance metrics.</p>
-            
-            <div class="interactive-box">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-                    <div>
-                        <h4>Home Country (Hours per unit)</h4>
-                        <label>Cloth: <input type="number" id="homeCloth" value="1"></label><br>
-                        <label>Wine: <input type="number" id="homeWine" value="2"></label>
+        <div class="grid">
+            <div class="panel">
+                <h2>1. System Input Parameters</h2>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                    <div class="form-group">
+                        <label>Home Labor Force (L)</label>
+                        <input type="number" id="homeL" value="1000" oninput="calculateRicardian()">
                     </div>
-                    <div>
-                        <h4>Foreign Country (Hours per unit)</h4>
-                        <label>Cloth: <input type="number" id="foreignCloth" value="6"></label><br>
-                        <label>Wine: <input type="number" id="foreignWine" value="4"></label>
+                    <div class="form-group">
+                        <label>Foreign Labor Force (L*)</label>
+                        <input type="number" id="foreignL" value="1200" oninput="calculateRicardian()">
+                    </div>
+                    <div class="form-group">
+                        <label>Home Cloth ULR (aLC)</label>
+                        <input type="number" id="homeALC" value="2" oninput="calculateRicardian()">
+                    </div>
+                    <div class="form-group">
+                        <label>Home Wine ULR (aLW)</label>
+                        <input type="number" id="homeALW" value="4" oninput="calculateRicardian()">
+                    </div>
+                    <div class="form-group">
+                        <label>Foreign Cloth ULR (a*LC)</label>
+                        <input type="number" id="foreignALC" value="6" oninput="calculateRicardian()">
+                    </div>
+                    <div class="form-group">
+                        <label>Foreign Wine ULR (a*LW)</label>
+                        <input type="number" id="foreignALW" value="8" oninput="calculateRicardian()">
                     </div>
                 </div>
-                <button onclick="runRicardianAnalysis()">Compute Opportunity Costs</button>
-                <div id="ricardoOutput" style="margin-top:16px; font-weight:500; font-size:15px;"></div>
             </div>
-        </div>
 
-        <div class="section">
-            <h2>3. Empirical Matrix Data</h2>
-            <p>This static baseline architecture recreates a production possibilities model charting global yield outputs before and after applying strict specialization paths.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Scenario Model</th>
-                        <th>Home Production</th>
-                        <th>Foreign Production</th>
-                        <th>Combined Global Yield</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Pre-Trade Autarky</td>
-                        <td>50 Cloth / 25 Wine</td>
-                        <td>10 Cloth / 15 Wine</td>
-                        <td>60 Units Cloth / 40 Units Wine</td>
-                    </tr>
-                    <tr>
-                        <td class="highlight">Post-Trade Specialization</td>
-                        <td>100 Cloth / 0 Wine</td>
-                        <td>0 Cloth / 30 Wine</td>
-                        <td class="highlight">100 Units Cloth / 30 Units Wine</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="panel">
+                <h2>2. Opportunity Cost Evaluation</h2>
+                <table class="table-matrix">
+                    <thead>
+                        <tr>
+                            <th>Metric / Country</th>
+                            <th>Home Nation</th>
+                            <th>Foreign Nation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cloth Cost (in Wine)</td>
+                            <td id="homeCostC">-</td>
+                            <td id="foreignCostC">-</td>
+                        </tr>
+                        <tr>
+                            <td>Wine Cost (in Cloth)</td>
+                            <td id="homeCostW">-</td>
+                            <td id="foreignCostW">-</td>
+                        </tr>
+                        <tr>
+                            <td>Specialization</td>
+                            <td><span class="badge" id="homeSpec">-</span></td>
+                            <td><span class="badge" id="foreignSpec">-</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div class="section">
-            <h2>4. Analytical Synthesis</h2>
-            <p><strong>Knowledge:</strong> I learned that isolationist trade behavior hurts consumer options. True global efficiency is achieved by sacrificing sectors with steep domestic opportunity costs.</p>
-            <p><strong>Skills:</strong> Developed capabilities in microeconomic opportunity calculations and mathematical modeling of relative output matrix curves.</p>
+            <div class="panel full-width">
+                <h2>3. Strategic Trade Equilibrium Verification</h2>
+                <div id="equilibriumOutput"></div>
+                <p class="explanation-text" style="border-top: 1px solid var(--border); padding-top:12px;">
+                    <strong>Academic Insight:</strong> Even if one nation holds an absolute advantage across all sectors (lower ULR numbers everywhere), trade optimization is dictated by relative differences in opportunity cost ratios. This mathematical proof validates that lower-productivity countries remain competitive by specializing where their relative disadvantage is smallest.
+                </p>
+            </div>
         </div>
     </div>
 
     <script>
-        function runRicardianAnalysis() {
-            let hc = parseFloat(document.getElementById('homeCloth').value);
-            let hw = parseFloat(document.getElementById('homeWine').value);
-            let fc = parseFloat(document.getElementById('foreignCloth').value);
-            let fw = parseFloat(document.getElementById('foreignWine').value);
-            
-            let homeOpp = hc / hw;
-            let foreignOpp = fc / fw;
-            
-            let output = document.getElementById('ricardoOutput');
-            
-            let explanation = `Home sacrifices ${homeOpp.toFixed(2)} units of Wine for each unit of Cloth. <br>` +
-                              `Foreign sacrifices ${foreignOpp.toFixed(2)} units of Wine for each unit of Cloth. <br><br>`;
-            
-            if(homeOpp < foreignOpp) {
-                explanation += `<span style="color:#0071e3;">✔ Optimization Strategy:</span> Home should specialize entirely in <strong>Cloth</strong>. Foreign should specialize in <strong>Wine</strong> to unlock mutual arbitrage trade premiums.</span>`;
+        function calculateRicardian() {
+            const hL = parseFloat(document.getElementById('homeL').value) || 1;
+            const fL = parseFloat(document.getElementById('foreignL').value) || 1;
+            const hALC = parseFloat(document.getElementById('homeALC').value) || 1;
+            const hALW = parseFloat(document.getElementById('homeALW').value) || 1;
+            const fALC = parseFloat(document.getElementById('foreignALC').value) || 1;
+            const fALW = parseFloat(document.getElementById('foreignALW').value) || 1;
+
+            const hCostC = hALC / hALW;
+            const hCostW = hALW / hALC;
+            const fCostC = fALC / fALW;
+            const fCostW = fALW / fALC;
+
+            document.getElementById('homeCostC').innerText = hCostC.toFixed(3) + " W";
+            document.getElementById('homeCostW').innerText = hCostW.toFixed(3) + " C";
+            document.getElementById('foreignCostC').innerText = fCostC.toFixed(3) + " W";
+            document.getElementById('foreignCostW').innerText = fCostW.toFixed(3) + " C";
+
+            let homeSpec = "";
+            let foreignSpec = "";
+
+            if (hCostC < fCostC) {
+                homeSpec = "Cloth (Exporters)";
+                foreignSpec = "Wine (Exporters)";
             } else {
-                explanation += `<span style="color:#0071e3;">✔ Optimization Strategy:</span> Home should specialize entirely in <strong>Wine</strong>. Foreign should specialize in <strong>Cloth</strong> to maximize collective output.</span>`;
+                homeSpec = "Wine (Exporters)";
+                foreignSpec = "Cloth (Exporters)";
             }
-            output.innerHTML = explanation;
+
+            document.getElementById('homeSpec').innerText = homeSpec;
+            document.getElementById('foreignSpec').innerText = foreignSpec;
+
+            const intPriceC = ((hCostC + fCostC) / 2).toFixed(3);
+
+            document.getElementById('equilibriumOutput').innerHTML = `
+                <p style="margin-bottom:8px;">Estimated International Relative Price of Cloth (P<sub>C</sub>/P<sub>W</sub>): <span class="highlight">${intPriceC}</span></p>
+                <p class="explanation-text">With an intermediate world price settled, Home gains surplus by trading away Cloth for cheaper imported Wine. Simultaneously, Foreign profits by avoiding domestic production of high-opportunity-cost Cloth, successfully maximizing global output capabilities without direct structural conflicts.</p>
+            `;
         }
         
-        if (localStorage.getItem('theme') === 'true') { document.body.classList.add('dark'); }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark');
+        }
+        calculateRicardian();
     </script>
 </body>
 </html>
