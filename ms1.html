@@ -3,74 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M/S Project 1 — Pizza Optimizer Engine</title>
+    <title>MS Lab I: Pizza Optimization Engine</title>
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-red: #ea4335;
-            --google-yellow: #fbbc05;
-            --google-green: #34a853;
-            --surface-bg: #ffffff;
-            --body-bg: #f8f9fa;
-            --text-main: #202124;
-            --text-sub: #5f6368;
-            --border-color: #dadce0;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent: #0071e3;
+            --accent-gradient: linear-gradient(135deg, #ff2d55, #ff9500);
+            --pill-active: #ffffff;
+            --blur-radius: 20px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--body-bg); color: var(--text-main); font-family: "Roboto", sans-serif; padding: 40px 20px; }
-        .google-container { max-width: 960px; margin: 0 auto; }
-        
-        .color-strip { display: flex; height: 4px; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
-        .strip-b { background: var(--google-blue); flex: 1; }
-        .strip-r { background: var(--google-red); flex: 1; }
-        .strip-y { background: var(--google-yellow); flex: 1; }
-        .strip-g { background: var(--google-green); flex: 1; }
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #0d0d0e 0%, #1a1a1e 100%);
+            --glass-bg: rgba(30, 30, 32, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --accent-gradient: linear-gradient(135deg, #bf5af2, #ff453a);
+            --pill-active: rgba(255, 255, 255, 0.15);
+        }
 
-        .project-card { background: var(--surface-bg); border: 1px solid var(--border-color); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 40px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); margin-bottom: 24px; }
-        .back-nav { display: inline-flex; align-items: center; color: var(--google-blue); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; }
-        .back-nav:hover { text-decoration: underline; }
-        
-        h1 { font-size: 32px; font-weight: 400; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
-        .project-meta { font-size: 14px; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
-        h2 { font-size: 20px; font-weight: 500; margin: 24px 0 12px 0; color: var(--google-blue); }
-        p { font-size: 15px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
-        
-        .interactive-sandbox { background: #f1f3f4; border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; margin: 20px 0; }
-        .btn-action { background-color: var(--google-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 500; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-        .btn-action:hover { background-color: #1557b0; }
-        .footer-note { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 40px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 40px;
+            transition: background 0.4s ease;
+        }
+
+        /* APPLE BLURRED GLOBAL NAVIGATION BAR */
+        .apple-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 52px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: -0.02em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: var(--pill-active);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 4px;
+            margin-left: 10px;
+        }
+
+        /* APPLE LOADING INDICATOR OVERLAY */
+        #apple-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-gradient);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0,0,0,0.05);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        body.dark .spinner {
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top: 3px solid var(--accent);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MAIN GLASS LAYOUT CHASSIS */
+        .wrapper {
+            max-width: 1060px;
+            margin: 30px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.21fr 0.79fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .span-2 { grid-column: span 2; }
+        @media (max-width: 900px) { .span-2 { grid-column: span 1; } }
+
+        h1 {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* INTERACTIVE INTERFACE & DATA MATRIX */
+        .apple-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .apple-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .apple-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+
+        body.dark .apple-table td {
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .switch-input {
+            appearance: none;
+            width: 44px;
+            height: 24px;
+            background: rgba(0,0,0,0.1);
+            body.dark & { background: rgba(255,255,255,0.1); }
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            transition: background 0.2s ease;
+        }
+
+        .switch-input:checked {
+            background: #34c759;
+        }
+
+        .switch-input::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            top: 2px; left: 2px;
+            background: #ffffff;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .switch-input:checked::before {
+            transform: translateX(20px);
+        }
+
+        /* INTERACTIVE BUDGET SLIDER CONTROLS */
+        .control-group {
+            margin: 20px 0;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .apple-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(0,0,0,0.08);
+            body.dark & { background: rgba(255,255,255,0.08); }
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .apple-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.15);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .apple-slider::-webkit-slider-thumb:active {
+            transform: scale(1.2);
+        }
+
+        /* LIVE DIAGNOSTICS DISPLAY PILLS */
+        .metric-badge {
+            display: inline-flex;
+            flex-direction: column;
+            background: rgba(255,255,255,0.3);
+            body.dark & { background: rgba(255,255,255,0.05); }
+            border: 1px solid var(--glass-border);
+            padding: 14px 20px;
+            border-radius: 16px;
+            min-width: 120px;
+        }
+
+        .metric-val {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-top: 4px;
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-valid { background: rgba(52, 199, 89, 0.15); color: #248a3d; }
+        .status-invalid { background: rgba(255, 69, 58, 0.15); color: #ff3b30; }
+
+        /* EMBEDDED STREAMLIT GAME VIEWPORT */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="google-container">
-        <a href="index.html" class="back-nav">← Back to Management Hub</a>
+    <!-- APPLE LOADER ACCELERATOR -->
+    <div id="apple-loader">
+        <div class="spinner"></div>
+    </div>
 
-        <div class="color-strip">
-            <div class="strip-b"></div>
-            <div class="strip-r"></div>
-            <div class="strip-y"></div>
-            <div class="strip-g"></div>
+    <!-- APPLE GLOBAL SYNCED HEADER NAVBAR -->
+    <nav class="apple-nav">
+        <div class="nav-container">
+            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-links">
+                <a href="https://2417735.github.io/Study_Cafe/" class="nav-item">Index Hub</a>
+                <a href="ms1.html" class="nav-item active">MS 1</a>
+                <a href="ms2.html" class="nav-item">MS 2</a>
+                <a href="ms3.html" class="nav-item">MS 3</a>
+                <a href="ms4.html" class="nav-item">MS 4</a>
+                <a href="ms5.html" class="nav-item">MS 5</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        
+        <!-- MODULE CORE SOLVER PANEL -->
+        <div class="glass-card">
+            <div style="text-transform: uppercase; font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 6px;">MS Lab Module I</div>
+            <h1>The Pizza Allocation Matrix</h1>
+            <p class="subtitle">Linear Solver Prototype executing structural target thresholds for multi-criteria optimization problems.</p>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Upper Cost Limit</span>
+                    <span id="cost-val">$7.00</span>
+                </div>
+                <input type="range" class="apple-slider" id="budget-slider" min="3" max="15" step="0.5" value="7" oninput="runOptimization()">
+            </div>
+
+            <table class="apple-table">
+                <thead>
+                    <tr>
+                        <th>Topping Item</th>
+                        <th>Cost ($)</th>
+                        <th>Satisfaction</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tbody id="topping-rows">
+                    <!-- Dynamic Rows Populated Via JavaScript -->
+                </tbody>
+            </table>
         </div>
 
-        <div class="project-card">
-            <span style="color: var(--google-blue); font-weight: 700; font-size: 12px; text-transform: uppercase;">M/S • Activity Platform</span>
-            <h1 style="margin-top: 6px;">The Pizza Optimizer: A Decision Problem</h1>
-            <div class="project-meta">Student ID: 2417735 • Objective Resource Formulation Matrix</div>
-
-            <h2>1. Operational Objective</h2>
-            <p>Formulate and compute the optimal parameter distributions balancing raw ingredient constraints, processing capacities, and multi-criteria utility functions.</p>
-
-            <h2>2. Optimization Simulation Sandbox</h2>
-            <div class="interactive-sandbox">
-                <p style="font-family: monospace; margin-bottom: 15px; color: var(--text-sub);">// Dynamic optimization arrays and parameters go here</p>
-                <button class="btn-action" onclick="alert('Optimization model initialized.')">Execute Pizza Optimization pass</button>
+        <!-- DIAGNOSTICS & SUMMARY SIDEBAR -->
+        <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 20px;">Allocation Yield</h3>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">Total Score</span>
+                        <span class="metric-val" id="total-score" style="color: #34c759;">0.0</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">Combined Cost</span>
+                        <span class="metric-val" id="total-cost">$0.00</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">Feasibility Check</span>
+                        <div style="margin-top: 6px;">
+                            <span id="status-tag" class="status-pill status-valid">Optimal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 30px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
+                <p>Data linked to source framework architecture repository: <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Asset ↗</a></p>
             </div>
         </div>
 
-        <div class="footer-note">Alam Al Kahaf • Management Science Laboratory Module</div>
+        <!-- INTERACTIVE SIMULATOR EMBED MODULE -->
+        <div class="glass-card span-2">
+            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Native Simulation Environment</h3>
+            <div class="iframe-container">
+                <iframe src="https://pizz-opz-c87bbfepdbxteg9uekeh3n.streamlit.app/?embed=true"></iframe>
+            </div>
+        </div>
+
     </div>
 
+    <script>
+        // CORE PIZZA ALLOCATION DATASET Array
+        const toppings = [
+            { name: "Buffalo mozzarella", cost: 2.00, score: 5.0 },
+            { name: "Gorgonzola", cost: 1.50, score: 3.1 },
+            { name: "Ricotta", cost: 1.00, score: 4.2 },
+            { name: "Burrata", cost: 3.00, score: 4.7 },
+            { name: "Parma ham", cost: 3.00, score: 7.2 },
+            { name: "Pancetta", cost: 2.00, score: 4.2 },
+            { name: "Salame", cost: 2.00, score: 8.3 },
+            { name: "Nduja", cost: 0.50, score: 4.8 },
+            { name: "Zucchini", cost: 1.00, score: 3.5 },
+            { name: "Fried eggplant", cost: 2.00, score: 5.2 }
+        ];
+
+        // Track selected items locally
+        let selections = {
+            "Buffalo mozzarella": true, "Gorgonzola": false, "Ricotta": true,
+            "Burrata": false, "Parma ham": true, "Pancetta": false,
+            "Salame": true, "Nduja": true, "Zucchini": false, "Fried eggplant: " : false
+        };
+
+        // Render dynamic table components
+        function initTable() {
+            const container = document.getElementById('topping-rows');
+            container.innerHTML = '';
+            toppings.forEach((t, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 500;">${t.name}</td>
+                    <td>$${t.cost.toFixed(2)}</td>
+                    <td style="color: var(--text-secondary); font-weight: 600;">${t.score.toFixed(1)}</td>
+                    <td>
+                        <input type="checkbox" class="switch-input" id="check-${index}" ${selections[t.name] ? 'checked' : ''} onchange="toggleTopping('${t.name}', ${index})">
+                    </td>
+                `;
+                container.appendChild(tr);
+            });
+            runOptimization();
+        }
+
+        function toggleTopping(name, index) {
+            selections[name] = document.getElementById(`check-${index}`).checked;
+            runOptimization();
+        }
+
+        // Live calculation engine verifying linear bounds
+        function runOptimization() {
+            const budget = parseFloat(document.getElementById('budget-slider').value);
+            document.getElementById('cost-val').innerText = `$${budget.toFixed(2)}`;
+
+            let currentCost = 0;
+            let currentScore = 0;
+
+            toppings.forEach(t => {
+                if (selections[t.name]) {
+                    currentCost += t.cost;
+                    currentScore += t.score;
+                }
+            });
+
+            document.getElementById('total-cost').innerText = `$${currentCost.toFixed(2)}`;
+            document.getElementById('total-score').innerText = currentScore.toFixed(1);
+
+            const statusTag = document.getElementById('status-tag');
+            if (currentCost <= budget) {
+                statusTag.innerText = "Optimal/Feasible";
+                statusTag.className = "status-pill status-valid";
+            } else {
+                statusTag.innerText = "Over Budget Bounds";
+                statusTag.className = "status-pill status-invalid";
+            }
+        }
+
+        // Global Apple Framework Layout Routines (Theme + Smooth Loading Elements)
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('apple-theme', isDark ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('apple-theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('apple-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.visibility = 'hidden', 400);
+            initTable();
+        });
+    </script>
 </body>
 </html>
