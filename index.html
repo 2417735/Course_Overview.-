@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Executive Portfolio | Alam Al Kahaf</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/video/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg: #f5f5f7;
@@ -296,58 +298,99 @@
             margin-top: 24px;
         }
 
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 40px;
-        }
-
-        .bento-grid .bento-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 28px;
-            backdrop-filter: var(--blur);
-        }
-
-        .span-2 { grid-column: span 2; }
-
-        .bento-box h4 {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 10px;
-        }
-
-        .bento-box p {
-            font-size: 16px;
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        .pill-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .pill {
-            background: var(--toggle-bg);
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
         h2 {
-            font-size: 34px;
+            font-size: 38px;
             font-weight: 600;
             letter-spacing: -0.01em;
             margin: 80px 0 30px 0;
-            text-align: center;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        /* Synthesis & Insights Styling */
+        .synthesis-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 40px;
+            margin-top: 60px;
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+        }
+
+        .synthesis-section h3 {
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        .synthesis-section h4 {
+            font-size: 18px;
+            color: var(--accent);
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .synthesis-section p, .synthesis-section li {
+            font-size: 16px;
+            color: var(--text-primary);
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .synthesis-section ul, .synthesis-section ol {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .synthesis-section a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+            transition: opacity 0.2s;
+        }
+
+        .synthesis-section a:hover {
+            opacity: 0.8;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        pre {
+            background-color: #1c1c1e;
+            color: #f5f5f7;
+            padding: 20px;
+            border-radius: 14px;
+            overflow-x: auto;
+            font-family: "SF Mono", SFMono-Regular, Consolas, Monaco, monospace;
+            font-size: 14px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        blockquote {
+            background: var(--toggle-bg);
+            border-left: 4px solid var(--accent);
+            margin: 24px 0;
+            padding: 16px 20px;
+            font-style: italic;
+            border-radius: 0 14px 14px 0;
+        }
+
+        .formula-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        body:not(.dark) .formula-block {
+            background: rgba(0, 0, 0, 0.01);
         }
 
         footer {
@@ -363,10 +406,9 @@
             h1 { font-size: 44px; }
             .subtitle { font-size: 19px; }
             .suite-panel.active { display: flex; flex-direction: column; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .span-2 { grid-column: span 1; }
             .nav-container { padding: 0 16px; }
             .nav-right { gap: 12px; }
+            .synthesis-section { padding: 24px; }
         }
     </style>
 </head>
@@ -408,7 +450,6 @@
 
         <section id="portfolio">
 
-            <!-- SUITE A: TRADE DEPT -->
             <div id="tradeSuite" class="suite-panel active" style="display: grid;">
                 
                 <a href="trade1.html" class="card col-4">
@@ -458,7 +499,6 @@
 
             </div>
 
-            <!-- SUITE B: MANAGEMENT SCIENCE DEPT -->
             <div id="msSuite" class="suite-panel">
                 
                 <a href="ms1.html" class="card col-3">
@@ -512,90 +552,54 @@
 
         <section id="reflection">
             <h2>Synthesis & Insights</h2>
-            <div class="bento-grid">
-                
-                <div class="bento-box span-2">
-                    <h4>Evolution of Perspective</h4>
-                    <p>Previously, I treated Trade as a system of regulations and Management Science as simple text summaries. Developing this interactive matrix proved that both fields are highly connected, quantitative ecosystems. Success relies entirely on process optimization, strict error control, and clear statistical guardrails.</p>
-                </div>
+            
+            <div class="synthesis-section">
+                <p>Management Science (MS), or <a href="https://en.wikipedia.org/wiki/Operations_research" target="_blank">Operations Research</a>, applies scientific methods and formal mathematical models to help managers solve complex organizational decision problems.</p>
 
-                <div class="bento-box">
-                    <h4>Highest Operational Value</h4>
-                    <p>The combination of Trade's physical flow rules (Kanban) with Management Science's statistical control metrics creates an airtight framework for maximizing cross-border supply chain performance.</p>
-                </div>
+                <h3>1. Introduction to Management Science & Modeling</h3>
+                <p>Every managerial problem can be viewed through a systemic framework to balance reality with mathematical tractability.</p>
 
-                <div class="bento-box">
-                    <h4>Core Challenges Overcome</h4>
-                    <p>Structuring complex algorithms like the Gravity Model and Monte Carlo logic strings using vanilla JavaScript required finding a fine balance between lightweight script execution and high data fidelity.</p>
-                </div>
+                <h4>The Systemic Structure</h4>
+                <p>Systems are composed of inputs, processes, and outputs. Management science typically optimizes open systems to achieve strategic goals, such as profit maximization or cost minimization.</p>
 
-                <div class="bento-box span-2">
-                    <h4>Acquired Architecture Matrix</h4>
-                    <div class="pill-wrapper">
-                        <span class="pill">Supply Flow Management</span>
-                        <span class="pill">Statistical Quality Boundaries</span>
-                        <span class="pill">Risk Ingress Isolation</span>
-                        <span class="pill">Mathematical Gravity Modeling</span>
-                        <span class="pill">Probability Matrix Runs</span>
-                        <span class="pill">Defensive UI Fail-safes</span>
-                    </div>
-                </div>
+                <h4>The Modeling Process</h4>
+                <p>Solving a real-world problem requires an iterative lifecycle:</p>
+                <ol>
+                    <li><strong>Problem Definition:</strong> Identifying the root decision issue and objectives.</li>
+                    <li><strong>Model Construction:</strong> Transforming variables and relationships into mathematical expressions.</li>
+                    <li><strong>Validation:</strong> Testing the model against past data to ensure it behaves realistically.</li>
+                    <li><strong>Sensitivity Testing:</strong> Evaluating how changes in input parameters impact the optimal solution.</li>
+                    <li><strong>Implementation:</strong> Translating mathematical results into managerial action.</li>
+                </ol>
 
-            </div>
-        </section>
+                <blockquote>
+                    <strong>The Simplification Golden Rule:</strong><br>
+                    "Finding a proper balance between the level of simplification of the model and the good representation of reality."
+                </blockquote>
 
-        <footer>
-            <p>Trade & Management Science Portfolio Hub • Alam Al Kahaf • Student ID 2417735</p>
-        </footer>
+                <h4>Model Classification</h4>
+                <ul>
+                    <li><strong>Deterministic Models:</strong> All parameters and functional relationships are known with absolute certainty.</li>
+                    <li><strong>Probabilistic Models:</strong> Incorporate random variables to handle high levels of risk or uncertainty.</li>
+                </ul>
 
-    </div>
+                <h3>2. Linear Programming (LP)</h3>
+                <p><a href="https://en.wikipedia.org/wiki/Linear_programming" target="_blank">Linear Programming</a> is a foundational technique used to optimize a linear objective function subject to a set of linear equality or inequality constraints.</p>
 
-    <script>
-        function switchSuite(suiteKey, indexNum) {
-            const btns = document.querySelectorAll('.control-btn');
-            const slider = document.getElementById('controlSlider');
-            const tradePanel = document.getElementById('tradeSuite');
-            const msPanel = document.getElementById('msSuite');
+<pre>
+                  X2 ^
+                     |      / Borderline
+                     |     / 
+                     |..../ <--- Corner Point (Optimal Solution)
+                     |   / \
+                     |  /   \ 
+                     | / Feasible
+                     |/  Area \
+                     +---------\----------> X1
+</pre>
 
-            btns.forEach(btn => btn.classList.remove('active'));
-            btns[indexNum].classList.add('active');
-            slider.style.transform = `translateX(${indexNum * 100}%)`;
-
-            if(suiteKey === 'trade') {
-                msPanel.style.opacity = '0';
-                msPanel.style.transform = 'translateY(15px)';
-                setTimeout(() => {
-                    msPanel.style.display = 'none';
-                    tradePanel.style.display = 'grid';
-                    setTimeout(() => {
-                        tradePanel.style.opacity = '1';
-                        tradePanel.style.transform = 'translateY(0)';
-                    }, 50);
-                }, 350);
-            } else {
-                tradePanel.style.opacity = '0';
-                tradePanel.style.transform = 'translateY(15px)';
-                setTimeout(() => {
-                    tradePanel.style.display = 'none';
-                    msPanel.style.display = 'grid';
-                    setTimeout(() => {
-                        msPanel.style.opacity = '1';
-                        msPanel.style.transform = 'translateY(0)';
-                    }, 50);
-                }, 350);
-            }
-        }
-
-        function toggleTheme() {
-            const isDark = document.body.classList.toggle('dark');
-            localStorage.setItem('theme', isDark);
-            document.getElementById('themeBtn').innerText = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
-        }
-
-        if (localStorage.getItem('theme') === 'true') {
-            document.body.classList.add('dark');
-            document.getElementById('themeBtn').innerText = "☀️ Light Mode";
-        }
-    </script>
-</body>
-</html>
+                <h4>Key Technical Attributes</h4>
+                <ul>
+                    <li><strong>Feasible Region:</strong> The combination of all constraints forms a <a href="https://en.wikipedia.org/wiki/Convex_set" target="_blank">convex set</a> (specifically, a convex polyhedron).</li>
+                    <li><strong>The Fundamental Theorem of LP:</strong> If an optimal solution exists, it will always occur at one or more of the extreme <a href="https://en.wikipedia.org/wiki/Extreme_point" target="_blank">corner points</a> of the feasible area.</li>
+                    <li><strong>The Simplex Method:</strong> An algebraic, iterative <a href="
