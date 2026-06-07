@@ -4,30 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Executive Portfolio | Alam Al Kahaf</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/video/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg: rgba(255, 255, 255, 0.8);
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --accent: #0071e3;
             --accent-rgb: 0, 113, 227;
             --border: rgba(0, 0, 0, 0.08);
-            --toggle-bg: rgba(0, 0, 0, 0.05);
+            --toggle-bg: rgba(0, 0, 0, 0.04);
             --blur: saturate(180%) blur(20px);
         }
 
         body.dark {
             --bg: #000000;
-            --card-bg: rgba(28, 28, 30, 0.75);
+            --card-bg: rgba(28, 28, 30, 0.8);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent: #2997ff;
             --accent-rgb: 41, 151, 255;
             --border: rgba(255, 255, 255, 0.12);
-            --toggle-bg: rgba(255, 255, 255, 0.1);
+            --toggle-bg: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -36,18 +34,13 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             background-color: var(--bg);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.47059;
-            letter-spacing: -0.022em;
-            transition: background-color 0.5s ease;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+            transition: background-color 0.3s ease;
             -webkit-font-smoothing: antialiased;
+            padding-bottom: 60px;
         }
 
         nav {
@@ -59,7 +52,6 @@
             -webkit-backdrop-filter: var(--blur);
             border-bottom: 1px solid var(--border);
             z-index: 100;
-            transition: background 0.3s, border 0.3s;
         }
 
         .nav-container {
@@ -78,24 +70,20 @@
             gap: 20px;
         }
 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
+        .theme-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+            opacity: 0.8;
         }
 
         .nav-links a, .main-portfolio-link {
             color: var(--text-primary);
             text-decoration: none;
             font-size: 13px;
-            opacity: 0.7;
-            transition: opacity 0.2s, color 0.2s;
-            font-weight: 400;
-        }
-
-        .nav-links a:hover, .main-portfolio-link:hover {
-            opacity: 1;
-            color: var(--accent);
+            font-weight: 500;
         }
 
         .main-portfolio-link {
@@ -103,78 +91,65 @@
             padding: 4px 12px;
             border-radius: 12px;
             background: var(--toggle-bg);
-            font-weight: 500;
-        }
-
-        .theme-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 13px;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .theme-btn:hover {
-            opacity: 1;
         }
 
         .container {
             max-width: 1040px;
             margin: 0 auto;
-            padding: 140px 24px 60px 24px;
+            padding: 120px 24px 20px 24px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         h1 {
-            font-size: 64px;
+            font-size: 56px;
             font-weight: 700;
             letter-spacing: -0.015em;
-            line-height: 1.08;
-            margin-bottom: 16px;
+            line-height: 1.1;
+            margin-bottom: 12px;
         }
 
         .hero-gradient {
-            background: linear-gradient(135deg, #0071e3, #86f9ff, #bd00ff);
+            background: linear-gradient(135deg, #0071e3, #2997ff, #bd00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
-            font-size: 24px;
-            font-weight: 400;
+            font-size: 20px;
             color: var(--text-secondary);
-            max-width: 650px;
-            margin: 0 auto 28px auto;
-            letter-spacing: -0.01em;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
         }
 
         .meta-badges {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            font-size: 13px;
+            gap: 10px;
         }
 
         .badge {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 6px 16px;
-            border-radius: 30px;
-            color: var(--text-primary);
-            font-weight: 500;
-            backdrop-filter: var(--blur);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .drive-link {
+            background: var(--accent);
+            color: #fff !important;
+            border: none;
         }
 
         .controls-wrapper {
             display: flex;
             justify-content: center;
-            margin-bottom: 40px;
+            margin: 30px 0;
         }
 
         .segmented-control {
@@ -189,68 +164,56 @@
         .control-btn {
             background: none;
             border: none;
-            padding: 10px 32px;
-            font-size: 15px;
+            padding: 8px 28px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
-            border-radius: 25px;
-            position: relative;
+            border-radius: 20px;
+            transition: color 0.2s ease, background-color 0.2s ease;
             z-index: 2;
-            transition: color 0.3s ease;
         }
 
         .control-btn.active {
             color: var(--text-primary);
-        }
-
-        .slider {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            height: calc(100% - 8px);
-            width: calc(50% - 4px);
             background: #ffffff;
-            border-radius: 25px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04);
-            z-index: 1;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        body.dark .slider {
+        body.dark .control-btn.active {
             background: #2c2c2e;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .suite-panel {
             display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
         }
 
         .suite-panel.active {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 20px;
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 32px;
+            border-radius: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 260px;
+            min-height: 200px;
             text-decoration: none;
             color: inherit;
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
         }
 
         .col-4 { grid-column: span 4; }
@@ -258,157 +221,97 @@
         .col-3 { grid-column: span 3; }
         .col-6 { grid-column: span 6; }
 
-        .card:hover {
-            transform: scale(1.015);
-            border-color: rgba(var(--accent-rgb), 0.4);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
-        }
-
         .card-tag {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
             color: var(--accent);
-            margin-bottom: 12px;
-        }
-
-        .card h3 {
-            font-size: 26px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .card p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .card-footer {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 24px;
-        }
-
-        h2 {
-            font-size: 38px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin: 80px 0 30px 0;
-            text-align: left;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        /* Synthesis & Insights Styling */
-        .synthesis-section {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 40px;
-            margin-top: 60px;
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-        }
-
-        .synthesis-section h3 {
-            font-size: 22px;
-            color: var(--text-primary);
-            margin-top: 30px;
-            margin-bottom: 12px;
-        }
-
-        .synthesis-section h4 {
-            font-size: 18px;
-            color: var(--accent);
-            margin-top: 20px;
             margin-bottom: 8px;
         }
 
-        .synthesis-section p, .synthesis-section li {
-            font-size: 16px;
-            color: var(--text-primary);
-            opacity: 0.9;
-            line-height: 1.6;
-            margin-bottom: 12px;
+        .card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        .synthesis-section ul, .synthesis-section ol {
-            padding-left: 24px;
-            margin-bottom: 16px;
-        }
-
-        .synthesis-section a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px dashed var(--accent);
-            transition: opacity 0.2s;
-        }
-
-        .synthesis-section a:hover {
-            opacity: 0.8;
-            border-bottom: 1px solid var(--accent);
-        }
-
-        pre {
-            background-color: #1c1c1e;
-            color: #f5f5f7;
-            padding: 20px;
-            border-radius: 14px;
-            overflow-x: auto;
-            font-family: "SF Mono", SFMono-Regular, Consolas, Monaco, monospace;
+        .card p {
             font-size: 14px;
-            margin: 20px 0;
-            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            line-height: 1.4;
         }
 
-        blockquote {
-            background: var(--toggle-bg);
-            border-left: 4px solid var(--accent);
-            margin: 24px 0;
-            padding: 16px 20px;
-            font-style: italic;
-            border-radius: 0 14px 14px 0;
+        .card-footer {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: 16px;
         }
 
-        .formula-block {
-            background: rgba(255, 255, 255, 0.03);
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 50px 0 20px 0;
+            color: var(--text-primary);
+        }
+
+        /* SMART COOLS & PRODUCTIVE CASE STUDIES MATRIX */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .matrix-box {
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 20px;
             border-radius: 16px;
-            margin: 20px 0;
-            overflow-x: auto;
+            padding: 20px;
         }
 
-        body:not(.dark) .formula-block {
-            background: rgba(0, 0, 0, 0.01);
+        .matrix-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .keyword-pill {
+            display: inline-block;
+            background: var(--toggle-bg);
+            color: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 4px 2px;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.15s ease;
+        }
+
+        .keyword-pill:hover {
+            background: var(--accent);
+            color: #ffffff !important;
+            transform: scale(1.03);
         }
 
         footer {
             text-align: center;
-            padding: 60px 0 40px 0;
-            font-size: 13px;
+            padding: 40px 0;
+            font-size: 12px;
             color: var(--text-secondary);
+            margin-top: 60px;
             border-top: 1px solid var(--border);
-            margin-top: 80px;
         }
 
-        @media (max-width: 900px) {
-            h1 { font-size: 44px; }
-            .subtitle { font-size: 19px; }
-            .suite-panel.active { display: flex; flex-direction: column; }
-            .nav-container { padding: 0 16px; }
-            .nav-right { gap: 12px; }
-            .synthesis-section { padding: 24px; }
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; }
+            .suite-panel.active, .matrix-grid { grid-template-columns: 1fr; }
+            .col-2, .col-3, .col-4, .col-6 { grid-column: span 1; }
         }
     </style>
 </head>
@@ -420,7 +323,7 @@
                 <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
                 <div class="nav-links">
                     <a href="#portfolio">Suites</a>
-                    <a href="#reflection">Synthesis</a>
+                    <a href="#insights">Case Studies</a>
                 </div>
             </div>
             <div class="nav-right">
@@ -432,174 +335,210 @@
     <div class="container">
 
         <header>
-            <h1>Global Systems & <br><span class="hero-gradient">Management Analytics</span></h1>
-            <p class="subtitle">A strategic framework portfolio investigating modern logistics and analytical models.</p>
+            <h1>Case Studies & <br><span class="hero-gradient">Management Analytics</span></h1>
+            <p class="subtitle">Dual Domain Architecture Engine analyzing complex optimization and international trade loops.</p>
             <div class="meta-badges">
-                <span class="badge">Alam Al Kahaf (2417735)</span>
-                <span class="badge">Dual Domain Case File</span>
+                <span class="badge">ID: 2417735</span>
+                <span class="badge">Validated Framework</span>
+                <a href="https://drive.google.com/drive/folders/17EOkcWEv--5dJEsctmHKzpV-7P2oz_Qn?usp=drive_link" target="_blank" class="badge drive-link">Cloud Storage Vault ↗</a>
             </div>
         </header>
 
         <div class="controls-wrapper">
             <div class="segmented-control">
-                <div class="slider" id="controlSlider"></div>
-                <button class="control-btn active" onclick="switchSuite('trade', 0)">Trade Suite</button>
-                <button class="control-btn" onclick="switchSuite('ms', 1)">Management Science</button>
+                <button class="control-btn active" id="btn-trade" onclick="switchSuite('trade')">Trade Suite</button>
+                <button class="control-btn" id="btn-ms" onclick="switchSuite('ms')">Management Science</button>
             </div>
         </div>
 
         <section id="portfolio">
 
-            <div id="tradeSuite" class="suite-panel active" style="display: grid;">
-                
+            <!-- TRADE MODULE -->
+            <div id="tradeSuite" class="suite-panel active">
                 <a href="trade1.html" class="card col-4">
                     <div>
-                        <div class="card-tag">Trade • Project 1</div>
-                        <h3>World Trade Overview & The Gravity Model</h3>
+                        <div class="card-tag">Trade • Study I</div>
+                        <h3>Gravity Model Metrics</h3>
                         <p>Analyze international macroeconomic patterns, trade-to-GDP indices, and geometric market boundaries utilizing distance coefficients.</p>
                     </div>
-                    <div class="card-footer">Execute Gravity Engine ↗</div>
+                    <div class="card-footer">Execute Engine ↗</div>
                 </a>
 
                 <a href="trade2.html" class="card col-2">
                     <div>
-                        <div class="card-tag">Trade • Project 2</div>
-                        <h3>Labor Productivity & Comparative Advantage</h3>
+                        <div class="card-tag">Trade • Study II</div>
+                        <h3>Comparative Advantage Matrix</h3>
                         <p>Calculate opportunity cost arrays across international production curves to identify ultimate operational optimization thresholds.</p>
                     </div>
-                    <div class="card-footer">Analyze Productivity ↗</div>
+                    <div class="card-footer">Analyze Curves ↗</div>
                 </a>
 
                 <a href="trade3.html" class="card col-3">
                     <div>
-                        <div class="card-tag">Trade • Project 3</div>
-                        <h3>Resources, Comparative Advantage, & Income Distribution</h3>
+                        <div class="card-tag">Trade • Study III</div>
+                        <h3>Income Allocation Dynamics</h3>
                         <p>Evaluate trade factors and structural resource trends while plotting the real-world allocation impacts on regional labor structures.</p>
                     </div>
-                    <div class="card-footer">Launch Resource Model ↗</div>
+                    <div class="card-footer">Launch Allocation ↗</div>
                 </a>
 
                 <a href="creative1.html" class="card col-3">
                     <div>
-                        <div class="card-tag">Trade • Project 4</div>
-                        <h3>AI Chat Debate: Beat the AI Debater!</h3>
-                        <p>Converse with DAH-Snarky, the Devil's Advocate for Autarky, using counter-arguments to compromise defense mechanisms and dismantle self-sufficiency theories.</p>
+                        <div class="card-tag">Trade • Study IV</div>
+                        <h3>Autarky AI Debater</h3>
+                        <p>Converse with DAH-Snarky, the Devil's Advocate for Autarky, using counter-arguments to compromise defense mechanisms.</p>
                     </div>
-                    <div class="card-footer">Enter Argument Arena ↗</div>
+                    <div class="card-footer">Enter Arena ↗</div>
                 </a>
 
                 <a href="creative2.html" class="card col-6">
                     <div>
-                        <div class="card-tag">Trade • Project 5</div>
-                        <h3>Activity: Systems Thinking Notes Matrix</h3>
+                        <div class="card-tag">Trade • Study V</div>
+                        <h3>Systems Thinking Mapping</h3>
                         <p>Define systemic bounds, organize structural reference loops, and analyze interconnected network properties on a multi-tier canvas.</p>
                     </div>
-                    <div class="card-footer">Examine Systems Map ↗</div>
+                    <div class="card-footer">Open Map ↗</div>
                 </a>
-
             </div>
 
+            <!-- MANAGEMENT SCIENCE MODULE -->
             <div id="msSuite" class="suite-panel">
-                
                 <a href="ms1.html" class="card col-3">
                     <div>
-                        <div class="card-tag">M/S • Activity</div>
-                        <h3>Project 1 — The Pizza Optimizer: A Decision Problem</h3>
+                        <div class="card-tag">Analytics • Lab I</div>
+                        <h3>Multi-Criteria Linear Allocation</h3>
                         <p>Isolate key variables, handle inventory targets, and engineer custom optimization limits to map explicit multi-criteria production choices.</p>
                     </div>
-                    <div class="card-footer">Launch Optimizer Engine ↗</div>
+                    <div class="card-footer">Run LP Solver ↗</div>
                 </a>
 
                 <a href="ms2.html" class="card col-3">
                     <div>
-                        <div class="card-tag">M/S • Activity</div>
-                        <h3>Project 2 — Reading Project</h3>
+                        <div class="card-tag">Analytics • Lab II</div>
+                        <h3>Reading Project Vault</h3>
                         <p>Structured ingestion framework analyzing core management science reading assignments, key methodology concepts, and system insights.</p>
                     </div>
-                    <div class="card-footer">Examine Text Notebooks ↗</div>
+                    <div class="card-footer">Inquire Base ↗</div>
                 </a>
 
                 <a href="ms3.html" class="card col-6">
                     <div>
-                        <div class="card-tag">M/S • Activity: Networks</div>
-                        <h3>Project 3 — Traveling Salesperson Problem (TSP) Simulator</h3>
+                        <div class="card-tag">Analytics • Lab III</div>
+                        <h3>Network Routing Simulator (TSP)</h3>
                         <p>Examine the mathematical lowest-cost pathways across structural nodes, evaluate matching path profiles, and isolate optimal network flows.</p>
                     </div>
-                    <div class="card-footer">Solve Network Paths ↗</div>
+                    <div class="card-footer">Simulate Nodes ↗</div>
                 </a>
 
                 <a href="ms4.html" class="card col-2">
                     <div>
-                        <div class="card-tag">M/S • Activity</div>
-                        <h3>Project 4 — Picking Heuristic Optimization Lab</h3>
+                        <div class="card-tag">Analytics • Lab IV</div>
+                        <h3>Warehouse Picking Heuristics</h3>
                         <p>Simulate a 12-item random layout collection map, bypass simple nearest neighbor paths, and construct three efficient routing heuristics.</p>
                     </div>
-                    <div class="card-footer">Simulate Fulfillment ↗</div>
+                    <div class="card-footer">Route Path ↗</div>
                 </a>
 
                 <a href="ms5.html" class="card col-4">
                     <div>
-                        <div class="card-tag">M/S • Activity</div>
-                        <h3>Project 5 — Operational Decision Tree Simulator</h3>
+                        <div class="card-tag">Analytics • Lab V</div>
+                        <h3>Sequential Tree Risk Assessment</h3>
                         <p>Navigate sequential uncertainty splits, evaluate outcome trees, and analyze strategic expected values across volatile operating horizons.</p>
                     </div>
-                    <div class="card-footer">Evaluate Decision Tree ↗</div>
+                    <div class="card-footer">Test Tree ↗</div>
                 </a>
-
             </div>
 
         </section>
 
-        <section id="reflection">
-            <h2>Synthesis & Insights</h2>
+        <!-- PRODUCTIVE CASE STUDY SYNTHESIS MATRIX -->
+        <section id="insights">
+            <h2>Synthesis & Insights: Case Studies</h2>
             
-            <div class="synthesis-section">
-                <p>Management Science (MS), or <a href="https://en.wikipedia.org/wiki/Operations_research" target="_blank">Operations Research</a>, applies scientific methods and formal mathematical models to help managers solve complex organizational decision problems.</p>
+            <div class="matrix-grid">
+                
+                <div class="matrix-box">
+                    <h3 style="color: #0071e3;">Modeling Archetypes</h3>
+                    <a href="https://en.wikipedia.org/wiki/Operations_research" target="_blank" class="keyword-pill">Operations Research</a>
+                    <a href="https://en.wikipedia.org/wiki/Deterministic_system" target="_blank" class="keyword-pill">Deterministic Systems</a>
+                    <a href="https://en.wikipedia.org/wiki/Probabilistic_model" target="_blank" class="keyword-pill">Probabilistic Models</a>
+                    <a href="https://en.wikipedia.org/wiki/Sensitivity_analysis" target="_blank" class="keyword-pill">Sensitivity Matrix</a>
+                </div>
 
-                <h3>1. Introduction to Management Science & Modeling</h3>
-                <p>Every managerial problem can be viewed through a systemic framework to balance reality with mathematical tractability.</p>
+                <div class="matrix-box">
+                    <h3 style="color: #2b6cb0;">Linear Optimization</h3>
+                    <a href="https://en.wikipedia.org/wiki/Linear_programming" target="_blank" class="keyword-pill">Linear Programming</a>
+                    <a href="https://en.wikipedia.org/wiki/Simplex_algorithm" target="_blank" class="keyword-pill">Simplex Algorithm</a>
+                    <a href="https://en.wikipedia.org/wiki/Convex_set" target="_blank" class="keyword-pill">Convex Polyhedrons</a>
+                    <a href="https://en.wikipedia.org/wiki/Extreme_point" target="_blank" class="keyword-pill">Corner Optimal Points</a>
+                </div>
 
-                <h4>The Systemic Structure</h4>
-                <p>Systems are composed of inputs, processes, and outputs. Management science typically optimizes open systems to achieve strategic goals, such as profit maximization or cost minimization.</p>
+                <div class="matrix-box">
+                    <h3 style="color: #bd00ff;">Logistics & Resource Allocation</h3>
+                    <a href="https://en.wikipedia.org/wiki/Blending_problem" target="_blank" class="keyword-pill">Blending Problems</a>
+                    <a href="https://en.wikipedia.org/wiki/Cutting_stock_problem" target="_blank" class="keyword-pill">Cutting-Stock Optimization</a>
+                    <a href="https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)" target="_blank" class="keyword-pill">Transportation Models</a>
+                    <a href="https://en.wikipedia.org/wiki/Assignment_problem" target="_blank" class="keyword-pill">Binary Assignments</a>
+                </div>
 
-                <h4>The Modeling Process</h4>
-                <p>Solving a real-world problem requires an iterative lifecycle:</p>
-                <ol>
-                    <li><strong>Problem Definition:</strong> Identifying the root decision issue and objectives.</li>
-                    <li><strong>Model Construction:</strong> Transforming variables and relationships into mathematical expressions.</li>
-                    <li><strong>Validation:</strong> Testing the model against past data to ensure it behaves realistically.</li>
-                    <li><strong>Sensitivity Testing:</strong> Evaluating how changes in input parameters impact the optimal solution.</li>
-                    <li><strong>Implementation:</strong> Translating mathematical results into managerial action.</li>
-                </ol>
+                <div class="matrix-box">
+                    <h3 style="color: #2997ff;">Network Routing Algorithms</h3>
+                    <a href="https://en.wikipedia.org/wiki/Shortest_path_problem" target="_blank" class="keyword-pill">Shortest Path Flow</a>
+                    <a href="https://en.wikipedia.org/wiki/Travelling_salesperson_problem" target="_blank" class="keyword-pill">Traveling Salesperson (TSP)</a>
+                    <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree" target="_blank" class="keyword-pill">Minimum Spanning Trees</a>
+                    <a href="https://en.wikipedia.org/wiki/Maximum_flow_problem" target="_blank" class="keyword-pill">Max Flow Bounds</a>
+                </div>
 
-                <blockquote>
-                    <strong>The Simplification Golden Rule:</strong><br>
-                    "Finding a proper balance between the level of simplification of the model and the good representation of reality."
-                </blockquote>
+                <div class="matrix-box" style="grid-column: span 2;">
+                    <h3 style="color: #4a5568; text-align: center;">Project Lifecycle Architecture</h3>
+                    <div style="text-align: center;">
+                        <a href="https://en.wikipedia.org/wiki/Critical_path_method" target="_blank" class="keyword-pill">Critical Path Method (CPM)</a>
+                        <a href="https://en.wikipedia.org/wiki/Program_evaluation_and_review_technique" target="_blank" class="keyword-pill">PERT Approximations</a>
+                        <a href="https://en.wikipedia.org/wiki/Beta_distribution" target="_blank" class="keyword-pill">Beta Duration Distributions</a>
+                        <a href="https://en.wikipedia.org/wiki/Float_(project_management)" target="_blank" class="keyword-pill">Total Slack Floats</a>
+                        <a href="https://en.wikipedia.org/wiki/Modern_portfolio_theory" target="_blank" class="keyword-pill">Risk-Return Horizons</a>
+                    </div>
+                </div>
 
-                <h4>Model Classification</h4>
-                <ul>
-                    <li><strong>Deterministic Models:</strong> All parameters and functional relationships are known with absolute certainty.</li>
-                    <li><strong>Probabilistic Models:</strong> Incorporate random variables to handle high levels of risk or uncertainty.</li>
-                </ul>
+            </div>
+        </section>
 
-                <h3>2. Linear Programming (LP)</h3>
-                <p><a href="https://en.wikipedia.org/wiki/Linear_programming" target="_blank">Linear Programming</a> is a foundational technique used to optimize a linear objective function subject to a set of linear equality or inequality constraints.</p>
+        <footer>
+            <p>Trade & Systems Analytics Engine • Alam Al Kahaf • Student Reference 2417735</p>
+        </footer>
 
-<pre>
-                  X2 ^
-                     |      / Borderline
-                     |     / 
-                     |..../ <--- Corner Point (Optimal Solution)
-                     |   / \
-                     |  /   \ 
-                     | / Feasible
-                     |/  Area \
-                     +---------\----------> X1
-</pre>
+    </div>
 
-                <h4>Key Technical Attributes</h4>
-                <ul>
-                    <li><strong>Feasible Region:</strong> The combination of all constraints forms a <a href="https://en.wikipedia.org/wiki/Convex_set" target="_blank">convex set</a> (specifically, a convex polyhedron).</li>
-                    <li><strong>The Fundamental Theorem of LP:</strong> If an optimal solution exists, it will always occur at one or more of the extreme <a href="https://en.wikipedia.org/wiki/Extreme_point" target="_blank">corner points</a> of the feasible area.</li>
-                    <li><strong>The Simplex Method:</strong> An algebraic, iterative <a href="
+    <script>
+        function switchSuite(suiteKey) {
+            const tradeBtn = document.getElementById('btn-trade');
+            const msBtn = document.getElementById('btn-ms');
+            const tradeSuite = document.getElementById('tradeSuite');
+            const msSuite = document.getElementById('msSuite');
+
+            if (suiteKey === 'trade') {
+                tradeBtn.classList.add('active');
+                msBtn.classList.remove('active');
+                msSuite.classList.remove('active');
+                tradeSuite.classList.add('active');
+            } else {
+                msBtn.classList.add('active');
+                tradeBtn.classList.remove('active');
+                tradeSuite.classList.remove('active');
+                msSuite.classList.add('active');
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('portfolio-dark-mode', isDark);
+            document.getElementById('themeBtn').innerText = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+        }
+
+        if (localStorage.getItem('portfolio-dark-mode') === 'true') {
+            document.body.classList.add('dark');
+            document.getElementById('themeBtn').innerText = "☀️ Light Mode";
+        }
+    </script>
+</body>
+</html>
