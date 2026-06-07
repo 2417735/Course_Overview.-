@@ -48,7 +48,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphic Top Navbar */
         nav {
             position: fixed;
             top: 0;
@@ -80,7 +79,7 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 24px;
         }
 
         .nav-links a, .main-portfolio-link {
@@ -119,7 +118,6 @@
             opacity: 1;
         }
 
-        /* Hero Layout Center Container */
         .container {
             max-width: 1040px;
             margin: 0 auto;
@@ -159,7 +157,6 @@
             justify-content: center;
             gap: 8px;
             font-size: 13px;
-            flex-wrap: wrap;
         }
 
         .badge {
@@ -172,7 +169,6 @@
             backdrop-filter: var(--blur);
         }
 
-        /* Segmented Controller (Apple Style Switch) */
         .controls-wrapper {
             display: flex;
             justify-content: center;
@@ -224,7 +220,6 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.4);
         }
 
-        /* Portfolio Suite Layout Panels */
         .suite-panel {
             display: none;
             opacity: 0;
@@ -240,7 +235,6 @@
             transform: translateY(0);
         }
 
-        /* Premium Modular App Cards */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -257,7 +251,6 @@
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s;
         }
 
-        /* Dynamic Grid Layout Sizes */
         .col-4 { grid-column: span 4; }
         .col-2 { grid-column: span 2; }
         .col-3 { grid-column: span 3; }
@@ -303,7 +296,6 @@
             margin-top: 24px;
         }
 
-        /* Bento-Style Reflection Module */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -374,12 +366,12 @@
             .bento-grid { grid-template-columns: 1fr; }
             .span-2 { grid-column: span 1; }
             .nav-container { padding: 0 16px; }
+            .nav-right { gap: 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Apple Main Nav Strip -->
     <nav>
         <div class="nav-container">
             <div class="nav-left">
@@ -390,8 +382,6 @@
                 </div>
             </div>
             <div class="nav-right">
-                <!-- Direct Integration Link to the DAH-Snarky AI Agent -->
-                <a href="https://chatgpt.com/g/g-69e55aad8f18819188593bd158bdaa52-dah-snarky" target="_blank" class="main-portfolio-link" style="color: #0071e3; border-color: rgba(0, 113, 227, 0.3);">⚔️ Beat the AI Debater! ↗</a>
                 <a href="https://2417735.github.io/Study_Cafe/" target="_blank" class="main-portfolio-link">Study Cafe Hub ↗</a>
             </div>
         </div>
@@ -399,7 +389,6 @@
 
     <div class="container">
 
-        <!-- Unified Hero Presentation -->
         <header>
             <h1>Global Systems & <br><span class="hero-gradient">Management Analytics</span></h1>
             <p class="subtitle">A strategic framework portfolio investigating modern logistics and analytical models.</p>
@@ -409,7 +398,6 @@
             </div>
         </header>
 
-        <!-- Segmented Controls Container -->
         <div class="controls-wrapper">
             <div class="segmented-control">
                 <div class="slider" id="controlSlider"></div>
@@ -418,10 +406,9 @@
             </div>
         </div>
 
-        <!-- Portfolio Work Matrix Section -->
         <section id="portfolio">
 
-            <!-- SUITE A: TRADE DEPT (Corrected & Updated Names) -->
+            <!-- SUITE A: TRADE DEPT -->
             <div id="tradeSuite" class="suite-panel active" style="display: grid;">
                 
                 <a href="trade1.html" class="card col-4">
@@ -471,7 +458,7 @@
 
             </div>
 
-            <!-- SUITE B: MANAGEMENT SCIENCE DEPT (5 Exact Specified Projects) -->
+            <!-- SUITE B: MANAGEMENT SCIENCE DEPT -->
             <div id="msSuite" class="suite-panel">
                 
                 <a href="ms1.html" class="card col-3">
@@ -523,7 +510,6 @@
 
         </section>
 
-        <!-- Premium Unified Summary Modules -->
         <section id="reflection">
             <h2>Synthesis & Insights</h2>
             <div class="bento-grid">
