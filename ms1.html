@@ -176,9 +176,6 @@
             transform: translateY(-2px);
         }
 
-        .span-2 { grid-column: span 2; }
-        @media (max-width: 900px) { .span-2 { grid-column: span 1; } }
-
         h1 {
             font-size: 34px;
             font-weight: 700;
@@ -222,12 +219,15 @@
             width: 44px;
             height: 24px;
             background: rgba(0,0,0,0.1);
-            body.dark & { background: rgba(255,255,255,0.1); }
             border-radius: 12px;
             position: relative;
             cursor: pointer;
             outline: none;
             transition: background 0.2s ease;
+        }
+
+        body.dark .switch-input {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .switch-input:checked {
@@ -268,9 +268,12 @@
             width: 100%;
             height: 6px;
             background: rgba(0,0,0,0.08);
-            body.dark & { background: rgba(255,255,255,0.08); }
             border-radius: 3px;
             outline: none;
+        }
+
+        body.dark .apple-slider {
+            background: rgba(255,255,255,0.08);
         }
 
         .apple-slider::-webkit-slider-thumb {
@@ -294,11 +297,14 @@
             display: inline-flex;
             flex-direction: column;
             background: rgba(255,255,255,0.3);
-            body.dark & { background: rgba(255,255,255,0.05); }
             border: 1px solid var(--glass-border);
             padding: 14px 20px;
             border-radius: 16px;
             min-width: 120px;
+        }
+
+        body.dark .metric-badge {
+            background: rgba(255,255,255,0.05);
         }
 
         .metric-val {
@@ -318,33 +324,14 @@
 
         .status-valid { background: rgba(52, 199, 89, 0.15); color: #248a3d; }
         .status-invalid { background: rgba(255, 69, 58, 0.15); color: #ff3b30; }
-
-        /* EMBEDDED STREAMLIT GAME VIEWPORT */
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 520px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
     </style>
 </head>
 <body>
 
-    <!-- APPLE LOADER ACCELERATOR -->
     <div id="apple-loader">
         <div class="spinner"></div>
     </div>
 
-    <!-- APPLE GLOBAL SYNCED HEADER NAVBAR -->
     <nav class="apple-nav">
         <div class="nav-container">
             <div class="nav-brand">Management Science Engine</div>
@@ -362,7 +349,6 @@
 
     <div class="wrapper">
         
-        <!-- MODULE CORE SOLVER PANEL -->
         <div class="glass-card">
             <div style="text-transform: uppercase; font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 6px;">MS Lab Module I</div>
             <h1>The Pizza Allocation Matrix</h1>
@@ -386,12 +372,10 @@
                     </tr>
                 </thead>
                 <tbody id="topping-rows">
-                    <!-- Dynamic Rows Populated Via JavaScript -->
-                </tbody>
+                    </tbody>
             </table>
         </div>
 
-        <!-- DIAGNOSTICS & SUMMARY SIDEBAR -->
         <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
             <div>
                 <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 20px;">Allocation Yield</h3>
@@ -417,14 +401,6 @@
             </div>
         </div>
 
-        <!-- INTERACTIVE SIMULATOR EMBED MODULE -->
-        <div class="glass-card span-2">
-            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Native Simulation Environment</h3>
-            <div class="iframe-container">
-                <iframe src="https://pizz-opz-c87bbfepdbxteg9uekeh3n.streamlit.app/?embed=true"></iframe>
-            </div>
-        </div>
-
     </div>
 
     <script>
@@ -446,7 +422,7 @@
         let selections = {
             "Buffalo mozzarella": true, "Gorgonzola": false, "Ricotta": true,
             "Burrata": false, "Parma ham": true, "Pancetta": false,
-            "Salame": true, "Nduja": true, "Zucchini": false, "Fried eggplant: " : false
+            "Salame": true, "Nduja": true, "Zucchini": false, "Fried eggplant": false
         };
 
         // Render dynamic table components
