@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M/S Project 4 — Picking Heuristics Lab</title>
+    <style>
+        :root {
+            --google-blue: #1a73e8;
+            --google-red: #ea4335;
+            --google-yellow: #fbbc05;
+            --google-green: #34a853;
+            --surface-bg: #ffffff;
+            --body-bg: #f8f9fa;
+            --text-main: #202124;
+            --text-sub: #5f6368;
+            --border-color: #dadce0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--body-bg); color: var(--text-main); font-family: "Roboto", sans-serif; padding: 40px 20px; }
+        .google-container { max-width: 960px; margin: 0 auto; }
+        
+        .color-strip { display: flex; height: 4px; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
+        .strip-b { background: var(--google-blue); flex: 1; }
+        .strip-r { background: var(--google-red); flex: 1; }
+        .strip-y { background: var(--google-yellow); flex: 1; }
+        .strip-g { background: var(--google-green); flex: 1; }
+
+        .project-card { background: var(--surface-bg); border: 1px solid var(--border-color); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 40px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); margin-bottom: 24px; }
+        .back-nav { display: inline-flex; align-items: center; color: var(--google-blue); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; }
+        .back-nav:hover { text-decoration: underline; }
+        
+        h1 { font-size: 32px; font-weight: 400; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
+        .project-meta { font-size: 14px; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        h2 { font-size: 20px; font-weight: 500; margin: 24px 0 12px 0; color: var(--google-blue); }
+        p { font-size: 15px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
+        
+        .warehouse-canvas { background: #e8eaed; border: 2px solid var(--border-color); border-radius: 8px; height: 300px; display: flex; align-items: center; justify-content: center; color: var(--text-sub); margin: 20px 0; font-family: monospace; }
+        .btn-action { background-color: var(--google-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 500; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+        .footer-note { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="google-container">
+        <a href="index.html" class="back-nav">← Back to Management Hub</a>
+
+        <div class="color-strip">
+            <div class="strip-b"></div>
+            <div class="strip-r"></div>
+            <div class="strip-y"></div>
+            <div class="strip-g"></div>
+        </div>
+
+        <div class="project-card">
+            <span style="color: var(--google-blue); font-weight: 700; font-size: 12px; text-transform: uppercase;">M/S • Activity Workspace</span>
+            <h1 style="margin-top: 6px;">Picking Heuristic Optimization Lab</h1>
+            <div class="project-meta">Student ID: 2417735 • Warehouse Fulfillment Simulation Matrix</div>
+
+            <h2>1. Operational Scenario</h2>
+            <p>You are a warehouse picker tasked with collecting 12 items located across random, decentralized locations within the structural grid. Optimize fulfillment times while entirely avoiding standard nearest-neighbor algorithms.</p>
+
+            <h2>2. Core Spatial Map Layout</h2>
+            <div class="warehouse-canvas">
+                [ 12-Item Spatial Distribution Canvas Array Map ]
+            </div>
+
+            <h2>3. Heuristic Strategies Configuration</h2>
+            <p>• <strong>Heuristic 1:</strong> Systemic Route Mapping Parameter</p>
+            <p>• <strong>Heuristic 2:</strong> Zonal Consolidation Array</p>
+            <p>• <strong>Heuristic 3:</strong> Inverse Geometric Bounding Matrix</p>
+            <br>
+            <button class="btn-action" onclick="alert('Heuristic arrays loaded.')">Simulate Heuristic Models</button>
+        </div>
+
+        <div class="footer-note">Alam Al Kahaf • Management Science Laboratory Module</div>
+    </div>
+
+</body>
+</html>
