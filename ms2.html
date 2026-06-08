@@ -243,35 +243,32 @@
             background: rgba(255,255,255,0.4);
             body.dark & { background: rgba(255,255,255,0.03); }
             border: 1px solid var(--glass-border);
-            height: 200px;
+            height: 220px;
             border-radius: 14px;
             position: relative;
             overflow: hidden;
             margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .feasible-region {
             position: absolute;
             bottom: 0; left: 0;
-            width: 140px;
-            height: 110px;
+            width: 130px;
+            height: 125px;
             background: rgba(52, 199, 89, 0.2);
-            border-top-right-radius: 80px;
+            border-top-right-radius: 90px;
             border-right: 2px dashed #34c759;
             border-top: 2px dashed #34c759;
         }
 
         .coordinate-dot {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background: #ff3b30;
             border-radius: 50%;
-            box-shadow: 0 0 10px #ff3b30;
-            transition: all 0.15s ease;
+            box-shadow: 0 0 12px #ff3b30;
+            transition: transform 0.1s ease, left 0.1s ease, bottom 0.1s ease;
             z-index: 10;
         }
 
@@ -348,39 +345,39 @@
                 <p class="subtitle">Study constraint geometry first-hand by adjusting resource usage across a bounded vector space.</p>
 
                 <div class="theory-block">
-                    <div class="theory-title">1. Linear Programming Structure</div>
-                    <div class="theory-text">Every LP model translates operations targets into an <b>Objective Function</b> (maximizing profit) governed by strict mathematical <b>Constraints</b> representing scarce inputs like labor or raw materials.</div>
+                    <div class="theory-title">1. Linear Programming Framework</div>
+                    <div class="theory-text">An LP configuration maps operational inputs to an <b>Objective Function</b> (maximizing gross revenue) bounded by algebraic inequalities that represent scarce resource allocations.</div>
                 </div>
 
                 <div class="theory-block">
-                    <div class="theory-title">2. Geometrical Feasible Space</div>
-                    <div class="theory-text">The shaded region below isolates every single coordinate intersection that fulfills all system limits simultaneously. The optimal profile will always sit on an outermost corner intersection point.</div>
+                    <div class="theory-title">2. Geometric Feasible Space</div>
+                    <div class="theory-text">The shaded constraint polygon bounds all viable solutions. According to the extreme-point theorem, optimization choices always sit directly on a bounding vertex corner.</div>
                 </div>
 
                 <div class="sim-panel">
-                    <h3 style="font-size: 16px; font-weight: 700;">💼 Problem Case Scenario: Factory Volume Optimizer</h3>
-                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">You run a high-end carpentry facility. Product X₁ (Trucks) yields $450 profit; Product X₂ (Trains) yields $550 profit. You have an absolute limit of <b>5,000 Carpentry Hours</b> and <b>3,000 Polishing Hours</b> available.</p>
+                    <h3 style="font-size: 16px; font-weight: 700;">💼 Case Scenario: Pinocchio, Inc. Production Solver</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Maximize factory yield parameters. Product X₁ (Trucks) yields $450 profit; Product X₂ (Trains) yields $550 profit. Available processing limits: <b>5,000 Carpentry Hours</b> and <b>3,000 Finishing Hours</b>.</p>
                     
                     <div class="slider-row">
-                        <div class="slider-label"><span>Produce Quantity X₁ (Trucks)</span><span id="x1-lbl">0</span></div>
+                        <div class="slider-label"><span>Manufacture Quantity X₁ (Trucks)</span><span id="x1-lbl">0</span></div>
                         <input type="range" class="apple-slider" id="sim-x1" min="0" max="15" step="1" value="0" oninput="calculateSimulator()">
                     </div>
                     
                     <div class="slider-row">
-                        <div class="slider-label"><span>Produce Quantity X₂ (Trains)</span><span id="x2-lbl">0</span></div>
+                        <div class="slider-label"><span>Manufacture Quantity X₂ (Trains)</span><span id="x2-lbl">0</span></div>
                         <input type="range" class="apple-slider" id="sim-x2" min="0" max="15" step="1" value="0" oninput="calculateSimulator()">
                     </div>
 
-                    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px;">Feasible Vector Space Mapping</div>
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 6px;">Interactive Feasible Vector Space</div>
                     <div class="chart-box">
                         <div class="feasible-region"></div>
                         <div class="coordinate-dot" id="vector-dot" style="bottom: 0px; left: 0px;"></div>
-                        <span style="position: absolute; bottom: 8px; left: 10px; font-size: 10px; opacity: 0.5; font-weight: bold;">(0,0) Base</span>
+                        <span style="position: absolute; bottom: 8px; left: 10px; font-size: 10px; opacity: 0.5; font-weight: bold;">(0,0) Base Origin</span>
                     </div>
 
                     <div class="live-badge">
                         <div>Carpentry Consumption (400*X₁ + 300*X₂): <b id="carp-status">0 / 5000 hrs</b></div>
-                        <div>Polishing Consumption (200*X₁ + 250*X₂): <b id="fin-status">0 / 3000 hrs</b></div>
+                        <div>Finishing Consumption (200*X₁ + 250*X₂): <b id="fin-status">0 / 3000 hrs</b></div>
                         <div id="sim-alert" class="status-banner status-ok">Feasible Configuration</div>
                     </div>
                 </div>
@@ -389,4 +386,104 @@
 
         <div>
             <div class="glass-card">
-                <h3 style="font-size
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 14px;">📖 Conceptual Study Vault</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Core elements derived directly from your Chapter 2 linear parsing models:</p>
+                
+                <div class="preview-item">
+                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">I. Structural Decision Variables</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">Mathematical vectors describing management volume targets, such as target items to manufacture.</p>
+                </div>
+
+                <div class="preview-item">
+                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">II. Convex Linear Sets</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">A bounded set where any segment joining two coordinate intersections is wholly contained inside the space.</p>
+                </div>
+
+                <div class="preview-item">
+                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">III. Binding Constraint Constraints</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">An operational limit that reduces down to an exact equality at the optimum point, leaving zero surplus resource slack.</p>
+                </div>
+
+                <a href="ms2read.html" class="btn-portal">Learn More (Open Reading Room) ➔</a>
+            </div>
+
+            <div class="glass-card">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Simulated Output Yield</h3>
+                
+                <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 12px;">
+                    <span style="font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Total Evaluated Gross Profit</span>
+                    <div style="font-size: 30px; font-weight: 800; color: #34c759; margin-top: 2px;" id="total-profit-val">$0</div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 12px;">
+                    <span style="font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Sensitivity State Vector</span>
+                    <div style="font-size: 13px; font-weight: 700; margin-top: 4px;" id="binding-output">No Active Binding Constraints</div>
+                </div>
+
+                <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 16px;">
+                    <p>Asset Documentation Archive: <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Matrix Link ↗</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // SIMULATOR RUNTIME METRIC CALCULATIONS - BUG FIXED
+        function calculateSimulator() {
+            const x1 = parseInt(document.getElementById('sim-x1').value);
+            const x2 = parseInt(document.getElementById('sim-x2').value);
+            
+            document.getElementById('x1-lbl').innerText = x1;
+            document.getElementById('x2-lbl').innerText = x2;
+
+            // Strict Operations Research Coefficients Matrix
+            const carpentry = (x1 * 400) + (x2 * 300);
+            const finishing = (x1 * 200) + (x2 * 250);
+            const revenue = (x1 * 450) + (x2 * 550);
+
+            document.getElementById('carp-status').innerText = `${carpentry.toLocaleString()} / 5,000 hrs`;
+            document.getElementById('fin-status').innerText = `${finishing.toLocaleString()} / 3,000 hrs`;
+            document.getElementById('total-profit-val').innerText = `$${revenue.toLocaleString()}`;
+
+            // Visual Vector Dot Coordinate Calculations
+            const dot = document.getElementById('vector-dot');
+            dot.style.left = `${(x1 * 12)}px`;
+            dot.style.bottom = `${(x2 * 12)}px`;
+
+            const alertBox = document.getElementById('sim-alert');
+            const bindingTxt = document.getElementById('binding-output');
+
+            if (carpentry > 5000 || finishing > 3000) {
+                alertBox.innerText = "Infeasible Configuration: Resource Boundary Broken!";
+                alertBox.className = "status-banner status-err";
+                bindingTxt.innerText = "Mathematical Bounds Broken";
+                bindingTxt.style.color = "#ff3b30";
+            } else {
+                alertBox.innerText = "Feasible Configuration";
+                alertBox.className = "status-banner status-ok";
+                bindingTxt.style.color = "inherit";
+                
+                // Track bounding vectors accurately live
+                let conditions = [];
+                if (carpentry === 5000) conditions.push("Carpentry Labor");
+                if (finishing === 3000) conditions.push("Finishing Labor");
+                bindingTxt.innerText = conditions.length > 0 ? `Binding Limit: ${conditions.join(' & ')}` : "No Active Binding Constraints";
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('apple-theme', isDark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('apple-theme') === 'dark') document.body.classList.add('dark');
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('apple-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.visibility = 'hidden', 300);
+            calculateSimulator();
+        });
+    </script>
+</body>
+</html>
