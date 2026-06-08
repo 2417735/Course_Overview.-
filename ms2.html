@@ -3,80 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M/S Project 2 — Structured Notes Workspace</title>
+    <title>MS Lab II: Network Distribution & Routing Theory</title>
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-red: #ea4335;
-            --google-yellow: #fbbc05;
-            --google-green: #34a853;
-            --surface-bg: #ffffff;
-            --body-bg: #f8f9fa;
-            --text-main: #202124;
-            --text-sub: #5f6368;
-            --border-color: #dadce0;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e5e9f0 100%);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent: #0071e3;
+            --accent-gradient: linear-gradient(135deg, #0071e3, #5ac8fa);
+            --pill-active: #ffffff;
+            --card-success: rgba(52, 199, 89, 0.15);
+            --card-error: rgba(255, 59, 48, 0.15);
+            --blur-radius: 20px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--body-bg); color: var(--text-main); font-family: "Roboto", sans-serif; padding: 40px 20px; }
-        .google-container { max-width: 960px; margin: 0 auto; }
-        
-        .color-strip { display: flex; height: 4px; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
-        .strip-b { background: var(--google-blue); flex: 1; }
-        .strip-r { background: var(--google-red); flex: 1; }
-        .strip-y { background: var(--google-yellow); flex: 1; }
-        .strip-g { background: var(--google-green); flex: 1; }
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #090a0f 0%, #121318 100%);
+            --glass-bg: rgba(28, 28, 30, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --accent-gradient: linear-gradient(135deg, #2997ff, #64d2ff);
+            --pill-active: rgba(255, 255, 255, 0.12);
+            --card-success: rgba(48, 209, 88, 0.2);
+            --card-error: rgba(255, 69, 58, 0.2);
+        }
 
-        .project-card { background: var(--surface-bg); border: 1px solid var(--border-color); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 40px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); margin-bottom: 24px; }
-        .back-nav { display: inline-flex; align-items: center; color: var(--google-blue); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; }
-        .back-nav:hover { text-decoration: underline; }
-        
-        h1 { font-size: 32px; font-weight: 400; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
-        .project-meta { font-size: 14px; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
-        h2 { font-size: 20px; font-weight: 500; margin: 24px 0 12px 0; color: var(--google-blue); }
-        p { font-size: 15px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
-        
-        .notebook-step { background: #f8f9fa; border-left: 4px solid var(--google-blue); padding: 16px; margin: 12px 0; border-radius: 0 4px 4px 0; }
-        .footer-note { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 40px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-top: 74px;
+            padding-bottom: 40px;
+            transition: background 0.4s ease;
+        }
+
+        /* APPLE BLURRED GLOBAL NAVIGATION BAR */
+        .apple-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 52px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: -0.02em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: var(--pill-active);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 4px;
+            margin-left: 10px;
+        }
+
+        /* APPLE LOADING INDICATOR OVERLAY */
+        #apple-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-gradient);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(0,0,0,0.04);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* LAYOUT MAIN GRID CHASSIS */
+        .wrapper {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* STEP-BY-STEP CONCEPTUAL CARDS */
+        .step-block {
+            border-left: 3px solid var(--accent);
+            padding-left: 16px;
+            margin: 20px 0;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* GAMIFICATION & TARGET VERIFICATION FIELD */
+        .interactive-hub {
+            background: rgba(255,255,255,0.15);
+            body.dark & { background: rgba(0,0,0,0.15); }
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .hub-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .target-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        .node-network {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 24px 0;
+            background: rgba(0,0,0,0.02);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .node-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .node-btn.selected {
+            background: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+        }
+
+        .status-banner {
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        .status-ok { background: var(--card-success); color: #248a3d; }
+        .status-err { background: var(--card-error); color: #ff3b30; }
     </style>
 </head>
 <body>
 
-    <div class="google-container">
-        <a href="index.html" class="back-nav">← Back to Management Hub</a>
+    <div id="apple-loader"><div class="spinner"></div></div>
 
-        <div class="color-strip">
-            <div class="strip-b"></div>
-            <div class="strip-r"></div>
-            <div class="strip-y"></div>
-            <div class="strip-g"></div>
-        </div>
-
-        <div class="project-card">
-            <span style="color: var(--google-blue); font-weight: 700; font-size: 12px; text-transform: uppercase;">M/S • Reading 2 Workspace</span>
-            <h1 style="margin-top: 6px;">Secondary Text Ch. 2 & Main Text Ch. 5</h1>
-            <div class="project-meta">Student ID: 2417735 • NotebookLM Structured Ingestion Pipeline</div>
-
-            <h2>NotebookLM Notes Structure & Methodology</h2>
-            
-            <div class="notebook-step">
-                <strong>Step 1: Scan & Topic Selection</strong>
-                <p>Skim and scan Reading parameters for 4–6 high-interest systemic concepts mapped to page 3 protocols.</p>
-            </div>
-
-            <div class="notebook-step">
-                <strong>Step 2: Dual Source Prompting</strong>
-                <p>Prompting NotebookLM with core concepts and Guided Questions (GQs) to engineer the primary 2-page structural draft matrix.</p>
-            </div>
-
-            <div class="notebook-step">
-                <strong>Step 3: Comprehensive Synthesis</strong>
-                <p>Full reading assessment with notes taken progressively from page 3 onwards to synthesize the final verified textual run.</p>
+    <nav class="apple-nav">
+        <div class="nav-container">
+            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-links">
+                <a href="https://2417735.github.io/Study_Cafe/" class="nav-item">Index Hub</a>
+                <a href="ms1.html" class="nav-item">MS 1</a>
+                <a href="ms2.html" class="nav-item">MS 2</a>
+                <a href="ms3.html" class="nav-item active">MS 3</a>
+                <a href="ms4.html" class="nav-item">MS 4</a>
+                <a href="ms5.html" class="nav-item">MS 5</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
             </div>
         </div>
+    </nav>
 
-        <div class="footer-note">Alam Al Kahaf • Management Science Laboratory Module</div>
+    <div class="wrapper">
+        
+        <div>
+            <div class="glass-card">
+                <div style="text-transform: uppercase; font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 4px;">MS Lab Module III</div>
+                <h1>Network Flow Routing Architecture</h1>
+                <p class="subtitle">Understand the systemic mathematical principles governing transshipment networks before initiating active data balancing tests.</p>
+
+                <div class="step-block">
+                    <div class="step-title">1. Structural Node Archetypes</div>
+                    <div class="step-desc">A system consists of vertices (nodes) linked by directional transshipment arcs. Nodes represent points of origin (Suppliers), destination (Markets), or intermediate sorting centers (Warehouses).</div>
+                </div>
+
+                <div class="step-block">
+                    <div class="step-title">2. Conservation of Flow (The Core Requirement)</div>
+                    <div class="step-desc">The absolute mathematical target for any intermediate warehouse node is that <b>Total Inflow must exactly equal Total Outflow</b>. No assets can be lost or stockpiled beyond target capacity metrics.</div>
+                </div>
+
+                <div class="step-block">
+                    <div class="step-title">3. Integer Programming Constraints</div>
+                    <div class="step-desc">When variables dictate binary choices (e.g., whether to open a specific shipping route or keep it closed), integer parameters constraint inputs to non-fractional bounds [0 or 1].</div>
+                </div>
+
+                <div class="interactive-hub">
+                    <div class="hub-title">🕹️ Active Field: Transshipment Calibration Sim</div>
+                    <p style="font-size: 13px; color: var(--text-secondary);"><b>Your Mission Objective:</b> Route inventory batches from Supplier Node A through Warehouse Node B/C, down to Market Node D. Achieve perfect Flow Balance conservation at the warehouses without breaking pipeline limits.</p>
+                    
+                    <div class="target-box">
+                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;">Strict Operational Targets</div>
+                        <ul style="font-size: 13px; padding-left: 18px; line-height: 1.4;">
+                            <li>Supplier Node A Production: <b>100 units</b></li>
+                            <li>Market Node D Target Demand: <b>100 units</b></li>
+                            <li>Intermediate Warehouse Node B/C Capacity: <b>Max 60 units per node</b></li>
+                        </ul>
+                    </div>
+
+                    <div class="node-network">
+                        <button class="node-btn" id="route1" onclick="toggleRoute(1)">Route via B (60 Units)</button>
+                        <button class="node-btn" id="route2" onclick="toggleRoute(2)">Route via C (40 Units)</button>
+                        <button class="node-btn" id="route3" onclick="toggleRoute(3)">Route directly A➔D (Invalid Bound)</button>
+                    </div>
+
+                    <div id="sim-alert" class="status-banner status-err">System Unbalanced: 0 / 100 units routed.</div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="glass-card" style="position: sticky; top: 74px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">Comprehension Audit</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 16px; border-radius: 14px; border: 1px solid var(--glass-border);">
+                            <span style="font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Total Transshipment Load</span>
+                            <div style="font-size: 32px; font-weight: 800; color: var(--accent); margin-top: 4px;" id="load-val">0 / 100</div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 16px; border-radius: 14px; border: 1px solid var(--glass-border);">
+                            <span style="font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Warehouse Conservation State</span>
+                            <div style="font-size: 14px; font-weight: 700; margin-top: 6px; color: #ff3b30;" id="conservation-lbl">Violated</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; font-size: 12px; color: var(--text-secondary); line-height: 1.4; border-top: 1px solid var(--glass-border); padding-top: 16px;">
+                    <p>Parameters validated under linear programming transshipment logic. Reference documentation: <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Asset ↗</a></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <script>
+        // INTERACTIVE ROUTING GAME ARCHITECTURE
+        let activeRoutes = { 1: false, 2: false, 3: false };
+
+        function toggleRoute(routeId) {
+            activeRoutes[routeId] = !activeRoutes[routeId];
+            
+            const btn = document.getElementById(`route${routeId}`);
+            if (activeRoutes[routeId]) {
+                btn.classList.add('selected');
+            } else {
+                btn.classList.remove('selected');
+            }
+
+            evaluateNetwork();
+        }
+
+        function evaluateNetwork() {
+            let currentTotalLoad = 0;
+            let overCapacity = false;
+
+            if (activeRoutes[1]) currentTotalLoad += 60;
+            if (activeRoutes[2]) currentTotalLoad += 40;
+            if (activeRoutes[3]) {
+                currentTotalLoad += 100;
+                overCapacity = true; // Simulating integer/structural boundary break
+            }
+
+            document.getElementById('load-val').innerText = `${currentTotalLoad} / 100`;
+            const alertBox = document.getElementById('sim-alert');
+            const consLabel = document.getElementById('conservation-lbl');
+
+            if (overCapacity) {
+                alertBox.innerText = "Error: Structural Boundary Broken. Direct A➔D path lacks transshipment authorization!";
+                alertBox.className = "status-banner status-err";
+                consLabel.innerText = "Violated";
+                consLabel.style.color = "#ff3b30";
+            } else if (currentTotalLoad === 100) {
+                alertBox.innerText = "✓ Success: Network Calibrated. Total Inflow matches Total Outflow flawlessly across nodes B & C.";
+                alertBox.className = "status-banner status-ok";
+                consLabel.innerText = "Balanced & Conserved";
+                consLabel.style.color = "#34c759";
+            } else {
+                alertBox.innerText = `System Unbalanced: ${currentTotalLoad} / 100 units routed. Destination targets unmet.`;
+                alertBox.className = "status-banner status-err";
+                consLabel.innerText = "Violated";
+                consLabel.style.color = "#ff3b30";
+            }
+        }
+
+        // GLOBAL APPLE DESIGN SYSTEMS
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('apple-theme', isDark ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('apple-theme') === 'dark') document.body.classList.add('dark');
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('apple-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.visibility = 'hidden', 300);
+        });
+    </script>
 </body>
 </html>
