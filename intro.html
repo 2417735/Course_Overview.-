@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALAM AL KAHAF | Trade & Management Science Portal</title>
+    <style>
+        :root {
+            /* iOS26 Liquid Glass Palette - Light Mode */
+            --liquid-bg: radial-gradient(circle at 0% 0%, #f3f7fa 0%, #e4efe9 50%, #dbe9f4 100%);
+            --glass-core: rgba(255, 255, 255, 0.35);
+            --glass-border: rgba(255, 255, 255, 0.55);
+            --glass-specular: rgba(255, 255, 255, 0.7);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --ios-accent: #0071e3;
+            --ios-accent-gradient: linear-gradient(135deg, #0071e3 0%, #34c759 100%);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04), inset 0 1px 1px rgba(255,255,255,0.6);
+            --blur-radius: 24px;
+        }
+
+        body.dark {
+            /* iOS26 Liquid Glass Palette - Dark Cyber Mode */
+            --liquid-bg: radial-gradient(circle at 0% 0%, #0c1122 0%, #07080d 50%, #0f1318 100%);
+            --glass-core: rgba(22, 22, 30, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-specular: rgba(255, 255, 255, 0.15);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --ios-accent: #2997ff;
+            --ios-accent-gradient: linear-gradient(135deg, #2997ff 0%, #30d158 100%);
+            --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0px rgba(255,255,255,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--liquid-bg);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: background 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* LIQUID FLUID BACKGROUND ORBS EFFECT */
+        .liquid-orb-1, .liquid-orb-2 {
+            position: fixed;
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            mix-blend-mode: multiply;
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        .liquid-orb-1 {
+            background: #9bd0ff;
+            top: -10%;
+            left: -10%;
+            body.dark & { background: #1a4275; opacity: 0.2; }
+        }
+        .liquid-orb-2 {
+            background: #baffc9;
+            bottom: -10%;
+            right: -10%;
+            body.dark & { background: #14472c; opacity: 0.15; }
+            animation-delay: -5s;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(0) scale(1) rotate(0deg); }
+            100% { transform: translateY(40px) scale(1.1) rotate(45deg); }
+        }
+
+        /* HEADER & GLOBAL LIGHTBAR BUTTON */
+        .system-topbar {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .theme-pill-toggle {
+            background: var(--glass-core);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            box-shadow: var(--glass-shadow);
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .theme-pill-toggle:hover {
+            transform: scale(1.04);
+            border-color: var(--glass-specular);
+        }
+
+        /* MAIN GLASS CHASSIS */
+        .main-portal-container {
+            width: 100%;
+            max-width: 780px;
+            margin: 10px auto;
+            padding: 0 24px;
+        }
+
+        .liquid-glass-card {
+            background: var(--glass-core);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            box-shadow: var(--glass-shadow);
+            border-radius: 32px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* GLOSS SHEEN APEX HIGHLIGHT */
+        .liquid-glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 40%;
+            background: linear-gradient(to bottom, var(--glass-specular) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* BIOMETRIC IDENTITY AVATAR */
+        .avatar-ring {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: var(--ios-accent-gradient);
+            padding: 3px;
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.15);
+        }
+
+        .avatar-internal {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--glass-core);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        /* PROFILE METADATA LABELS */
+        .student-name {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .student-id-tag {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ios-accent);
+            margin-bottom: 24px;
+        }
+
+        .divider-line {
+            width: 60px;
+            height: 4px;
+            background: var(--ios-accent-gradient);
+            border-radius: 2px;
+            margin: 0 auto 28px;
+        }
+
+        /* ENTRY COURSE BRIEFING TEXT */
+        .course-synopsis {
+            font-size: 17px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto 36px;
+            font-weight: 400;
+        }
+
+        /* FLOW PIPELINE CONNECTIVE NAVIGATION BUTTONS */
+        .pipeline-launcher {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .btn-ios-glass {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            padding: 18px 24px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            body.dark & { background: rgba(255, 255, 255, 0.03); }
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+
+        .btn-ios-glass:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.4);
+            body.dark & { background: rgba(255, 255, 255, 0.07); }
+            border-color: var(--ios-accent);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+
+        /* HIGH EMPHASIS DIRECT ACCESS ROUTE */
+        .btn-ios-accent {
+            background: var(--ios-accent-gradient);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.25);
+        }
+        .btn-ios-accent:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 113, 227, 0.35);
+        }
+
+        .chevron-arrow {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* TIER 4 DYNAMIC SUPPORTING FRAMEWORK FOOTER */
+        .framework-footer {
+            width: 100%;
+            max-width: 1100px;
+            margin: 40px auto 20px;
+            padding: 0 24px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .framework-footer a {
+            color: var(--ios-accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .framework-footer a:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <!-- LIQUID BACK-LAYER AGENTS -->
+    <div class="liquid-orb-1"></div>
+    <div class="liquid-orb-2"></div>
+
+    <!-- TIER 1 APP BAR CONTROLS -->
+    <header class="system-topbar">
+        <button class="theme-pill-toggle" onclick="toggleSystemTheme()">Switch Environment UI</button>
+    </header>
+
+    <!-- MAIN IDENTITY ENTRY PLATFORM -->
+    <main class="main-portal-container">
+        <div class="liquid-glass-card">
+            
+            <!-- BIOMETRIC SIGNALS -->
+            <div class="avatar-ring">
+                <div class="avatar-internal">AK</div>
+            </div>
+
+            <!-- PROFILE CORE DATA MATRIX -->
+            <h1 class="student-name">ALAM AL KAHAF</h1>
+            <p class="student-id-tag">Operations Workspace • ID: 24177375</p>
+            
+            <div class="divider-line"></div>
+
+            <!-- COURSE META VALUE PITCH -->
+            <p class="course-synopsis">
+                Welcome to the Trade & Management Science Interactive Engine Blueprint. This platform serves as a multi-tier guide demonstrating how algorithmic matrix functions automate real-world logistics parameters.
+            </p>
+
+            <!-- TIER 1 TO TIER 3 LOGICAL SYSTEM ROUTING CONNECTORS -->
+            <div class="pipeline-launcher">
+                <!-- LEADS DIRECTLY TO YOUR 10-FILE SPECIFIC PROJECT HUB GRID -->
+                <a href="concept.html" class="btn-ios-glass btn-ios-accent">
+                    <span>Enter Core Project Grid Hub</span>
+                    <span class="chevron-arrow">➔</span>
+                </a>
+                
+                <!-- IF YOU HAVE A GENERIC PRE-ENTRY COURSE DETAILS ESSAY LINK IT HERE -->
+                <a href="#" class="btn-ios-glass">
+                    <span>Explore Structural Course Syllabus</span>
+                    <span class="chevron-arrow">→</span>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- TIER 4 SUPPORTING DOCUMENT MATRIX HUB -->
+    <footer class="framework-footer">
+        <p>Architectural Node Ledger System • Lead Designer: ALAM AL KAHAF • <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank">View Strategic Syllabus Document Matrix ↗</a></p>
+    </footer>
+
+    <!-- LIQUID LIQUID GLASS INTERFACING SCRIPT ENGINE -->
+    <script>
+        function toggleSystemTheme() {
+            const turningDark = document.body.classList.toggle('dark');
+            localStorage.setItem('ios26-theme', turningDark ? 'dark' : 'light');
+        }
+
+        // Initialize persistent user preferences cache
+        if (localStorage.getItem('ios26-theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+    </script>
+</body>
+</html>
