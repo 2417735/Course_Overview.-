@@ -3,75 +3,527 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M/S Project 3 — Networks & TSP Engine</title>
+    <title>MS Lab III: Network Topology & Distance Minimization</title>
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-red: #ea4335;
-            --google-yellow: #fbbc05;
-            --google-green: #34a853;
-            --surface-bg: #ffffff;
-            --body-bg: #f8f9fa;
-            --text-main: #202124;
-            --text-sub: #5f6368;
-            --border-color: #dadce0;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent: #0071e3;
+            --accent-gradient: linear-gradient(135deg, #0071e3, #34c759);
+            --pill-active: #ffffff;
+            --card-success: rgba(52, 199, 89, 0.15);
+            --card-error: rgba(255, 59, 48, 0.15);
+            --blur-radius: 20px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--body-bg); color: var(--text-main); font-family: "Roboto", sans-serif; padding: 40px 20px; }
-        .google-container { max-width: 960px; margin: 0 auto; }
-        
-        .color-strip { display: flex; height: 4px; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
-        .strip-b { background: var(--google-blue); flex: 1; }
-        .strip-r { background: var(--google-red); flex: 1; }
-        .strip-y { background: var(--google-yellow); flex: 1; }
-        .strip-g { background: var(--google-green); flex: 1; }
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #0a0f1d 0%, #070708 100%);
+            --glass-bg: rgba(22, 22, 26, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --accent-gradient: linear-gradient(135deg, #2997ff, #30d158);
+            --pill-active: rgba(255, 255, 255, 0.12);
+            --card-success: rgba(48, 209, 88, 0.2);
+            --card-error: rgba(255, 69, 58, 0.2);
+        }
 
-        .project-card { background: var(--surface-bg); border: 1px solid var(--border-color); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 40px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); margin-bottom: 24px; }
-        .back-nav { display: inline-flex; align-items: center; color: var(--google-blue); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; }
-        .back-nav:hover { text-decoration: underline; }
-        
-        h1 { font-size: 32px; font-weight: 400; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
-        .project-meta { font-size: 14px; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
-        h2 { font-size: 20px; font-weight: 500; margin: 24px 0 12px 0; color: var(--google-blue); }
-        p { font-size: 15px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
-        
-        .network-box { background: #f1f3f4; border: 1px dashed var(--border-color); padding: 24px; border-radius: 8px; margin: 20px 0; }
-        .btn-action { background-color: var(--google-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 500; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-        .footer-note { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 40px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-top: 74px;
+            padding-bottom: 40px;
+            transition: background 0.4s ease;
+        }
+
+        /* APPLE NAVIGATION CHASSIS */
+        .apple-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 52px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: -0.02em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover { background: rgba(255, 255, 255, 0.1); }
+
+        .nav-item.active {
+            background: var(--pill-active);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 4px;
+            margin-left: 10px;
+        }
+
+        #apple-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-gradient);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(0,0,0,0.04);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) { .wrapper { grid-template-columns: 1fr; } }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* SIMULATOR CANVAS PANEL */
+        .map-container {
+            background: rgba(255, 255, 255, 0.6);
+            body.dark & { background: rgba(255, 255, 255, 0.03); }
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            position: relative;
+            height: 380px;
+            margin: 20px 0;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .map-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .city-node {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: var(--glass-bg);
+            border: 2px solid var(--text-primary);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .city-node.visited {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .city-node.start-node {
+            border-color: #34c759;
+            box-shadow: 0 0 10px rgba(52,199,89,0.5);
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .apple-btn {
+            background: var(--text-primary);
+            color: var(--bg-gradient);
+            border: none;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .apple-btn:hover { opacity: 0.9; }
+
+        .apple-btn.secondary {
+            background: rgba(0,0,0,0.05);
+            body.dark & { background: rgba(255,255,255,0.08); }
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .metrics-badge {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .preview-item {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+        .preview-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .btn-portal {
+            display: block;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 14px;
+            transition: opacity 0.2s;
+        }
+        .btn-portal:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 
-    <div class="google-container">
-        <a href="index.html" class="back-nav">← Back to Management Hub</a>
+    <div id="apple-loader"><div class="spinner"></div></div>
 
-        <div class="color-strip">
-            <div class="strip-b"></div>
-            <div class="strip-r"></div>
-            <div class="strip-y"></div>
-            <div class="strip-g"></div>
+    <!-- ANCHORED GLOBAL NAVIGATION LINKS -->
+    <nav class="apple-nav">
+        <div class="nav-container">
+            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-links">
+                <a href="https://2417735.github.io/Study_Cafe/" class="nav-item">Index Hub</a>
+                <a href="ms1.html" class="nav-item">MS 1</a>
+                <a href="ms2.html" class="nav-item">MS 2</a>
+                <a href="ms3.html" class="nav-item active">MS 3</a>
+                <a href="ms4.html" class="nav-item">MS 4</a>
+                <a href="ms5.html" class="nav-item">MS 5</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            </div>
         </div>
+    </nav>
 
-        <div class="project-card">
-            <span style="color: var(--google-blue); font-weight: 700; font-size: 12px; text-transform: uppercase;">M/S • Activity: Networks</span>
-            <h1 style="margin-top: 6px;">Traveling Salesperson Problem (TSP)</h1>
-            <div class="project-meta">Student ID: 2417735 • Combinatorial Network Workspace</div>
+    <div class="wrapper">
+        
+        <!-- COLUMN 1: INTERACTIVE ROUTE CANVAS DESIGN -->
+        <div>
+            <div class="glass-card">
+                <div style="text-transform: uppercase; font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 4px;">MS Lab Module III</div>
+                <h1>Traveling Salesperson Optimization</h1>
+                <p class="subtitle">Click node dots sequentially to plot a closed logistics pipeline loop. Avoid wasted mileage.</p>
 
-            <h2>1. Strategic Inquiries</h2>
-            <p>• What is the lowest cost with all available nodes?</p>
-            <p>• Are there more paths with the same cost?</p>
-            <p>• How can we find all possible paths of the lowest cost?</p>
+                <div class="map-container" id="map-box">
+                    <canvas class="map-canvas" id="routeCanvas"></canvas>
+                    <!-- Nodes will be injected here instantly dynamically -->
+                </div>
 
-            <h2>2. Interactive Matrix Solver</h2>
-            <div class="network-box">
-                <p style="font-family: monospace; color: var(--text-sub); margin-bottom: 15px;">// Matrix weight tables and array algorithms will be mapped here</p>
-                <button class="btn-action" onclick="alert('Network solution sweeps initialized.')">Compute Minimal Cost Path</button>
+                <div class="controls-row">
+                    <button class="apple-btn" onclick="triggerHeuristic()">Run Machine Heuristic</button>
+                    <button class="apple-btn secondary" onclick="resetSimulator()">Clear Route Map</button>
+                </div>
+
+                <div class="metrics-badge">
+                    <div>Your Sequence Chain: <b id="user-path-string">None</b></div>
+                    <div>Total Travel Distance: <b id="user-dist-val">0 km</b></div>
+                </div>
             </div>
         </div>
 
-        <div class="footer-note">Alam Al Kahaf • Management Science Laboratory Module</div>
+        <!-- COLUMN 2: ARCHIVE ARCHITECTURE PORTAL & STATS -->
+        <div>
+            <!-- READING CONCEPTS INTEGRATION PREVIEW -->
+            <div class="glass-card">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 14px;">📖 Conceptual Overview Vault</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Core theoretical concepts extracted directly from your structural TSP models:</p>
+                
+                <div class="preview-item">
+                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">I. Combinatorial Explosion</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">As new hubs are introduced, the possible sequence configurations grow at an unmanageable factorial rate.</p>
+                </div>
+
+                <div class="preview-item">
+                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">II. Hamiltonian Closed Cycles</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">A sequence condition requiring that every vertex point is intercepted exactly once prior to snapping back to origin.</p>
+                </div>
+
+                <div class="preview-item">
+                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">III. Nearest Neighbor Logic</h4>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">A greedy algorithmic heuristic that instantly selects the shortest immediate vector step to save computation resources.</p>
+                </div>
+
+                <a href="ms3read.html" class="btn-portal">Learn More (Open Reading Room) ➔</a>
+            </div>
+
+            <!-- COMPARATIVE EVALUATION MATRIX CARD -->
+            <div class="glass-card">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Logistics Efficiency Feed</h3>
+                
+                <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 12px;">
+                    <span style="font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Heuristic Benchmark Distance</span>
+                    <div style="font-size: 26px; font-weight: 800; color: #0071e3; margin-top: 2px;" id="heuristic-val">284 km</div>
+                </div>
+
+                <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; border-top: 1px solid var(--glass-border); padding-top: 12px;">
+                    <p>Asset Documentation File: <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Matrix Link ↗</a></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <script>
+        // System Coordinate Topology Mapping Setup
+        const cities = [
+            { id: 'A', x: 70,  y: 180 },
+            { id: 'B', x: 220, y: 80  },
+            { id: 'C', x: 420, y: 120 },
+            { id: 'D', x: 490, y: 280 },
+            { id: 'E', x: 280, y: 320 },
+            { id: 'F', x: 130, y: 260 }
+        ];
+
+        let userRoute = [];
+        let canvas, ctx;
+
+        function initMap() {
+            const container = document.getElementById('map-box');
+            canvas = document.getElementById('routeCanvas');
+            
+            // Adjust canvas to real structural pixel resolution bounds
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            ctx = canvas.getContext('2d');
+
+            // Inject node elements onto the field grid layout
+            cities.forEach((city, index) => {
+                const node = document.createElement('div');
+                node.className = `city-node ${index === 0 ? 'start-node' : ''}`;
+                node.id = `node-${city.id}`;
+                node.style.left = `${city.x}px`;
+                node.style.top = `${city.y}px`;
+                node.innerText = city.id;
+                node.onclick = () => selectNode(city.id);
+                container.appendChild(node);
+            });
+            drawMapEdges();
+        }
+
+        function selectNode(id) {
+            if (userRoute.includes(id)) {
+                // Allow closing the loop only if all nodes have been checked
+                if (id === userRoute[0] && userRoute.length === cities.length) {
+                    userRoute.push(id);
+                    document.getElementById(`node-${id}`).classList.add('visited');
+                    processMetrics();
+                }
+                return;
+            }
+            
+            if (userRoute.length === 0 || userRoute.length < cities.length) {
+                userRoute.push(id);
+                document.getElementById(`node-${id}`).classList.add('visited');
+                processMetrics();
+            }
+        }
+
+        function drawMapEdges() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Render background structural alignment mesh network guidelines
+            ctx.strokeStyle = document.body.classList.contains('dark') ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)';
+            ctx.lineWidth = 1;
+            for(let i=0; i<cities.length; i++) {
+                for(let j=i+1; j<cities.length; j++) {
+                    ctx.beginPath();
+                    ctx.moveTo(cities[i].x, cities[i].y);
+                    ctx.lineTo(cities[j].x, cities[j].y);
+                    ctx.stroke();
+                }
+            }
+
+            if (userRoute.length < 2) return;
+
+            // Draw active choice travel pipelines
+            ctx.strokeStyle = '#0071e3';
+            ctx.lineWidth = 3;
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            
+            let startCity = cities.find(c => c.id === userRoute[0]);
+            ctx.moveTo(startCity.x, startCity.y);
+
+            for (let i = 1; i < userRoute.length; i++) {
+                let nextCity = cities.find(c => c.id === userRoute[i]);
+                ctx.lineTo(nextCity.x, nextCity.y);
+            }
+            ctx.stroke();
+        }
+
+        function processMetrics() {
+            drawMapEdges();
+            document.getElementById('user-path-string').innerText = userRoute.join(' ➔ ');
+            
+            let totalDist = 0;
+            for(let i=0; i < userRoute.length - 1; i++) {
+                let c1 = cities.find(c => c.id === userRoute[i]);
+                let c2 = cities.find(c => c.id === userRoute[i+1]);
+                totalDist += Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
+            }
+            document.getElementById('user-dist-val').innerText = `${Math.round(totalDist)} km`;
+        }
+
+        function triggerHeuristic() {
+            // Immediate automated run executing structural Nearest Neighbor routing logic
+            let unvisited = [...cities];
+            let current = unvisited.shift(); // Start at Node A
+            let path = [current.id];
+            
+            while(unvisited.length > 0) {
+                unvisited.sort((a, b) => {
+                    let dA = Math.sqrt(Math.pow(current.x - a.x, 2) + Math.pow(current.y - a.y, 2));
+                    let dB = Math.sqrt(Math.pow(current.x - b.x, 2) + Math.pow(current.y - b.y, 2));
+                    return dA - dB;
+                });
+                current = unvisited.shift();
+                path.push(current.id);
+            }
+            path.push(path[0]); // Force home vector loop block
+
+            // Mirror calculated array onto operational canvas loop
+            resetSimulator();
+            path.forEach(id => {
+                userRoute.push(id);
+                document.getElementById(`node-${id}`).classList.add('visited');
+            });
+            processMetrics();
+        }
+
+        function resetSimulator() {
+            userRoute = [];
+            cities.forEach(c => {
+                document.getElementById(`node-${c.id}`).className = `city-node ${c.id === 'A' ? 'start-node' : ''}`;
+            });
+            processMetrics();
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('apple-theme', isDark ? 'dark' : 'light');
+            drawMapEdges();
+        }
+        if (localStorage.getItem('apple-theme') === 'dark') document.body.classList.add('dark');
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('apple-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.visibility = 'hidden', 300);
+            initMap();
+        });
+    </script>
 </body>
 </html>
