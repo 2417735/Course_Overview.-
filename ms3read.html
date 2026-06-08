@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Lab III: TSP Conceptual Vault</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent: #0071e3;
+            --accent-gradient: linear-gradient(135deg, #0071e3, #34c759);
+            --blur-radius: 20px;
+        }
+
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #0a0f1d 0%, #070708 100%);
+            --glass-bg: rgba(22, 22, 26, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --accent-gradient: linear-gradient(135deg, #2997ff, #30d158);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 80px 24px 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 28px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 6px;
+        }
+
+        p, li {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .highlight-box {
+            background: rgba(0, 113, 227, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .btn-back {
+            display: inline-block;
+            text-decoration: none;
+            background: var(--text-primary);
+            color: var(--bg-gradient);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-back:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1>Module III: Combinatorial Explosion & TSP</h1>
+            <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 24px;">The foundational concepts behind routing optimization models.</p>
+            
+            <h2>1. Problem Definition</h2>
+            <p>The Traveling Salesperson Problem seeks to minimize total cost, time, or distance when traversing a collection of network vertices (cities). The sequence must satisfy two uncompromising structural rules:</p>
+            <ul>
+                <li>Every node inside the network map configuration must be targeted exactly <b>once</b>.</li>
+                <li>The asset pipeline loop must terminate precisely at its starting point (forming a Hamiltonian Cycle).</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Mathematical Formulation:</strong> The number of possible distinct structural path combinations grows at a factorial rate of $(n-1)! / 2$ where $n$ represents the city quantity count.
+            </div>
+
+            <h2>2. Exact Solutions vs. Heuristics</h2>
+            <p>Because processing every permutation becomes impossible for real-world fleets, optimization splits into two branches:</p>
+            <ul>
+                <li><b>Brute-Force / Exact Algorithms:</b> Methodically checks every combination. Guarantees the absolute best path, but breaks down processing any layout past 25 coordinates.</li>
+                <li><b>Heuristics (The Greedy Approach):</b> Fast algorithms that apply logical shortcuts. The <i>Nearest Neighbor Heuristic</i> instantly selects the closest unvisited node. It might not yield the true absolute minimum, but it finishes instantly and gets remarkably close.</li>
+            </ul>
+
+            <h2>3. Real-World Fleet Logistics</h2>
+            <p>From optimizing cargo flight patterns across global continents to helping automated package sorting arms move across warehouses with zero wasted motion, solving TSP variations directly saves millions in operational overhead, carbon emissions, and driver transit fatigue.</p>
+            
+            <div style="margin-top: 32px;">
+                <a href="ms3.html" class="btn-back">← Enter Lab Simulator</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
