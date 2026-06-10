@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Project 2: Systems Thinking Matrix</title>
     <style>
-        /* Modern, Professional CSS Custom Properties (Mixed Design System) */
+        /* Modern, Professional Apple-Inspired CSS Custom Properties */
         :root {
             --bg-primary: #f5f5f7;
             --bg-secondary: rgba(255, 255, 255, 0.8);
@@ -13,7 +13,6 @@
             --text-body: #334155;    
             --text-secondary: #86868b;
             --accent-color: #34c759;   
-            --accent-hover: #28a745;   
             --border-color: rgba(0, 0, 0, 0.08);
             --card-radius: 20px;
             --blur: saturate(180%) blur(20px);
@@ -21,7 +20,6 @@
             --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
         }
 
-        /* Dark Mode Preferences */
         body.dark {
             --bg-primary: #000000;
             --bg-secondary: rgba(28, 28, 30, 0.8);
@@ -31,7 +29,6 @@
             --border-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* CSS Reset & Global Styling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: var(--bg-primary);
@@ -69,7 +66,6 @@
         .nav-links-group a:hover { color: var(--accent-color); }
         .nav-links-group a.active-page { color: var(--accent-color); font-weight: 700; }
 
-        /* Master Layout Structure */
         .main-header {
             max-width: 1200px;
             width: 100%;
@@ -87,7 +83,7 @@
         }
         h1 { font-size: 34px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
 
-        /* Two-Column Split-Screen Grid CSS Architecture */
+        /* Two-Column Layout */
         .app-container {
             max-width: 1200px;
             width: 100%;
@@ -107,46 +103,54 @@
         }
 
         h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
-        h3 { font-size: 16px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text-primary); }
-        p { margin-bottom: 14px; font-size: 15px; text-align: justify; }
-        ol, ul { margin-left: 20px; margin-bottom: 14px; font-size: 14.5px; }
+        h3 { font-size: 15px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text-primary); }
+        p { margin-bottom: 14px; font-size: 14.5px; text-align: justify; }
+        ul { margin-left: 20px; margin-bottom: 14px; font-size: 14px; }
         li { margin-bottom: 8px; }
 
-        /* PIPELINE / FLOW CODES */
-        .flow-diagram {
-            background: rgba(0,0,0,0.02);
-            padding: 16px;
+        /* Video Wrapper */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
             border-radius: 12px;
-            font-family: monospace;
-            font-size: 13px;
-            text-align: center;
-            margin: 16px 0;
-            color: var(--text-primary);
             border: 1px solid var(--border-color);
-            line-height: 1.4;
+            margin: 18px 0;
+            background: #000;
         }
-        body.dark .flow-diagram { background: rgba(255,255,255,0.03); }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
 
-        /* MATRIX METRICS TABLE */
-        table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
-        th, td { border-bottom: 1px solid var(--border-color); padding: 12px; text-align: left; }
-        th { color: var(--text-secondary); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
-        
-        /* SYSTEM STAT BADGES */
-        .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; margin-right: 6px; }
-        .badge-err { background: rgba(255,69,58,0.15); color: #ff453a; }
-        .badge-ok { background: rgba(48,209,88,0.15); color: #34c759; }
+        /* Callout Box */
+        .concept-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #ff453a;
+            padding: 20px;
+            border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            margin: 20px 0;
+        }
+        body.dark .concept-card { background-color: #1e293b; }
 
-        /* RESPONSIVE MEDIA QUERY */
+        /* Repository Presentation Links */
+        .repo-link-box {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(0,0,0,0.02);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            font-size: 13.5px;
+        }
+        body.dark .repo-link-box { background: rgba(255,255,255,0.02); }
+
+        table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13.5px; }
+        th, td { border-bottom: 1px solid var(--border-color); padding: 10px; text-align: left; }
+        th { color: var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+
         @media (max-width: 768px) {
-            body { padding-top: 70px; }
-            .app-container {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .column-card { padding: 24px; }
-            table { font-size: 12px; }
-            th, td { padding: 8px; }
+            .app-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -163,118 +167,97 @@
     </nav>
 
     <div class="main-header">
-        <span class="project-tag">Creative Activity • Project 2</span>
-        <h1>Systems Thinking & Economies of Scale</h1>
+        <span class="project-tag">Case Study Validation</span>
+        <h1>Smarter Scrubber Framework & Middleman Risks</h1>
     </div>
 
     <main class="app-container">
 
-        <!-- LEFT COLUMN: Defining Systems & Methodology Foundations -->
+        <!-- LEFT COLUMN: Smarter Scrubber Case Study Summary -->
         <section class="column-card">
-            <h2>1. System Framework Foundations</h2>
+            <h2>1. Case Study: The Smarter Scrubber Project</h2>
             <p>
-                A <strong>system</strong> is defined as a group of interconnected components functioning as a unified whole[cite: 4]. It is structurally driven by an explicit engine framework: <strong>Inputs</strong> enter the boundary, are altered by a operational <strong>process</strong>, and transform into measurable <strong>outputs</strong>—continually regulating the internal <strong>stocks and flows</strong> of resources[cite: 4].
+                Led by Destin Sandlin (Smarter Every Day) and John Youngblood (JJGeorge), this project outlines an ambitious experiment in reviving local industry, eliminating safety hazards, and prioritizing long-term durability.
             </p>
-            
-            <h3>Deconstructing System Paradigms (The Tree Model)</h3>
-            <p>
-                Systems thinking requires shifting focus from passive biological structures to dynamic functional processing feedback loops[cite: 4]:
-            </p>
-            
-            <ul style="list-style: none; margin-left: 0;">
-                <li style="margin-bottom: 16px;">
-                    <span class="badge badge-err">Anatomical Fallacy (X)</span> 
-                    <div class="flow-diagram" style="text-align: left; margin: 6px 0 4px 0;">Roots → Trunk → Branches → Leaves → Flower → Fruit</div>
-                    <p style="font-size: 13px; color: var(--text-secondary);">This linear list catalogs static physical assets rather than functional system interdependencies[cite: 4].</p>
-                </li>
-                <li>
-                    <span class="badge badge-ok">Functional System (O)</span> 
-                    <div class="flow-diagram" style="text-align: left; margin: 6px 0 4px 0;">Leaves (Light Input) → Photosynthesis (Process) → Energy Distribution to All Parts & Oxygen Release (Outputs)</div>
-                    <p style="font-size: 13px; color: var(--text-secondary);">This loop correctly models continuous resource flows, conversions, and outputs across system lines[cite: 4].</p>
-                </li>
-            </ul>
 
-            <h2 style="margin-top: 30px;">2. Methodology of Systems Thinking</h2>
-            <p>
-                Analyzing an industrial or economic engine through systems architecture relies on five core diagnostic milestones to map its behavior[cite: 4]:
-            </p>
-            <ol>
-                <li><strong>Define Boundaries:</strong> Isolating the active loop variables from chaotic external noise[cite: 4].</li>
-                <li><strong>Identify the Parts:</strong> Inventorying all physical assets, raw stocks, human elements, and info capitals[cite: 4].</li>
-                <li><strong>Identify Relationships:</strong> Pinpointing how modifying one asset node impacts downstream throughput capabilities[cite: 4].</li>
-                <li><strong>Identify Flows & Stocks:</strong> Quantifying resource accumulation pools and velocity channels[cite: 4].</li>
-                <li><strong>Identify the Function:</strong> Identifying the primary objective or baseline output target of the overall loop[cite: 4].</li>
-            </ol>
-        </section>
-
-        <!-- RIGHT COLUMN: Industrial Scale Loops & Balancing Constraints -->
-        <section class="column-card">
-            <h2>3. Simple Factory Loop Application</h2>
-            <p>
-                A microeconomic factory operates as a processing network that converts capital and resource throughput into profit[cite: 4]:
-            </p>
-            <div class="flow-diagram">
-                Materials → Equipment → Workers → IP → Product Output → Revenue/Profit → Raw Materials Reinjection
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/3ZTGwcHQfLY" title="I Tried To Make Something In America" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
-            <h3>Mathematical Model: Internal Economies of Scale</h3>
+            <h3>Primary Engineering & Strategic Objectives:</h3>
+            <ul>
+                <li><strong>100% Made-in-USA Supply Chain:</strong> Attempting to map the current state of domestic manufacturing, identifying lost industrial knowledge, and investing directly back into local toolmakers and suppliers.</li>
+                <li><strong>Eliminating the Wire-Bristle Hazard:</strong> Bypassing dangerous, cheap bristles that break off into food by designing a safe alternative using interlocking, food-safe, welded stainless steel chainmail backed by high-temperature silicone.</li>
+                <li><strong>Combatting the "Pandemic of Decay":</strong> Rejecting cheap, disposable consumer product trends by engineering a premium, robust, dishwasher-safe handle meant to last a lifetime.</li>
+            </ul>
+
+            <h3>The Systemic Reality (The Uphill Battle):</h3>
             <p>
-                By adjusting input ratios within fixed cost parameters, a system increases throughput velocity, lowering average per-unit costs[cite: 4]:
+                The project took over four years due to deep structural gaps in the domestic ecosystem. Destin discovered that many American injection molding companies no longer build their own tooling, routinely outsourcing mold creation overseas. To maintain a strictly domestic pipeline, they had to make the financially "illogical" choice to buy a CNC mill and cut the injection molds in-house themselves.
             </p>
-            
+        </section>
+
+        <!-- RIGHT COLUMN: Deep Dive into Middleman Risks -->
+        <section class="column-card">
+            <h2>2. Structural Analysis: Managing Middleman Risks</h2>
+            <p>
+                The friction experienced in the Smarter Scrubber project highlights why organizations attempt disintermediation. However, as outlined in the repository file <strong>Managing Middleman Risks.pptx</strong>, bypassing external networks introduces intense trade-offs.
+            </p>
+
+            <div class="concept-card">
+                <h3 style="margin-top:0; color:#ff453a;">The Anatomy of Middleman Risks</h3>
+                <p style="margin-top:8px;"><strong>Double Marginalization:</strong> Every layer of intermediation introduces accumulated markup layers, compressing margins and inflating final acquisition costs.</p>
+                <p style="margin-top:8px;"><strong>Opaque Value Chains:</strong> Intermediaries deliberately mask raw feedback loops and end-consumer relationships, creating an information blackout.</p>
+                <p style="margin-top:8px;"><strong>Agency Misalignment:</strong> Third-party brokers prioritize localized individual margins over long-term strategic alignments[cite: 5].</p>
+            </div>
+
+            <h2>3. The Disintermediation Strategic Trade-Off</h2>
+            <p>
+                According to data from <strong>Managing Middleman Risks.pptx</strong>, bypassing distribution layers yields up to a <strong>34% gross margin recovery</strong>[cite: 5]. Yet, eliminating middlemen shifts massive operational burdens directly onto internal operations[cite: 5]:
+            </p>
+
             <table>
                 <thead>
                     <tr>
-                        <th>System Configuration</th>
-                        <th>Labor</th>
-                        <th>Daily Output</th>
-                        <th>Daily Run Cost</th>
-                        <th>Per Unit Cost</th>
+                        <th>Strategic Dimension[cite: 5]</th>
+                        <th>Direct Sourcing (D2C)[cite: 5]</th>
+                        <th>Intermediated Sourcing[cite: 5]</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Baseline System (1 Machine)</strong></td>
-                        <td>5 Workers</td>
-                        <td>100 Products</td>
-                        <td>$1,000</td>
-                        <td><strong>$10.00</strong>[cite: 4]</td>
+                        <td><strong>Customer Relationship[cite: 5]</strong></td>
+                        <td>Direct & Unified[cite: 5]</td>
+                        <td>Siloed & Brokered[cite: 5]</td>
                     </tr>
                     <tr>
-                        <td><strong>Scaled System (5 Machines)</strong></td>
-                        <td>5 Workers</td>
-                        <td>500 Products</td>
-                        <td>$1,000</td>
-                        <td><strong style="color: var(--accent-color);">$2.00</strong>[cite: 4]</td>
+                        <td><strong>Operational Scalability[cite: 5]</strong></td>
+                        <td>High internal resource demand[cite: 5]</td>
+                        <td>Fast out-of-the-box scaling[cite: 5]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction Transparency[cite: 5]</strong></td>
+                        <td>100% Auditable[cite: 5]</td>
+                        <td>Hidden Fees[cite: 5]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supply Chain Resilience[cite: 5]</strong></td>
+                        <td>Direct liability & ownership[cite: 5]</td>
+                        <td>Buffered by external networks[cite: 5]</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2 style="margin-top: 26px;">4. Balancing Loops: Scaling Limits</h2>
-            <p>
-                Can this optimization continue forever? <strong>No.</strong>[cite: 4] Every system eventually encounters external balancing loops that impose real-world constraints on unchecked exponential growth[cite: 4]:
-            </p>
-            <ul>
-                <li>
-                    <strong>Demand Saturation:</strong> Expanding output beyond market absorption capacity causes finished goods to accumulate in inventory storage pools, dropping prices and halting production[cite: 4].
-                </li>
-                <li>
-                    <strong>Competitive Friction:</strong> High profit yields attract rival systems into the ecosystem, reducing market share and driving down resource availability[cite: 4].
-                </li>
-                <li>
-                    <strong>Regulatory Boundaries:</strong> Legal rules, emissions caps, labor laws, or antitrust constraints alter the underlying run-cost structure[cite: 4].
-                </li>
-                <li>
-                    <strong>Technological Obsolescence:</strong> External disruptive innovation can instantly render the entire internal factory loop outdated, breaking the reinjection cycle[cite: 4].
-                </li>
-            </ul>
+            <div class="repo-link-box">
+                <strong>Repository Resource Documentation:</strong><br>
+                For detailed risk mitigation strategies (including Hybrid Sourcing and Automated SLAs), review the complete executive presentation deck: 
+                <a href="./Managing Middleman Risks.pptx" style="color:#2563eb; font-weight:600; text-decoration:none;">Managing Middleman Risks.pptx</a>.
+            </div>
         </section>
 
     </main>
 
-    <!-- INTERACTIVE JS LOGIC -->
     <script>
-        // System Auto Dark Mode configuration mapping
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
             document.body.classList.add('dark'); 
         }
