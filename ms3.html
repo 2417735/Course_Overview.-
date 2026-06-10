@@ -17,6 +17,12 @@
             --card-success: rgba(52, 199, 89, 0.15);
             --card-error: rgba(255, 59, 48, 0.15);
             --blur-radius: 20px;
+            
+            /* Enhanced Theme Button Profiles */
+            --btn-bg-primary: #1d1d1f;
+            --btn-text-primary: #ffffff;
+            --btn-bg-secondary: rgba(0, 0, 0, 0.05);
+            --btn-border-secondary: rgba(0, 0, 0, 0.1);
         }
 
         body.dark {
@@ -30,6 +36,12 @@
             --pill-active: rgba(255, 255, 255, 0.12);
             --card-success: rgba(48, 209, 88, 0.2);
             --card-error: rgba(255, 69, 58, 0.2);
+            
+            /* Dark Theme Button Profiles Override */
+            --btn-bg-primary: #f5f5f7;
+            --btn-text-primary: #1d1d1f;
+            --btn-bg-secondary: rgba(255, 255, 255, 0.08);
+            --btn-border-secondary: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -180,8 +192,8 @@
 
         /* SIMULATOR CANVAS PANEL */
         .map-container {
-            background: rgba(255, 255, 255, 0.6);
-            body.dark & { background: rgba(255, 255, 255, 0.03); }
+            background: rgba(255, 255, 255, 0.4);
+            body.dark & { background: rgba(255, 255, 255, 0.02); }
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             position: relative;
@@ -234,24 +246,24 @@
             margin-top: 16px;
         }
 
+        /* Standardized Form Factor Button Classes */
         .apple-btn {
-            background: var(--text-primary);
-            color: var(--bg-gradient);
+            background: var(--btn-bg-primary);
+            color: var(--btn-text-primary);
             border: none;
             padding: 10px 18px;
             font-size: 13px;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background-color 0.2s, opacity 0.2s;
         }
         .apple-btn:hover { opacity: 0.9; }
 
         .apple-btn.secondary {
-            background: rgba(0,0,0,0.05);
-            body.dark & { background: rgba(255,255,255,0.08); }
+            background: var(--btn-bg-secondary);
             color: var(--text-primary);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--btn-border-secondary);
         }
 
         .metrics-badge {
@@ -292,7 +304,6 @@
 
     <div id="apple-loader"><div class="spinner"></div></div>
 
-    <!-- ANCHORED GLOBAL NAVIGATION LINKS -->
     <nav class="apple-nav">
         <div class="nav-container">
             <div class="nav-brand">Management Science Engine</div>
@@ -310,7 +321,6 @@
 
     <div class="wrapper">
         
-        <!-- COLUMN 1: INTERACTIVE ROUTE CANVAS DESIGN -->
         <div>
             <div class="glass-card">
                 <div style="text-transform: uppercase; font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 4px;">MS Lab Module III</div>
@@ -319,7 +329,6 @@
 
                 <div class="map-container" id="map-box">
                     <canvas class="map-canvas" id="routeCanvas"></canvas>
-                    <!-- Nodes will be injected here instantly dynamically -->
                 </div>
 
                 <div class="controls-row">
@@ -334,9 +343,7 @@
             </div>
         </div>
 
-        <!-- COLUMN 2: ARCHIVE ARCHITECTURE PORTAL & STATS -->
         <div>
-            <!-- READING CONCEPTS INTEGRATION PREVIEW -->
             <div class="glass-card">
                 <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 14px;">📖 Conceptual Overview Vault</h3>
                 <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Core theoretical concepts extracted directly from your structural TSP models:</p>
@@ -359,7 +366,6 @@
                 <a href="ms3read.html" class="btn-portal">Learn More (Open Reading Room) ➔</a>
             </div>
 
-            <!-- COMPARATIVE EVALUATION MATRIX CARD -->
             <div class="glass-card">
                 <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Logistics Efficiency Feed</h3>
                 
@@ -369,7 +375,7 @@
                 </div>
 
                 <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; border-top: 1px solid var(--glass-border); padding-top: 12px;">
-                    <p>Asset Documentation File: <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Matrix Link ↗</a></p>
+                    <p>Asset Documentation File: <a href="rdme.pdf" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Matrix Link ↗</a></p>
                 </div>
             </div>
         </div>
@@ -377,7 +383,6 @@
     </div>
 
     <script>
-        // System Coordinate Topology Mapping Setup
         const cities = [
             { id: 'A', x: 70,  y: 180 },
             { id: 'B', x: 220, y: 80  },
@@ -394,12 +399,10 @@
             const container = document.getElementById('map-box');
             canvas = document.getElementById('routeCanvas');
             
-            // Adjust canvas to real structural pixel resolution bounds
             canvas.width = container.clientWidth;
             canvas.height = container.clientHeight;
             ctx = canvas.getContext('2d');
 
-            // Inject node elements onto the field grid layout
             cities.forEach((city, index) => {
                 const node = document.createElement('div');
                 node.className = `city-node ${index === 0 ? 'start-node' : ''}`;
@@ -415,7 +418,6 @@
 
         function selectNode(id) {
             if (userRoute.includes(id)) {
-                // Allow closing the loop only if all nodes have been checked
                 if (id === userRoute[0] && userRoute.length === cities.length) {
                     userRoute.push(id);
                     document.getElementById(`node-${id}`).classList.add('visited');
@@ -434,7 +436,6 @@
         function drawMapEdges() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Render background structural alignment mesh network guidelines
             ctx.strokeStyle = document.body.classList.contains('dark') ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)';
             ctx.lineWidth = 1;
             for(let i=0; i<cities.length; i++) {
@@ -448,7 +449,6 @@
 
             if (userRoute.length < 2) return;
 
-            // Draw active choice travel pipelines
             ctx.strokeStyle = '#0071e3';
             ctx.lineWidth = 3;
             ctx.lineJoin = 'round';
@@ -478,9 +478,8 @@
         }
 
         function triggerHeuristic() {
-            // Immediate automated run executing structural Nearest Neighbor routing logic
             let unvisited = [...cities];
-            let current = unvisited.shift(); // Start at Node A
+            let current = unvisited.shift(); 
             let path = [current.id];
             
             while(unvisited.length > 0) {
@@ -492,9 +491,8 @@
                 current = unvisited.shift();
                 path.push(current.id);
             }
-            path.push(path[0]); // Force home vector loop block
+            path.push(path[0]); 
 
-            // Mirror calculated array onto operational canvas loop
             resetSimulator();
             path.forEach(id => {
                 userRoute.push(id);
