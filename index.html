@@ -116,44 +116,73 @@
         .mgmt-tag { background: rgba(134, 134, 139, 0.15); color: var(--text-secondary); }
 
         .course-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
-        .course-review-sub { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 12px; }
+        .course-review-sub { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 16px; }
 
-        /* Project Track Listing */
+        /* Project Track Listing with Subtitles */
         .project-track-list {
             list-style: none;
-            margin: 16px 0 24px 0;
+            margin: 16px 0 28px 0;
         }
         .project-track-list li {
-            font-size: 14px;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid var(--apple-border);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .project-track-list li:last-child { border-bottom: none; }
+        
+        .project-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
-        .project-track-list li:last-child { border-bottom: none; }
-        .project-num { font-weight: 700; color: var(--accent-trade); margin-right: 8px; }
+        .project-title { font-size: 14.5px; font-weight: 600; color: var(--text-primary); }
+        .project-num { font-weight: 700; color: var(--accent-trade); margin-right: 4px; }
         .project-status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: rgba(52, 211, 153, 0.15); color: #059669; }
+        
+        .project-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            padding-left: 4px;
+        }
 
-        /* Interactive Launchers */
+        /* Interactive Launchers Setup */
+        .button-action-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
         .btn-apple {
             display: inline-flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 8px;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
             padding: 12px 24px;
-            border-radius: 12px;
-            transition: all 0.2s ease;
-            width: 100%;
-            max-width: 220px;
+            border-radius: 14px;
+            transition: all 0.15s ease;
+            min-width: 190px;
         }
         .btn-apple-primary {
             background: var(--apple-btn-bg);
             color: var(--apple-btn-text);
         }
         .btn-apple-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        
+        .btn-apple-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-secondary);
+        }
+        .btn-apple-secondary:hover { background: rgba(0,0,0,0.03); }
+        body.dark .btn-apple-secondary:hover { background: rgba(255,255,255,0.05); }
 
         /* Management Science Locked Status Overlay */
         .locked-overlay {
@@ -208,6 +237,7 @@
         @media (max-width: 900px) {
             .hero-layout-grid { grid-template-columns: 1fr; gap: 30px; }
             body { padding: 24px 16px; }
+            .btn-apple { width: 100%; }
         }
     </style>
 </head>
@@ -237,33 +267,61 @@
                     </p>
                     
                     <ul class="project-track-list">
+                        <!-- Project 1 -->
                         <li>
-                            <span><span class="project-num">Project 1:</span> The Gravity Model of Trade (Friction Calculus)</span>
-                            <span class="project-status">Active Pipeline</span>
+                            <div class="project-header-row">
+                                <span class="project-title"><span class="project-num">Project 1:</span> The Gravity Model of Trade</span>
+                                <span class="project-status">Active Pipeline</span>
+                            </div>
+                            <div class="project-description">Reflects how economic mass and geographic distance calculate frictional drag on bilateral cross-border trade flows.</div>
                         </li>
+                        <!-- Project 2 -->
                         <li>
-                            <span><span class="project-num">Project 2:</span> Comparative Advantage Framework (Ricardo)</span>
-                            <span class="project-status">Active Pipeline</span>
+                            <div class="project-header-row">
+                                <span class="project-title"><span class="project-num">Project 2:</span> Comparative Advantage Framework</span>
+                                <span class="project-status">Active Pipeline</span>
+                            </div>
+                            <div class="project-description">Reflects Ricardian opportunity costs, productivity indicators, and why differences in technology drive mutual trade gains.</div>
                         </li>
+                        <!-- Project 3 -->
                         <li>
-                            <span><span class="project-num">Project 3:</span> Resource Endowments Matrix (Heckscher-Ohlin)</span>
-                            <span class="project-status">Active Pipeline</span>
+                            <div class="project-header-row">
+                                <span class="project-title"><span class="project-num">Project 3:</span> Resource Endowments Matrix</span>
+                                <span class="project-status">Active Pipeline</span>
+                            </div>
+                            <div class="project-description">Reflects Heckscher-Ohlin structures where countries export goods that intensively use locally abundant production factors.</div>
                         </li>
+                        <!-- Project 4 -->
                         <li>
-                            <span><span class="project-num">Project 4:</span> Deconstructing the Autarky Cascade Debate</span>
-                            <span class="project-status">Active Pipeline</span>
+                            <div class="project-header-row">
+                                <span class="project-title"><span class="project-num">Project 4:</span> Deconstructing the Autarky Cascade Debate</span>
+                                <span class="project-status">Active Pipeline</span>
+                            </div>
+                            <div class="project-description">Reflects a highly defensive debate examining the catastrophic, chain-reaction costs of cutting off open global trade networks.</div>
                         </li>
+                        <!-- Project 5 -->
                         <li>
-                            <span><span class="project-num">Project 5:</span> Systems Thinking & Industrial Scale Constraints</span>
-                            <span class="project-status">Active Pipeline</span>
+                            <div class="project-header-row">
+                                <span class="project-title"><span class="project-num">Project 5:</span> Systems Thinking & Industrial Scale Constraints</span>
+                                <span class="project-status">Active Pipeline</span>
+                            </div>
+                            <div class="project-description">Reflects the severe, real-world friction of reshoring manufacturing lines and avoiding double marginalization middleman risks.</div>
                         </li>
                     </ul>
                     
-                    <!-- Direct Sourcing to intro.html route -->
-                    <a href="intro.html" class="btn-apple btn-apple-primary">
-                        <span>Launch Course Intro</span>
-                        <span style="margin-left: 10px;">➔</span>
-                    </a>
+                    <!-- Action Row holding both important routes -->
+                    <div class="button-action-row">
+                        <a href="intro.html" class="btn-apple btn-apple-primary">
+                            <span>Launch Course Intro</span>
+                            <span>➔</span>
+                        </a>
+                        
+                        <!-- Restored Course Resources Portal Button -->
+                        <a href="vv.html" class="btn-apple btn-apple-secondary">
+                            <span>Course Resources</span>
+                            <span>📂</span>
+                        </a>
+                    </div>
                 </section>
 
                 <!-- Management Science Locked Section (Left Black/Pending Content) -->
