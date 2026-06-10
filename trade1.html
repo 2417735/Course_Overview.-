@@ -7,30 +7,28 @@
     <style>
         /* Modern, Professional CSS Custom Properties */
         :root {
-            --bg-primary: #f8fafc;
-            --bg-secondary: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-            --border-color: #e2e8f0;
-            --card-radius: 12px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg-primary: #f5f5f7;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent-color: #0071e3;
+            --accent-hover: #0077ed;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --card-radius: 20px;
+            --blur: saturate(180%) blur(20px);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
         }
 
         /* Dark Mode Preferences */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-primary: #0f172a;
-                --bg-secondary: #1e293b;
-                --text-primary: #f8fafc;
-                --text-secondary: #94a3b8;
-                --accent-color: #3b82f6;
-                --accent-hover: #60a5fa;
-                --border-color: #334155;
-            }
+        body.dark {
+            --bg-primary: #000000;
+            --bg-secondary: rgba(28, 28, 30, 0.8);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent-color: #2997ff;
+            --accent-hover: #40a0ff;
+            --border-color: rgba(255, 255, 255, 0.15);
         }
 
         /* CSS Reset & Global Styling */
@@ -40,57 +38,62 @@
             color: var(--text-primary);
             font-family: var(--font-stack);
             line-height: 1.6;
-            padding-bottom: 60px;
+            padding: 60px 24px;
+            display: flex;
+            justify-content: center;
         }
 
         /* Semantic Layout Containers */
         .nav-header {
-            position: sticky;
+            position: fixed;
             top: 0;
-            background-color: var(--bg-secondary);
+            width: 100%;
+            left: 0;
+            background: var(--bg-secondary);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
             border-bottom: 1px solid var(--border-color);
             z-index: 100;
-            padding: 1rem 2rem;
+            padding: 12px 24px;
         }
         .nav-container {
-            max-width: 1100px;
+            max-width: 1040px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .nav-brand { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); text-decoration: none; }
-        .nav-link { color: var(--accent-color); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .nav-brand { font-weight: 600; font-size: 13px; color: var(--text-primary); text-decoration: none; }
+        .nav-link { color: var(--accent-color); text-decoration: none; font-size: 13px; font-weight: 500; }
         .nav-link:hover { text-decoration: underline; }
 
-        .main-content {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin-top: 40px;
         }
 
         /* Portfolio Components */
         .project-tag {
-            display: inline-block;
-            background-color: rgba(37, 99, 233, 0.1);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             color: var(--accent-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
+            display: inline-block;
         }
 
-        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
-        h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
-        p { color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 1.05rem; text-align: justify; }
+        h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+        p { color: var(--text-secondary); margin-bottom: 14px; font-size: 15px; text-align: justify; }
 
         .section-card {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--card-radius);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            padding: 32px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow-sm);
         }
 
@@ -98,8 +101,8 @@
         .simulator-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 1.5rem;
+            gap: 24px;
+            margin-top: 16px;
         }
         @media (max-width: 768px) {
             .simulator-grid { grid-template-columns: 1fr; }
@@ -108,31 +111,32 @@
         .control-panel {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 16px;
         }
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 6px;
         }
-        label { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+        label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
         input[type="number"], select {
-            padding: 0.75rem;
+            padding: 12px;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 14px;
+            outline: none;
         }
         .calc-btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 0.85rem;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 14px;
             transition: background-color 0.2s;
         }
         .calc-btn:hover { background-color: var(--accent-hover); }
@@ -140,73 +144,100 @@
         .output-panel {
             background-color: var(--bg-primary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
         }
-        .output-value { font-size: 2.2rem; font-weight: 800; color: var(--accent-color); margin: 0.5rem 0; }
-        .output-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+        .output-value { font-size: 32px; font-weight: 800; color: var(--accent-color); margin: 8px 0; }
+        .output-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
 
         /* Data Table Styling */
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 1rem; }
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 16px; margin-bottom: 24px; }
         .data-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 14px;
         }
         .data-table th, .data-table td {
-            padding: 0.75rem 1rem;
+            padding: 12px;
             border-bottom: 1px solid var(--border-color);
         }
-        .data-table th { background-color: var(--bg-primary); font-weight: 600; }
+        .data-table th { background-color: var(--bg-primary); font-weight: 600; color: var(--text-primary); }
+        .data-table td { color: var(--text-secondary); }
+
+        /* Document Notes Images Layout */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        @media (max-width: 600px) {
+            .notes-grid { grid-template-columns: 1fr; }
+        }
+        .notes-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            overflow: hidden;
+        }
+        .notes-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+        }
 
         /* 3-Column Outcomes Layout */
         .outcomes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            gap: 16px;
+            margin-top: 16px;
         }
         @media (max-width: 768px) {
             .outcomes-grid { grid-template-columns: 1fr; }
         }
         .outcome-col {
             background-color: var(--bg-primary);
-            padding: 1.5rem;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
         }
-        .outcome-col h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--accent-color); }
-        .outcome-col ul { list-style-position: inside; margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.95rem; }
-        .outcome-col li { margin-bottom: 0.5rem; }
+        .outcome-col h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+        .outcome-col ul { list-style-position: inside; color: var(--text-secondary); font-size: 14px; }
+        .outcome-col li { margin-bottom: 6px; }
     </style>
 </head>
 <body>
 
     <nav class="nav-header">
         <div class="nav-container">
-            <a href="../index.html" class="nav-brand">Academic Portfolio</a>
-            <a href="../index.html" class="nav-link">← Back to Overview Hub</a>
+            <a href="index.html" class="nav-brand">Academic Portfolio</a>
+            <a href="intro.html" class="nav-link">← Back to Overview Hub</a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <span class="project-tag">Reading 1 • Macroeconomics</span>
-        <h1>The Gravity Model of International Trade</h1>
+    <div class="container">
+        <span class="project-tag">Reading Assignment 1 • Chapters 1 & 2</span>
+        <h1>World Trade Overview & The Gravity Model</h1>
 
-        <section class="section-card">
+        <div class="section-card">
             <h2>1. Concept Overview</h2>
             <p><strong>Inspiration & Context:</strong> This analysis was developed based on core reading assignments evaluating global macroeconomic interactions, trade-to-GDP indices, and geometric spatial market boundaries across sovereign nations.</p>
             <p><strong>Core Concept Demonstrated:</strong> The Gravity Model predicts bilateral trade flows by assuming that trade volume is directly proportional to the product of two countries' economic sizes (GDP) and inversely proportional to the geographical distance separating them.</p>
             <p><strong>Industry Relevancy:</strong> In global supply chain optimization and logistics management, this model dictates foreign direct investment (FDI) paths, multi-national distribution node layouts, and helps isolate hidden institutional trade frictions caused by regulatory non-tariff barriers or physical infrastructure limits.</p>
-        </section>
+        </div>
 
-        <section class="section-card">
+        <div class="section-card">
             <h2>2. Interactive Scenario Explorer Simulator</h2>
             <p>Adjust the domestic and foreign economic metrics below to instantly compute the expected trade flow index. Observe how physical structural limits drop trade velocity despite vast resource availability.</p>
             
@@ -228,24 +259,24 @@
                         <label for="tradeFriction">Trade Friction Coefficient (α)</label>
                         <select id="tradeFriction">
                             <option value="1.0" selected>Standard (1.0)</option>
-                            <option value="1.5">High Friction (1.5 - Strict Tariff / Border Controls)</option>
-                            <option value="0.7">Low Friction (0.7 - Free Trade Agreement Hub)</option>
+                            <option value="1.5">High Friction (1.5 - Strict Border Controls)</option>
+                            <option value="0.7">Low Friction (0.7 - Free Trade Bloc)</option>
                         </select>
                     </div>
-                    <button class="calc-btn" onclick="runGravityModel()">Execute Engine Engine</button>
+                    <button class="calc-btn" onclick="runGravityModel()">Execute Engine</button>
                 </div>
                 
                 <div class="output-panel">
                     <span class="output-label">Predicted Bilateral Trade Velocity</span>
                     <div class="output-value" id="tradeOutput">166.67</div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-top: 10px;">
+                    <p style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 10px;">
                         Formula Applied: <br><code style="font-family: monospace;">T = (GDP_A * GDP_B) / (Distance^α)</code>
                     </p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section-card">
+        <div class="section-card">
             <h2>3. Empirical Coursework Data Verification</h2>
             <p>The following dataset cross-references static parameters evaluated during my academic assignments to verify how historical distance factors scale relative trade volumes across changing partner structures.</p>
             
@@ -281,9 +312,25 @@
                     </tbody>
                 </table>
             </div>
-        </section>
 
-        <section class="section-card">
+            <h3>My Notes</h3>
+            <div class="notes-grid">
+                <div class="notes-card">
+                    <img src="trade1a.jpeg" alt="Course Notes Part A" class="notes-image" onerror="this.parentElement.style.display='none';">
+                </div>
+                <div class="notes-card">
+                    <img src="trade1b.jpeg" alt="Course Notes Part B" class="notes-image" onerror="this.parentElement.style.display='none';">
+                </div>
+                <div class="notes-card">
+                    <img src="trade1c.jpeg" alt="Course Notes Part C" class="notes-image" onerror="this.parentElement.style.display='none';">
+                </div>
+                <div class="notes-card">
+                    <img src="trade1d.jpeg" alt="Course Notes Part D" class="notes-image" onerror="this.parentElement.style.display='none';">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
             <h2>4. Applied Learning Synthesis</h2>
             
             <div class="outcomes-grid">
@@ -305,34 +352,33 @@
                 </div>
                 <div class="outcome-col">
                     <h3>Critical Reflection</h3>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-                        <strong>Challenge:</strong> Calibrating the trade friction coefficient manually felt abstract until cross-referenced with real regional boundary parameters. 
-                        <br><br>
-                        <strong>Application:</strong> This setup can immediately be integrated to run preliminary optimization checks before deploying full supply chain nodes or evaluating new supplier hubs.
+                    <p style="font-size: 13px; margin-top: 6px; color: var(--text-secondary);">
+                        Calibrating the trade friction coefficient manually felt abstract until cross-referenced with real regional boundary parameters. This setup can immediately be integrated to run preliminary optimization checks before deploying full supply chain nodes or evaluating new supplier hubs.
                     </p>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script>
+        // System Auto Dark Mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
+            document.body.classList.add('dark'); 
+        }
+
         function runGravityModel() {
-            // Get inputs
             const gdpA = parseFloat(document.getElementById('gdpHome').value);
             const gdpB = parseFloat(document.getElementById('gdpForeign').value);
             const dist = parseFloat(document.getElementById('distance').value);
             const alpha = parseFloat(document.getElementById('tradeFriction').value);
 
-            // Guard rails for calculations
             if (isNaN(gdpA) || isNaN(gdpB) || isNaN(dist) || dist <= 0) {
                 document.getElementById('tradeOutput').textContent = "Error";
                 return;
             }
 
-            // Execute Gravity Equation calculation: T = (Mass 1 * Mass 2) / (Distance ^ alpha)
             const tradeFlow = (gdpA * gdpB) / Math.pow(dist, alpha);
 
-            // Print format output
             document.getElementById('tradeOutput').textContent = tradeFlow.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
