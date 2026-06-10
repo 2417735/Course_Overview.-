@@ -48,17 +48,18 @@
             transition: background 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
         }
 
-        /* Top Utility Bar */
+        /* Top Utility Navigation Bar */
         .system-topbar { 
             width: 100%; 
-            max-width: 800px; 
+            max-width: 640px; 
             margin: 0 auto; 
-            padding: 24px; 
+            padding: 24px 24px 0 24px; 
             display: flex; 
-            justify-content: flex-end; 
+            justify-content: space-between; 
+            align-items: center;
         }
 
-        .icon-toggle { 
+        .icon-btn { 
             background: transparent;
             border: none;
             color: var(--text-primary);
@@ -69,18 +70,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
             transition: opacity 0.2s ease;
         }
-        .icon-toggle:hover {
+        .icon-btn:hover {
             opacity: 0.7;
         }
 
-        /* Content Container (Tailored perfectly for Mobile and Desktop layouts) */
+        /* Content Container */
         .main-portal-container { 
             width: 100%; 
             max-width: 640px; 
             margin: auto; 
-            padding: 0 24px; 
+            padding: 16px 24px; 
         }
 
         .apple-glass-card { 
@@ -143,10 +145,20 @@
             letter-spacing: -0.01em;
         }
 
-        /* Direct Route To intro.html Container */
+        /* Direct Buttons Setup (Stack on Mobile, Side-by-Side on Desktop) */
         .pipeline-launcher { 
-            max-width: 320px; 
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 400px; 
             margin: 0 auto; 
+        }
+
+        @media (min-width: 480px) {
+            .pipeline-launcher {
+                flex-direction: row;
+                justify-content: center;
+            }
         }
 
         .btn-apple { 
@@ -155,17 +167,28 @@
             justify-content: center; 
             gap: 8px;
             text-decoration: none; 
-            padding: 14px 28px; 
+            padding: 14px 24px; 
             border-radius: 24px; 
-            background: var(--apple-btn-bg); 
-            color: var(--apple-btn-text); 
             font-weight: 500; 
             font-size: 14px; 
             letter-spacing: -0.01em;
+            flex: 1;
             transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1); 
         }
+
+        .btn-apple-primary {
+            background: var(--apple-btn-bg); 
+            color: var(--apple-btn-text); 
+        }
+
+        .btn-apple-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-secondary);
+        }
+
         .btn-apple:hover { 
-            opacity: 0.9;
+            opacity: 0.85;
             transform: scale(1.01);
         }
         .btn-apple:active {
@@ -191,8 +214,12 @@
 </head>
 <body>
 
+    <!-- TOP NAVIGATION MATRIX -->
     <header class="system-topbar">
-        <button class="icon-toggle" onclick="toggleSystemTheme()" id="themeBtn" aria-label="Toggle Environment">🌓</button>
+        <!-- Home Button pointing right back to index.html -->
+        <a href="index.html" class="icon-btn" aria-label="Home">🏠</a>
+        <!-- Dark Mode Toggle Icon -->
+        <button class="icon-btn" onclick="toggleSystemTheme()" id="themeBtn" aria-label="Toggle Environment">🌓</button>
     </header>
 
     <main class="main-portal-container">
@@ -207,10 +234,16 @@
             </p>
             
             <div class="pipeline-launcher">
-                <!-- Connects directly to intro.html -->
-                <a href="intro.html" class="btn-apple">
-                    <span>Explore Course Projects & Modules</span>
+                <!-- Button A: Links to intro.html -->
+                <a href="intro.html" class="btn-apple btn-apple-primary">
+                    <span>Explore Projects</span>
                     <span>➔</span>
+                </a>
+                
+                <!-- Button B: Links directly to your local vv.html resources -->
+                <a href="vv.html" class="btn-apple btn-apple-secondary">
+                    <span>Course Resources</span>
+                    <span>📂</span>
                 </a>
             </div>
         </div>
@@ -225,7 +258,6 @@
             const turningDark = document.body.classList.toggle('dark');
             localStorage.setItem('apple-premium-theme', turningDark ? 'dark' : 'light');
         }
-        // Save choice preference natively
         if (localStorage.getItem('apple-premium-theme') === 'dark') {
             document.body.classList.add('dark');
         }
