@@ -164,7 +164,7 @@
             margin-top: 2px;
         }
 
-        /* Dynamic Live Scoreboard/Dashboard Grid */
+        /* Live Scoreboard Grid */
         .live-dashboard {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -195,7 +195,7 @@
             color: var(--text-primary);
         }
 
-        /* Visual Decision Tracker Ribbon Bar */
+        /* History Ribbon */
         .decision-history-ribbon {
             background: var(--apple-bg);
             border: 1px solid var(--apple-border);
@@ -235,14 +235,14 @@
             font-size: 10px;
         }
 
-        /* Video Preview Component Elements */
+        /* Video Link Preview Component Elements */
         .video-resource-card {
             background: var(--apple-bg);
             border: 1px solid var(--apple-border);
             border-radius: 14px;
             overflow: hidden;
             margin-top: 10px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             text-decoration: none;
             display: block;
             transition: transform 0.2s ease, border-color 0.2s ease;
@@ -254,7 +254,7 @@
         }
 
         .video-thumbnail-placeholder {
-            background: linear-gradient(135deg, #ff004c 0%, #1d1d1f 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             height: 140px;
             display: flex;
             align-items: center;
@@ -272,7 +272,7 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            color: #ff004c;
+            color: #1e3c72;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: transform 0.2s ease;
         }
@@ -310,7 +310,121 @@
             color: var(--text-secondary);
         }
 
-        /* Simulator Interactive Screen Area */
+        /* --- AUDIO PLAYER MODULE --- */
+        .audio-suite-panel {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--apple-border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        body.dark .audio-suite-panel {
+            background: rgba(28, 28, 30, 0.4);
+        }
+
+        .audio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .audio-title-block h5 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .audio-title-block p {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .audio-controls-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .audio-btn {
+            background: var(--apple-card);
+            border: 1px solid var(--apple-border);
+            color: var(--text-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.05);
+            border-color: var(--apple-accent);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--apple-border);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--apple-accent);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Success Suggestion Banner */
+        .success-audio-callout {
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.15) 0%, rgba(0, 113, 227, 0.1) 100%);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .success-audio-callout h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--color-success);
+            margin-bottom: 2px;
+        }
+
+        .success-audio-callout p {
+            font-size: 12px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Simulator Terminal Screen Workspace */
         .simulator-display {
             background: var(--apple-bg);
             border: 1px solid var(--apple-border);
@@ -351,7 +465,7 @@
             margin-bottom: 28px;
         }
 
-        /* Branching Layout Options */
+        /* Branch Buttons Options Stack */
         .options-stack {
             display: flex;
             flex-direction: column;
@@ -389,7 +503,7 @@
             color: var(--apple-accent);
         }
 
-        /* Reset & Utility Controls */
+        /* Utility Tray */
         .action-tray {
             display: flex;
             justify-content: space-between;
@@ -420,7 +534,7 @@
             color: var(--apple-accent);
         }
 
-        /* Group Rubric Assignment Sidebar Layout */
+        /* Rubric Panel Elements */
         .rubric-list {
             display: flex;
             flex-direction: column;
@@ -461,6 +575,11 @@
         .status-badge.green { background: rgba(52, 199, 89, 0.1); color: var(--color-success); }
         .status-badge.orange { background: rgba(255, 149, 0, 0.1); color: var(--color-warning); }
         .status-badge.red { background: rgba(255, 59, 48, 0.1); color: var(--color-danger); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         footer {
             text-align: center;
@@ -517,6 +636,11 @@
                 <span class="history-node-pill">Root</span>
             </div>
 
+            <div class="success-audio-callout" id="completionAudioBanner">
+                <h4>🎉 Matrix Architecture Successfully Built!</h4>
+                <p>You have navigated all operational dependencies safely. Excellent strategy work. Now that you've finished, unwind and listen to the ambient audio track in the right panel.</p>
+            </div>
+
             <div class="simulator-display" id="nodeDisplayBox">
                 <div class="node-level-tag" id="nodeLevel">Level 0</div>
                 <h2 class="node-title" id="nodeTitle">Loading Node...</h2>
@@ -549,17 +673,42 @@
                 <p>Visualizing Machine Learning Framework Foundations</p>
             </div>
 
-            <a href="https://www.youtube.com/watch?v=_L39rN6gz7Y" target="_blank" class="video-resource-card">
+            <a href="https://www.youtube.com/watch?v=9IVTOh0TkkQ&list=RD9IVTOh0TkkQ&start_radio=1" target="_blank" class="video-resource-card">
                 <div class="video-thumbnail-placeholder">
                     <div class="video-play-btn">▶</div>
-                    <div class="video-duration-badge">17:11</div>
-                    <div style="position: absolute; top: 12px; left: 12px; font-weight: 800; font-size: 11px; tracking: 0.05em; text-transform: uppercase; background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px;">StatQuest</div>
+                    <div class="video-duration-badge">LIVE</div>
+                    <div style="position: absolute; top: 12px; left: 12px; font-weight: 800; font-size: 11px; tracking: 0.05em; text-transform: uppercase; background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px;">Stream Link</div>
                 </div>
                 <div class="video-card-meta">
-                    <h4>Decision and Classification Trees, Clearly Explained!!!</h4>
-                    <p>Learn how nodes split data, calculate impurities via Gini metrics, and structure crisp sequential leaf parameters.</p>
+                    <h4>Operational Study Stream Session</h4>
+                    <p>Click here to launch your visual workspace resource matrix layer in an external browser tab layout.</p>
                 </div>
             </a>
+
+            <div class="panel-header" style="margin-bottom: 8px;">
+                <h2>Lab Companion Audio</h2>
+                <p>Background Study Stream</p>
+            </div>
+            
+            <div class="audio-suite-panel">
+                <audio id="labAudioEngine" src="aud.mp3" loop></audio>
+                
+                <div class="audio-header">
+                    <div class="audio-title-block">
+                        <h5 id="audioTrackName">Lo-fi Study Session</h5>
+                        <p id="audioTrackStatus">Paused • aud.mp3</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=9IVTOh0TkkQ&list=RD9IVTOh0TkkQ&start_radio=1" target="_blank" style="font-size: 11px; color: var(--apple-accent); text-decoration: none; font-weight: 500;">Open External ↗</a>
+                </div>
+
+                <div class="audio-controls-row">
+                    <button class="audio-btn" id="audioPlayPauseBtn" onclick="toggleAudioPlayback()" aria-label="Play or Pause">▶</button>
+                    <button class="audio-btn" id="audioMuteBtn" onclick="toggleAudioMute()" aria-label="Mute">🔊</button>
+                    <div class="volume-container">
+                        <input type="range" class="volume-slider" id="audioVolumeSlider" min="0" max="1" step="0.05" value="0.7" oninput="adjustAudioVolume(this.value)" aria-label="Volume Slider">
+                    </div>
+                </div>
+            </div>
 
             <div class="panel-header" style="margin-bottom: 16px;">
                 <h2>Tree Construction Tracker</h2>
@@ -827,7 +976,7 @@
             h_l10_fail: { level: 10, title: "💀 Terminal State: Bank Receivership", short: "End", desc: "Unmanaged compounding trade-offs completely exhausted your capital and operational metrics. Institutional liquidators seize the physical real estate assets at auction.", branches: [] }
         };
 
-        // --- DATA DICTIONARY 2: ORIGINAL SCENARIO 3 TECH PRODUCT LAUNCH ---
+        // --- DATA DICTIONARY 2: SCENARIO 3 TECH PRODUCT LAUNCH ---
         const techTree = {
             root: {
                 level: 0, title: "Viral Demand Spike", short: "Start", desc: "Orders explode by 800% globally following an organic celebrity mention. Supply capacity cannot survive past 48 hours. Choose your architecture path.",
@@ -918,6 +1067,12 @@
         let currentPathStack = ['root'];
         let activeDataMap = hotelTree;
 
+        // HTML5 Audio Components Setup
+        const audioEngine = document.getElementById('labAudioEngine');
+        const playPauseBtn = document.getElementById('audioPlayPauseBtn');
+        const muteBtn = document.getElementById('audioMuteBtn');
+        const audioStatusText = document.getElementById('audioTrackStatus');
+
         function updateScreenLabels() {
             if (currentContext === 'hotel') {
                 document.getElementById('engineTitle').innerText = "Hotel Operations Sandbox";
@@ -951,11 +1106,15 @@
             resetToRoot();
         }
 
+        function resetToRoot() {
+            currentPathStack = ['root'];
+            drawNodeState('root');
+        }
+
         function drawNodeState(nodeKey) {
             const node = activeDataMap[nodeKey];
             if (!node) return;
 
-            // Compute dynamic metric impacts based on the chosen path
             let runningM1 = activeDataMap.root.m1;
             let runningM2 = activeDataMap.root.m2;
             let runningM3 = activeDataMap.root.m3;
@@ -971,7 +1130,6 @@
                 }
             });
 
-            // Enforce metric constraints
             if (node === activeDataMap.root) {
                 runningM1 = node.m1; runningM2 = node.m2; runningM3 = node.m3; runningM4 = node.m4;
             }
@@ -979,16 +1137,13 @@
             if (runningM3 < 0) runningM3 = 0; if (runningM3 > 100) runningM3 = 100;
             if (runningM4 < 0) runningM4 = 0; if (runningM4 > 100) runningM4 = 100;
 
-            // Render Dashboard Values
             document.getElementById('val-m1').innerText = `$${runningM1.toLocaleString()}`;
             document.getElementById('val-m2').innerText = `${runningM2}%`;
             document.getElementById('val-m3').innerText = `${runningM3}%`;
             document.getElementById('val-m4').innerText = `${runningM4}%`;
 
-            // Redraw Visual History Ribbon Bar
             renderHistoryRibbon();
 
-            // Check for System Failures
             let failureTriggered = false;
             let failureMessage = "";
 
@@ -997,7 +1152,7 @@
             else if (runningM3 <= 0) { failureTriggered = true; failureMessage = "Regulatory/Asset Breakdown (Quality ≤ 0). Closure ordered."; }
             else if (runningM4 >= 100) { failureTriggered = true; failureMessage = "Human Capital Strike (Burnout ≥ 100%). Labor abandoned the enterprise."; }
 
-            // Render Node Details
+            document.getElementById('completionAudioBanner').style.display = 'none';
             document.getElementById('nodeLevel').innerText = `Level ${node.level} • ${node.branches.length === 0 ? 'Terminal State' : 'Intermediate Node'}`;
             
             if (failureTriggered && node.level !== 5 && node.level !== 10) {
@@ -1028,6 +1183,9 @@
 
             if (node.branches.length === 0) {
                 container.innerHTML = `<div style="padding: 14px; background: rgba(52,199,89,0.1); border: 1px solid var(--color-success); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--color-success);">🎯 Terminal Node Verified. Consequence Path Evaluation Matrix Complete.</div>`;
+                if (!failureTriggered) {
+                    document.getElementById('completionAudioBanner').style.display = 'block';
+                }
             }
 
             updateRubricUi(node.level, false);
@@ -1061,11 +1219,6 @@
                 const previousNodeKey = currentPathStack[currentPathStack.length - 1];
                 drawNodeState(previousNodeKey);
             }
-        }
-
-        function resetCurrentTree() {
-            currentPathStack = ['root'];
-            drawNodeState('root');
         }
 
         function updateRubricUi(level, failed) {
@@ -1102,17 +1255,49 @@
             }
         }
 
+        // --- AUDIO ENGINE LOGIC SUITE ---
+        function toggleAudioPlayback() {
+            if (audioEngine.paused) {
+                audioEngine.play().then(() => {
+                    playPauseBtn.innerText = "⏸";
+                    audioStatusText.innerText = "Playing Now... • aud.mp3";
+                }).catch(err => {
+                    console.log("Audio target note:", err);
+                    audioStatusText.innerText = "Error locating 'aud.mp3'";
+                });
+            } else {
+                audioEngine.pause();
+                playPauseBtn.innerText = "▶";
+                audioStatusText.innerText = "Paused • aud.mp3";
+            }
+        }
+
+        function toggleAudioMute() {
+            audioEngine.muted = !audioEngine.muted;
+            if (audioEngine.muted) {
+                muteBtn.innerText = "🔇";
+                muteBtn.style.borderColor = "var(--color-danger)";
+            } else {
+                muteBtn.innerText = "🔊";
+                muteBtn.style.borderColor = "var(--apple-border)";
+            }
+        }
+
+        function adjustAudioVolume(volumeValue) {
+            audioEngine.volume = volumeValue;
+        }
+
         function toggleLocalTheme() {
             const isDark = document.body.classList.toggle('dark');
             document.documentElement.classList.toggle('dark', isDark);
             localStorage.setItem('apple-premium-theme', isDark ? 'dark' : 'light');
         }
 
-        // Window Initialization Hook
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('apple-premium-theme') === 'dark') {
                 document.body.classList.add('dark');
             }
+            audioEngine.volume = document.getElementById('audioVolumeSlider').value;
             updateScreenLabels();
             drawNodeState('root');
         });
