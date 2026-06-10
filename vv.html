@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Resources | International Trade & Management Science</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --apple-bg: #f5f5f7;
+            --apple-card: rgba(255, 255, 255, 0.8);
+            --apple-border: rgba(0, 0, 0, 0.08);
+            --text-title: #1d1d1f;
+            --text-body: #6e6e73;
+            --apple-blue: #0071e3;
+            --pencil-graphite: #424245;
+            --radius-pro: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--apple-bg);
+            color: var(--text-title);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION LAYOUT --- */
+        .glass-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 52px;
+            background: rgba(245, 245, 247, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--apple-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .nav-left-home {
+            text-decoration: none;
+            font-size: 20px;
+            color: var(--text-title);
+            transition: transform 0.2s;
+        }
+        .nav-left-home:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-right-scroll {
+            background: var(--text-title);
+            color: var(--apple-bg);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .nav-right-scroll:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* --- VERTICAL 50/50 SPLIT HERO COMPONENT --- */
+        .split-hero-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 52px;
+            position: relative;
+            border-bottom: 1px solid var(--apple-border);
+        }
+
+        .split-side {
+            width: 50%;
+            padding: 80px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+        }
+
+        .left-trade {
+            background-color: #ffffff;
+        }
+
+        .right-science {
+            background-color: #fafafa;
+        }
+
+        .discipline-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-body);
+            margin-bottom: 12px;
+        }
+
+        .academic-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-title);
+            margin-bottom: 24px;
+        }
+
+        /* --- REALISTIC HANDWRITTEN STUDY NOTES LAYER --- */
+        .handwritten-notebook {
+            background: rgba(253, 253, 251, 0.9);
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.02);
+            border-radius: var(--radius-pro);
+            padding: 24px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .handwritten-notebook::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(255, 0, 0, 0.15); /* Soft margins notebook line */
+        }
+
+        .note-paragraph {
+            font-family: 'Caveat', cursive;
+            font-size: 21px;
+            line-height: 1.4;
+            color: var(--pencil-graphite);
+            padding-left: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* --- THE CENTER DIVIDER PENCIL ARTWORK --- */
+        .center-pencil-divider {
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            left: 50%;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.02), var(--apple-border) 20%, var(--apple-border) 80%, rgba(0,0,0,0.02));
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .pencil-illustration {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            opacity: 0.12;
+            filter: grayscale(1);
+            user-select: none;
+            animation: lightFloat 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes lightFloat {
+            0% { transform: translate(-50%, -46%); }
+            100% { transform: translate(-50%, -54%); }
+        }
+
+        /* --- SECTION: MATERIALS & NEUROLOGY --- */
+        .materials-section {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        .materials-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .materials-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .materials-header p {
+            font-size: 16px;
+            color: var(--text-body);
+        }
+
+        .prose-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .prose-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .prose-card {
+            background: #ffffff;
+            border: 1px solid var(--apple-border);
+            border-radius: var(--radius-pro);
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.01);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .prose-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.04);
+        }
+
+        .prose-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prose-card p {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-body);
+        }
+
+        /* Handwritten blockquote */
+        .philosophical-quote {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #ffffff, #fafafa);
+            border: 1px dashed var(--apple-border);
+            border-radius: var(--radius-pro);
+            padding: 32px;
+            text-align: center;
+        }
+
+        .philosophical-quote p {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            color: var(--pencil-graphite);
+            line-height: 1.4;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            border-top: 1px solid var(--apple-border);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-body);
+        }
+
+        /* --- MOBILE SCREEN ADAPTATIONS (RESPONSIVE) --- */
+        @media (max-width: 768px) {
+            .split-hero-container {
+                flex-direction: column;
+            }
+            .split-side {
+                width: 100%;
+                min-height: auto;
+                padding: 60px 20px;
+            }
+            .center-pencil-divider {
+                display: none; /* Hide vertical rule on narrow phone dimensions */
+            }
+            .academic-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="glass-nav">
+        <a href="index.html" class="nav-left-home" title="Return Home">🏠</a>
+        <button class="nav-right-scroll" onclick="document.getElementById('materials').scrollIntoView();">Course Files & Materials</button>
+    </nav>
+
+    <div class="split-hero-container">
+        
+        <div class="center-pencil-divider"></div>
+        <div class="pencil-illustration">✏️</div>
+
+        <section class="split-side left-trade">
+            <span class="discipline-tag">Track Alpha</span>
+            <h1 class="academic-title">International Trade</h1>
+            
+            <div class="handwritten-notebook">
+                <p class="note-paragraph">• Global supply lines are fragile. When a country imposes heavy import tariffs, it directly shifts consumer prices home.</p>
+                <p class="note-paragraph">• Comparative Advantage implies specialized trade yields a net positive output instead of forced autarky isolationism.</p>
+                <p class="note-paragraph">• Currencies act like standard weights—they fluctuate constantly based on micro-demand indicators across global trading hubs.</p>
+            </div>
+        </section>
+
+        <section class="split-side right-science">
+            <span class="discipline-tag">Track Beta</span>
+            <h1 class="academic-title">Management Science</h1>
+            
+            <div class="handwritten-notebook">
+                <p class="note-paragraph">• Linear programming models require an objective equation, typically maximizing revenue windows or minimizing total variable cost.</p>
+                <p class="note-paragraph">• Network routing charts help determine shortest-path transits, keeping marine freight costs at structural minimum values.</p>
+                <p class="note-paragraph">• Stochastic modeling accounts for unexpected market variance—ensuring operations do not freeze under pressure.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <main class="materials-section" id="materials">
+        
+        <div class="materials-header">
+            <h2>The Instrument of Thought</h2>
+            <p>Why tactile methods matter in high-level analytical business tracks.</p>
+        </div>
+
+        <div class="prose-grid">
+            
+            <div class="prose-card">
+                <h3><span>🇯🇵</span> Tombow Premium Graphite</h3>
+                <p>
+                    Tombow pencils (such as the legendary Mono 100) are globally appreciated for their high-density graphite mix. For student mathematicians, they offer an ultra-smooth gliding feel on paper, making long formulation reviews comfortable without graphite flaking or core breaking under rapid drawing strides.
+                </p>
+            </div>
+
+            <div class="prose-card">
+                <h3><span>🧠</span> Effort-Based Learning</h3>
+                <p>
+                    Writing long complex linear charts with traditional pencils forces an intentional physical pacing. Unlike typing instantly onto a cold plastic keyboard, manually sketching lines slows your thought pipeline down just enough to actively trace logic flows and build cognitive permanence.
+                </p>
+            </div>
+
+            <div class="prose-card">
+                <h3><span>🎯</span> Deep Focus & Memory</h3>
+                <p>
+                    The physical sensation of friction on a paper pad triggers tactile neural feedback networks. Studies confirm that hand-drawing flowcharts or structural algorithms increases deep focus time, avoids phone pop-up distractions, and significantly improves memory retention.
+                </p>
+            </div>
+
+            <div class="prose-card">
+                <h3><span>📈</span> Discipline & Gradual Skill</h3>
+                <p>
+                    Pencil lead wears down gradually and requires regular sharpening—a beautiful physical metaphor for sharpening your academic focus. It rewards continuous patience, steady practice, and accepts that mistakes can be erased cleanly while moving forward.
+                </p>
+            </div>
+
+            <div class="philosophical-quote">
+                <p>"To optimize a complex global supply line with Management Science, one must first learn to think deeply. The absolute simplest tool—a pencil on white paper—remains the fastest way to clear system noise and isolate core variables."</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>Resource Matrix Module &bull; ALAM AL KAHAF &bull; Academic Ledger 2026</p>
+    </footer>
+
+</body>
+</html>
