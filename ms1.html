@@ -3,298 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Science | Lab I: Pizza Optimization Engine</title>
+    <title>MS Lab I: Pizza Optimization Engine</title>
     <style>
         :root {
-            --apple-bg: #f5f5f7;
-            --apple-card: #ffffff;
-            --apple-border: rgba(0, 0, 0, 0.08);
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.4);
             --text-primary: #1d1d1f;
             --text-secondary: #6e6e73;
-            --apple-btn-bg: #0071e3;
-            --apple-btn-text: #ffffff;
-            --apple-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            --accent-blue: #0071e3;
-            --accent-green: #34c759;
-            --accent-red: #ff3b30;
+            --accent: #0071e3;
+            --accent-gradient: linear-gradient(135deg, #ff2d55, #ff9500);
+            --pill-active: #ffffff;
+            --blur-radius: 20px;
         }
 
         body.dark {
-            --apple-bg: #000000;
-            --apple-card: #1c1c1e;
-            --apple-border: rgba(255, 255, 255, 0.1);
+            --bg-gradient: linear-gradient(135deg, #0d0d0e 0%, #1a1a1e 100%);
+            --glass-bg: rgba(30, 30, 32, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
-            --apple-btn-bg: #ffffff;
-            --apple-btn-text: #1d1d1f;
-            --apple-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --accent: #2997ff;
+            --accent-gradient: linear-gradient(135deg, #bf5af2, #ff453a);
+            --pill-active: rgba(255, 255, 255, 0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            background-color: var(--apple-bg);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-            min-height: 100vh;
-            padding: 40px 24px;
-            transition: background-color 0.3s ease;
+            padding-top: 70px;
+            padding-bottom: 40px;
+            transition: background 0.4s ease;
         }
 
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Top Header Layout */
-        .navbar {
+        .apple-nav {
+            position: fixed;
+            top: 0; width: 100%; height: 52px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 32px;
-        }
-        .nav-brand { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; text-decoration: none; color: var(--text-primary); }
-        .theme-btn {
-            background: none; border: 1px solid var(--apple-border);
-            padding: 8px 14px; border-radius: 30px; font-size: 12px;
-            font-weight: 500; color: var(--text-primary); cursor: pointer;
         }
 
-        header h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
-        header .subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; max-width: 700px; }
-
-        /* Problem Briefing Box */
-        .problem-briefing {
-            background: rgba(0, 113, 227, 0.05);
-            border-left: 4px solid var(--accent-blue);
-            padding: 20px;
-            border-radius: 0 16px 16px 0;
-            margin-bottom: 32px;
-            font-size: 14.5px;
-            line-height: 1.6;
+        .nav-container {
+            width: 100%; max-width: 1100px;
+            margin: 0 auto; padding: 0 24px;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* Two-Column Core Grid */
-        .workspace-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 32px;
-            align-items: start;
+        .nav-brand {
+            font-weight: 700; font-size: 15px; letter-spacing: -0.02em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        @media (max-width: 850px) {
-            .workspace-grid { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: var(--apple-card);
-            border: 1px solid var(--apple-border);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: var(--apple-shadow);
-            margin-bottom: 24px;
-        }
-        .card h2 { font-size: 18px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.01em; }
-
-        /* Topping Row Controls */
-        .topping-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--apple-border);
-        }
-        .topping-item:last-child { border-bottom: none; }
+        .nav-links { display: flex; gap: 8px; align-items: center; }
         
-        .topping-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-        .topping-meta { font-size: 12.5px; color: var(--text-secondary); }
-        .meta-tag { font-weight: 600; color: var(--text-primary); }
+        .nav-item {
+            color: var(--text-primary); text-decoration: none;
+            font-size: 12px; font-weight: 500; padding: 6px 12px;
+            border-radius: 8px; transition: all 0.2s ease;
+        }
 
-        /* Premium Apple Toggle Switches */
-        .switch-container {
-            position: relative; display: inline-block; width: 46px; height: 26px;
+        .nav-item.active {
+            background: var(--pill-active);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        .switch-container input { opacity: 0; width: 0; height: 0; }
-        .slider-toggle {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--apple-border); transition: .2s; border-radius: 34px;
-        }
-        .slider-toggle:before {
-            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
-            background-color: white; transition: .2s; border-radius: 50%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        }
-        input:checked + .slider-toggle { background-color: var(--accent-green); }
-        input:checked + .slider-toggle:before { transform: translateX(20px); }
 
-        /* Scoreboard Panel metrics */
-        .scoreboard {
-            display: grid; grid-template-columns: 1fr; gap: 16px;
-        }
-        .stat-box {
-            background: var(--apple-bg); border: 1px solid var(--apple-border);
-            padding: 18px; border-radius: 16px; text-align: center;
-        }
-        .stat-val { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
-        .stat-lbl { font-size: 12px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .theme-toggle { background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
 
-        /* System Status Pill Indicators */
-        .status-pill {
-            display: inline-block; padding: 6px 14px; border-radius: 20px;
-            font-size: 13px; font-weight: 700; margin-top: 12px; text-align: center; width: 100%;
+        .wrapper {
+            max-width: 1100px; margin: 20px auto; padding: 0 24px;
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px;
         }
-        .pill-valid { background: rgba(52, 199, 89, 0.15); color: #248a3d; }
-        .pill-invalid { background: rgba(255, 59, 48, 0.15); color: #b3261e; }
+
+        @media (max-width: 900px) { .wrapper { grid-template-columns: 1fr; } }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-radius));
+            -webkit-backdrop-filter: blur(var(--blur-radius));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 32px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+        }
+
+        .full-width-card { grid-column: 1 / -1; margin-bottom: 8px; }
+
+        h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; }
+
+        .briefing-box {
+            background: rgba(0, 113, 227, 0.08); border-left: 4px solid var(--accent);
+            padding: 16px; border-radius: 0 12px 12px 0; font-size: 14px; line-height: 1.5;
+        }
+
+        .apple-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+        .apple-table th { text-align: left; padding: 12px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--glass-border); }
+        .apple-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.03); }
+        body.dark .apple-table td { border-bottom: 1px solid rgba(255,255,255,0.02); }
+
+        .switch-input {
+            appearance: none; width: 44px; height: 24px; background: rgba(0,0,0,0.1);
+            border-radius: 12px; position: relative; cursor: pointer; outline: none; transition: background 0.2s;
+        }
+        body.dark .switch-input { background: rgba(255, 255, 255, 0.1); }
+        .switch-input:checked { background: #34c759; }
+        .switch-input::before {
+            content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%;
+            top: 2px; left: 2px; background: #ffffff; transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .switch-input:checked::before { transform: translateX(20px); }
+
+        .metric-badge {
+            display: flex; flex-direction: column; background: rgba(255,255,255,0.25);
+            border: 1px solid var(--glass-border); padding: 16px; border-radius: 16px; margin-bottom: 16px;
+        }
+        body.dark .metric-badge { background: rgba(255,255,255,0.04); }
+        .metric-val { font-size: 26px; font-weight: 700; margin-top: 4px; }
+        
+        .status-pill { padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; text-align: center; display: block; width: 100%; }
+        .status-valid { background: rgba(52, 199, 89, 0.15); color: #248a3d; }
+        .status-invalid { background: rgba(255, 69, 58, 0.15); color: #ff3b30; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <nav class="navbar">
-            <a href="index.html" class="nav-brand">← System Portfolio Hub</a>
-            <button class="theme-btn" onclick="toggleSystemTheme()">🌓 Switch Theme</button>
-        </nav>
+    <nav class="apple-nav">
+        <div class="nav-container">
+            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">Index Hub</a>
+                <a href="ms1.html" class="nav-item active">MS 1</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+    </nav>
 
-        <header>
-            <h1>Module 02 // Lab I: Pizza Optimization Engine</h1>
-            <p class="subtitle">An introduction to Management Science operations research, using binary integer algorithms to model physical resource scarcity limits.</p>
-        </header>
-
-        <div class="problem-briefing">
-            <strong>The Mathematical Scarcity Challenge:</strong><br>
-            You have an ironclad resource constraint limit of <strong>exactly $7.00</strong>. Each ingredient you choose carries an exact acquisition cost and returns a fixed marginal satisfaction utility score. Your goal is to maximize your collective utility score ($Z$) without crossing the upper boundary of your financial constraint line.
+    <div class="wrapper">
+        
+        <!-- STEP 1: CONTEXT & LEARNING MODULE -->
+        <div class="glass-card full-width-card">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Part 1 // Learn First</div>
+            <h1>Understanding the Knapsack Optimization Model</h1>
+            <p class="subtitle">Why model a pizza quantitatively? To turn subjective intuition into systematic resource allocation.</p>
+            <div class="briefing-box">
+                <strong>The Scarcity Problem:</strong> You want to build a premium pizza that maximizes total satisfaction. However, you face a strict constraint of <strong>exactly $7.00</strong>. Choosing toppings at random leads to budget overruns or low-value combinations. Using <strong>Binary Variables (1 = select, 0 = drop)</strong>, you can create a mathematical model to find the absolute optimal choice under scarcity.
+            </div>
         </div>
 
-        <div class="workspace-grid">
+        <!-- STEP 2: THE INTERACTIVE OPTIMIZER SWITCHBOARD -->
+        <div class="glass-card">
+            <h2>Ingredient Switchboard (Decision Matrix)</h2>
+            <p class="subtitle" style="margin-bottom: 10px;">Toggle items on or off to make your decision selections.</p>
             
-            <section class="card">
-                <h2>Ingredient Inventory Matrix</h2>
-                
-                <div id="ingredient-matrix-box">
-                    <div class="topping-item">
-                        <div class="topping-info">
-                            <h3>Pepperoni Premium Selection</h3>
-                            <div class="topping-meta">Cost: <span class="meta-tag">$1.50</span> &bull; Value Multiplier: <span class="meta-tag">+4.5 Utility</span></div>
-                        </div>
-                        <label class="switch-container">
-                            <input type="checkbox" id="top-pep" onchange="runOptimizationCalculation()">
-                            <span class="slider-toggle"></span>
-                        </label>
-                    </div>
-
-                    <div class="topping-item">
-                        <div class="topping-info">
-                            <h3>Aged Extra Cheese Crust Blends</h3>
-                            <div class="topping-meta">Cost: <span class="meta-tag">$2.00</span> &bull; Value Multiplier: <span class="meta-tag">+5.0 Utility</span></div>
-                        </div>
-                        <label class="switch-container">
-                            <input type="checkbox" id="top-cheese" onchange="runOptimizationCalculation()">
-                            <span class="slider-toggle"></span>
-                        </label>
-                    </div>
-
-                    <div class="topping-item">
-                        <div class="topping-info">
-                            <h3>Wild Hand-Picked Mushrooms</h3>
-                            <div class="topping-meta">Cost: <span class="meta-tag">$1.00</span> &bull; Value Multiplier: <span class="meta-tag">+2.0 Utility</span></div>
-                        </div>
-                        <label class="switch-container">
-                            <input type="checkbox" id="top-mushrooms" onchange="runOptimizationCalculation()">
-                            <span class="slider-toggle"></span>
-                        </label>
-                    </div>
-
-                    <div class="topping-item">
-                        <div class="topping-info">
-                            <h3>White Alba Infused Truffle Oil</h3>
-                            <div class="topping-meta">Cost: <span class="meta-tag">$3.00</span> &bull; Value Multiplier: <span class="meta-tag">+7.0 Utility</span></div>
-                        </div>
-                        <label class="switch-container">
-                            <input type="checkbox" id="top-truffle" onchange="runOptimizationCalculation()">
-                            <span class="slider-toggle"></span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <section class="right-panel">
-                <div class="card">
-                    <h2>Live Optimization Output</h2>
-                    
-                    <div class="scoreboard">
-                        <div class="stat-box">
-                            <div class="stat-val" id="total-cost-display">$0.00</div>
-                            <div class="stat-lbl">Accumulated Expenditures</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" id="total-utility-display">0.0</div>
-                            <div class="stat-lbl">Total Satisfaction ($Z$)</div>
-                        </div>
-                    </div>
-
-                    <div id="optimization-status-pill" class="status-pill pill-valid">
-                        Optimal Feasible Boundary
-                    </div>
-                </div>
-
-                <div class="card" style="padding: 20px; font-size:13px; color:var(--text-secondary); line-height: 1.5;">
-                    <strong>Simplex Check:</strong> Can you find the exact combination of checkboxes that mathematically maximizes the utility value without turning the status display box red?
-                </div>
-            </section>
-
+            <table class="apple-table">
+                <thead>
+                    <tr>
+                        <th>Topping Item</th>
+                        <th>Cost</th>
+                        <th>Satisfaction</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="topping-rows">
+                    <!-- Dynamic Rows Injected via JS -->
+                </tbody>
+            </table>
         </div>
+
+        <!-- STEP 3: RUNTIME OUTPUT & METRICS -->
+        <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h2>Allocation Evaluation</h2>
+                <p class="subtitle">Live verification against linear constraint rules.</p>
+                
+                <div class="metric-badge">
+                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Upper Budget Target</span>
+                    <span class="metric-val" style="color: var(--accent);">$7.00</span>
+                </div>
+
+                <div class="metric-badge">
+                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Combined Cost</span>
+                    <span class="metric-val" id="total-cost">$0.00</span>
+                </div>
+
+                <div class="metric-badge">
+                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Total Score ($Z$)</span>
+                    <span class="metric-val" id="total-score" style="color: #34c759;">0.0</span>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <span id="status-tag" class="status-pill status-valid">Optimal/Feasible</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.45; border-top: 1px solid var(--glass-border); padding-top: 15px;">
+                <strong>Can you find the two historic targets?</strong><br>
+                🥇 Highest Target Set: <strong>26.0 Utility Score</strong><br>
+                🥈 Runner Up Set: <strong>25.6 Utility Score</strong>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // Matrix Array mapping cost and satisfaction weights directly to inputs
-        const database = [
-            { id: 'top-pep',       cost: 1.50, utility: 4.5 },
-            { id: 'top-cheese',    cost: 2.00, utility: 5.0 },
-            { id: 'top-mushrooms', cost: 1.00, utility: 2.0 },
-            { id: 'top-truffle',   cost: 3.00, utility: 7.0 }
+        // Full Dataset containing all 10 toppings from the assignment table
+        const toppings = [
+            { name: "Buffalo mozzarella", cost: 2.00, score: 5.0 },
+            { name: "Gorgonzola", cost: 1.50, score: 3.1 },
+            { name: "Ricotta", cost: 1.00, score: 4.2 },
+            { name: "Burrata", cost: 3.00, score: 4.7 },
+            { name: "Parma ham", cost: 3.00, score: 7.2 },
+            { name: "Pancetta", cost: 2.00, score: 4.2 },
+            { name: "Salame", cost: 2.00, score: 8.3 },
+            { name: "Nduja", cost: 0.50, score: 4.8 },
+            { name: "Zucchini", cost: 1.00, score: 3.5 },
+            { name: "Fried eggplant", cost: 2.00, score: 5.2 }
         ];
 
-        const budgetCeilingLimit = 7.00;
+        // Track your game selections dynamically
+        let selections = {};
+        toppings.forEach(t => { selections[t.name] = false; });
 
-        function runOptimizationCalculation() {
-            let combinedCost = 0.00;
-            let combinedUtility = 0.0;
+        function initTable() {
+            const container = document.getElementById('topping-rows');
+            container.innerHTML = '';
+            toppings.forEach((t, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 500;">${t.name}</td>
+                    <td>$${t.cost.toFixed(2)}</td>
+                    <td style="color: var(--text-secondary); font-weight: 600;">${t.score.toFixed(1)}</td>
+                    <td>
+                        <input type="checkbox" class="switch-input" id="check-${index}" onchange="toggleTopping('${t.name}', ${index})">
+                    </td>
+                `;
+                container.appendChild(tr);
+            });
+            runOptimization();
+        }
 
-            // Compute values inside the state matrix arrays
-            database.forEach(item => {
-                const elementChecked = document.getElementById(item.id).checked;
-                if (elementChecked) {
-                    combinedCost += item.cost;
-                    combinedUtility += item.utility;
+        function toggleTopping(name, index) {
+            selections[name] = document.getElementById(`check-${index}`).checked;
+            runOptimization();
+        }
+
+        function runOptimization() {
+            const targetBudget = 7.00;
+            let currentCost = 0;
+            let currentScore = 0;
+
+            toppings.forEach(t => {
+                if (selections[t.name]) {
+                    currentCost += t.cost;
+                    currentScore += t.score;
                 }
             });
 
-            // Feed mathematical variables into the DOM interface nodes
-            document.getElementById('total-cost-display').innerText = `$${combinedCost.toFixed(2)}`;
-            document.getElementById('total-utility-display').innerText = combinedUtility.toFixed(1);
+            document.getElementById('total-cost').innerText = `$${currentCost.toFixed(2)}`;
+            document.getElementById('total-score').innerText = currentScore.toFixed(1);
 
-            const flagPillNode = document.getElementById('optimization-status-pill');
-
-            // Evaluate bound parameter inequalities
-            if (combinedCost <= budgetCeilingLimit) {
-                flagPillNode.innerText = "Optimal Feasible Boundary";
-                flagPillNode.className = "status-pill pill-valid";
+            const statusTag = document.getElementById('status-tag');
+            if (currentCost <= targetBudget) {
+                statusTag.innerText = "Feasible Under Budget Bounds";
+                statusTag.className = "status-pill status-valid";
             } else {
-                flagPillNode.innerText = "Infeasible Constraint Breach";
-                flagPillNode.className = "status-pill pill-invalid";
+                statusTag.innerText = "Infeasible Budget Constraint Breach";
+                statusTag.className = "status-pill status-invalid";
             }
         }
 
-        // Synchronized Theme Engine Infrastructure
-        if (localStorage.getItem('apple-premium-theme') === 'dark' || 
-            (!('apple-premium-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('apple-theme', isDark ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('apple-theme') === 'dark') {
             document.body.classList.add('dark');
         }
 
-        function toggleSystemTheme() {
-            const turningDark = document.body.classList.toggle('dark');
-            localStorage.setItem('apple-premium-theme', turningDark ? 'dark' : 'light');
-        }
+        window.addEventListener('load', initTable);
     </script>
 </body>
 </html>
