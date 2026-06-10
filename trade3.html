@@ -3,79 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading 3: Resources & Trade (Heckscher-Ohlin)</title>
+    <title>Academic Portfolio | Resources & Trade (Heckscher-Ohlin)</title>
     <style>
+        /* Modern, Professional CSS Custom Properties (Mixed Design System) */
         :root {
-            --bg: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --text-primary: #1d1d1f;
+            --bg-primary: #f5f5f7;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --text-primary: #1e293b; 
+            --text-body: #334155;    
             --text-secondary: #86868b;
-            --accent: #0071e3;
-            --border: rgba(0, 0, 0, 0.08);
+            --accent-color: #3b82f6;   
+            --accent-hover: #2563eb;   
+            --border-color: rgba(0, 0, 0, 0.08);
+            --card-radius: 20px;
             --blur: saturate(180%) blur(20px);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
         }
+
+        /* Dark Mode Preferences */
         body.dark {
-            --bg: #000000;
-            --card-bg: rgba(28, 28, 30, 0.8);
+            --bg-primary: #000000;
+            --bg-secondary: rgba(28, 28, 30, 0.8);
             --text-primary: #f5f5f7;
+            --text-body: #cbd5e1;
             --text-secondary: #86868b;
-            --accent: #2997ff;
-            --border: rgba(255, 255, 255, 0.15);
+            --border-color: rgba(255, 255, 255, 0.15);
         }
+
+        /* CSS Reset & Global Styling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg); color: var(--text-primary); font-family: -apple-system, sans-serif; padding: 60px 24px; display: flex; justify-content: center; }
-        .container { max-width: 800px; width: 100%; }
-        nav { position: fixed; top: 0; width: 100%; left: 0; background: var(--card-bg); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border); z-index: 100; padding: 12px 24px; }
-        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; }
-        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
-        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
-        h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
-        h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
-        h3 { font-size: 16px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; }
-        p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; text-align: justify; }
-        ul { margin-left: 20px; color: var(--text-secondary); font-size: 15px; }
-        li { margin-bottom: 8px; }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-body);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            padding: 80px 24px 60px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navigation Header */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            left: 0;
+            background: var(--bg-secondary);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+            padding: 12px 24px;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand { font-weight: 600; font-size: 13px; color: var(--text-primary); text-decoration: none; }
+        .nav-links-group a { color: var(--text-body); text-decoration: none; font-size: 13px; font-weight: 500; margin-left: 20px; }
+        .nav-links-group a:hover { color: var(--accent-color); }
+        .nav-links-group a.active-page { color: var(--accent-color); font-weight: 700; }
+
+        /* Master Layout Structure */
+        .main-header {
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .project-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        h1 { font-size: 34px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
+
+        /* Two-Column Split-Screen Grid CSS Architecture */
+        .app-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .column-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: var(--blur);
+        }
+
+        h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        h3 { font-size: 16px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text-primary); }
+        p { margin-bottom: 14px; font-size: 15px; text-align: justify; }
+        ul { margin-left: 20px; margin-bottom: 14px; font-size: 14.5px; }
+        li { margin-bottom: 6px; }
+
+        /* LEFT COLUMN COMPONENTS */
+        .concept-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            margin: 20px 0;
+        }
+        body.dark .concept-card {
+            background-color: #1e293b;
+            border-left-color: #3b82f6;
+        }
+        .concept-card h3 { margin-top: 0; color: var(--text-primary); }
+        .concept-card p { margin-bottom: 0; font-size: 14.5px; }
+
+        .chart-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        body.dark .chart-container { background-color: rgba(30, 41, 59, 0.5); }
+        .chart-title { font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* RIGHT COLUMN COMPONENTS */
+        .qa-block { margin-bottom: 24px; }
+        .qa-question {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        .badge {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        .qa-answer {
+            padding-left: 42px;
+            font-size: 14.5px;
+        }
+
+        .callout-block {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            margin: 24px 0;
+        }
+        body.dark .callout-block {
+            background-color: rgba(37, 99, 235, 0.15);
+            border-left-color: #2563eb;
+        }
+        .callout-block h3 { margin-top: 0; color: #2563eb; font-size: 15px; text-transform: uppercase; letter-spacing: 0.03em; }
+        .callout-block p { margin-bottom: 0; font-size: 14.5px; }
+
+        /* EXTENDED ATTACHED GRAPHICS VIEWER PANEL */
+        .viewer-panel {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        .viewer-panel h3 { font-size: 15px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+        
+        .viewer-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .toggle-btn {
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-body);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .toggle-btn:hover {
+            background-color: var(--border-color);
+        }
+        .toggle-btn.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        .image-frame {
+            width: 100%;
+            height: auto;
+            max-height: 480px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 8px;
+        }
+        .image-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: contain; 
+            border-radius: 8px;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        /* RESPONSIVE MEDIA QUERY */
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            .app-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .column-card { padding: 24px; }
+            .qa-answer { padding-left: 0; margin-top: 6px; }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
-            <a href="index.html">← Executive Portfolio Hub</a>
-            <div>
+
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">← Executive Portfolio Hub</a>
+            <div class="nav-links-group">
                 <a href="trade1.html">Reading 1</a>
                 <a href="trade2.html">Reading 2</a>
-                <a href="trade3.html" style="color:var(--accent); font-weight:bold;">Reading 3</a>
+                <a href="trade3.html" class="active-page">Reading 3</a>
             </div>
         </div>
     </nav>
 
-    <div class="container" style="margin-top: 40px;">
-        <div class="tag">Reading Assignment 3 • Textbook Chapter 5</div>
+    <div class="main-header">
+        <span class="project-tag">Reading Assignment 3 • Textbook Chapter 5</span>
         <h1>Resources, Comparative Advantage, & Income Distribution</h1>
-
-        <div class="section">
-            <h2>1. Comprehensive Reading Notes</h2>
-            <p>The Heckscher-Ohlin framework expands on Ricardo's model by introducing multiple factors of production: **Capital (K)** and **Labor (L)**. It illustrates how relative resource scarcity across borders shapes global trade patterns and alters the internal distribution of national income.</p>
-        </div>
-
-        <div class="section">
-            <h2>2. Guiding Questions & Core Answers</h2>
-            
-            <h3>Q1: How does the Heckscher-Ohlin model differ from the Ricardian model in terms of construction and predictive potential?</h3>
-            <p>The Ricardian model assumes only **one factor of production (labor)** and attributes comparative advantage entirely to cross-border **technology and productivity differences**. The Heckscher-Ohlin model assumes **multiple factors (capital, labor, land)**, treats technologies as identical across countries, and attributes comparative advantage to differences in **national factor endowments**. This allows the Heckscher-Ohlin model to predict internal conflicts over income distribution among resource owners.</p>
-
-            <h3>Q2: Explain factor price equalization and why specific factors might not equalize in reality?</h3>
-            <p>The **Factor Price Equalization Theorem** states that international trade leads to the complete convergence of real returns to identical production factors (wages for labor, rental rates for capital) across trading nations. By trading goods, countries indirectly trade factor services, substituting for the physical migration of labor and capital.</p>
-            <h3>Frictional Realities Preventing Equalization:</h3>
-            <ul>
-                <li><strong>Pervasive Trade Barriers:</strong> Tariffs, quotas, and transport costs prevent international goods prices from equalizing completely.</li>
-                <li><strong>Technological Asymmetries:</strong> Contrary to the model's assumptions, countries do not use identical production technologies in practice.</li>
-                <li><strong>Specialization Boundaries:</strong> If factor endowment differences are extreme, countries may specialize completely in different goods, breaking the mathematical link required for price equalization.</li>
-            </ul>
-        </div>
     </div>
+
+    <main class="app-container">
+
+        <!-- LEFT COLUMN: Comprehensive Reading Notes & Theory -->
+        <section class="column-card">
+            <h2>1. Comprehensive Reading Notes</h2>
+            <p>
+                Based on Chapter 5 of Paul Krugman's <em>International Trade: Theory and Policy</em>, the Heckscher-Ohlin framework expands significantly on simpler trade paradigms by modeling multiple factors of production: **Capital ($K$)** and **Labor ($L$)**[cite: 2]. It uncovers how relative resource scarcity across political borders structurally shapes global trade vectors and alters the internal distribution of national wealth[cite: 2].
+            </p>
+
+            <div class="concept-card">
+                <h3>Heckscher-Ohlin Model vs. Ricardian Model</h3>
+                <p>
+                    <strong>The Ricardian Model:</strong> Built as a one-factor economy where labor ($L$) is the sole input[cite: 2]. Comparative advantage is driven entirely by international differences in labor productivity (technological differences), resulting in a straight-line PPF with a constant opportunity cost[cite: 2].
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>The Heckscher-Ohlin Model:</strong> Built as a multi-factor economy (typically a $2 \times 2 \times 2$ framework: two countries, two goods, and two mobile factors—Capital $K$ and Labor $L$)[cite: 2]. Comparative advantage is driven by the interaction between a nation's resource endowments (factor abundance) and the industry's production technology (factor intensity)[cite: 2].
+                </p>
+            </div>
+
+            <p>
+                Because inputs cannot perfectly substitute for one another across distinct manufacturing sectors, the Heckscher-Ohlin model features a curved production frontier displaying an increasing opportunity cost profile[cite: 2].
+            </p>
+
+            <!-- Inline SVG Responsive Curved HO PPF Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Heckscher-Ohlin Curved PPF (Increasing Opportunity Cost)</div>
+                <svg viewBox="0 0 400 300" width="100%" height="100%">
+                    <line x1="60" y1="60" x2="340" y2="60" stroke="var(--border-color)" stroke-width="1" />
+                    <line x1="60" y1="150" x2="340" y2="150" stroke="var(--border-color)" stroke-width="1" />
+                    <line x1="60" y1="240" x2="340" y2="240" stroke="var(--text-primary)" stroke-width="1.5" />
+                    <line x1="60" y1="40" x2="60" y2="240" stroke="var(--text-primary)" stroke-width="1.5" />
+                    <path d="M 60,70 Q 240,90 310,240" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+                    <circle cx="60" cy="70" r="4.5" fill="#2563eb" />
+                    <circle cx="310" cy="240" r="4.5" fill="#2563eb" />
+                    <text x="200" y="275" fill="var(--text-primary)" font-size="11" font-weight="600" text-anchor="middle">Quantity of Labor-Intensive Good</text>
+                    <text x="20" y="140" fill="var(--text-primary)" font-size="11" font-weight="600" text-anchor="middle" transform="rotate(-90,20,140)">Quantity of Capital-Intensive Good</text>
+                    <text x="230" y="125" fill="#3b82f6" font-size="10" font-weight="600" transform="rotate(38, 230, 125)">Increasing Opportunity Cost</text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Guiding Questions, Answers, & Interactive Viewer -->
+        <section class="column-card">
+            <h2>2. Guiding Questions & Core Answers</h2>
+
+            <div class="qa-block">
+                <div class="qa-question">
+                    <span class="badge">Q1</span>
+                    <strong>How do the predictive potentials of these models diverge regarding trade patterns and income distribution?</strong>
+                </div>
+                <div class="qa-answer">
+                    <p style="margin-bottom: 6px;"><strong>Trade Patterns:</strong> The Ricardian model predicts that a country will export goods where it has an absolute productivity edge[cite: 2]. The Heckscher-Ohlin model predicts that a country will export goods that intensively use its abundant factor and import goods that use its scarce factor[cite: 2].</p>
+                    <strong>Income Distribution:</strong> In the Ricardian framework, trade benefits every worker because labor is mobile and homogeneous[cite: 2]. Conversely, the Heckscher-Ohlin model predicts long-run domestic conflict: trade systematically benefits the owners of a country's abundant factor but hurts the owners of its scarce factor[cite: 2].
+                </div>
+            </div>
+
+            <div class="qa-block">
+                <div class="qa-question">
+                    <span class="badge">Q2</span>
+                    <strong>What is Factor-Price Equalization?</strong>
+                </div>
+                <div class="qa-answer">
+                    The theorem posits that international trade in goods acts as an implicit substitute for the physical migration of factors[cite: 2]. When a labor-abundant nation exports labor-intensive products, it is effectively exporting its abundant labor embedded in the product[cite: 2]. In an idealized, friction-free market, free trade will completely equalize the absolute wages of homogeneous labor and the rental rates of capital across nations[cite: 2].
+                </div>
+            </div>
+
+            <div class="qa-block">
+                <div class="qa-question">
+                    <span class="badge">Q3</span>
+                    <strong>Why do absolute factor prices fail to equalize in real-world contexts?</strong>
+                </div>
+                <div class="qa-answer">
+                    Absolute factor prices diverge drastically between countries due to several severe market frictions[cite: 2]:
+                    <ul style="margin-top: 6px;">
+                        <li><strong>Barriers to Trade:</strong> Natural barriers like transportation costs and restrictions like tariffs or quotas prevent goods prices from fully equalizing, blocking factor convergence[cite: 2].</li>
+                        <li><strong>Technological Asymmetries:</strong> In practice, a worker backed by advanced infrastructure and superior processes will be drastically more productive—and earn a higher real wage—than an identical worker using outdated methods[cite: 2].</li>
+                        <li><strong>Specialization Dynamics:</strong> Equalization requires that both countries continue to produce both goods[cite: 2]. If a trade shock causes a country to completely specialize in only one good, factor prices are no longer bound to equalize[cite: 2].</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-block">
+                <h3>Core Takeaway: Domestic Income Conflict</h3>
+                <p>
+                    Unlike alternative trade frameworks, Heckscher-Ohlin proves that trade liberalization creates concentrated domestic winners and losers—systematically decreasing the real income of scarce resource providers while boosting abundant capital owners[cite: 2].
+                </p>
+            </div>
+
+            <!-- Extended Repository Dynamic Image Viewer Panel -->
+            <div class="viewer-panel">
+                <h3>Attached Project Graphics (Repository Assets 1-7)</h3>
+                <div class="viewer-controls">
+                    <button class="toggle-btn active" onclick="switchImage('1.JPG', this)">Image 1</button>
+                    <button class="toggle-btn" onclick="switchImage('2.JPG', this)">Image 2</button>
+                    <button class="toggle-btn" onclick="switchImage('3.JPG', this)">Image 3</button>
+                    <button class="toggle-btn" onclick="switchImage('4.JPG', this)">Image 4</button>
+                    <button class="toggle-btn" onclick="switchImage('5.JPG', this)">Image 5</button>
+                    <button class="toggle-btn" onclick="switchImage('6.JPG', this)">Image 6</button>
+                    <button class="toggle-btn" onclick="switchImage('7.JPG', this)">Image 7</button>
+                </div>
+                <div class="image-frame">
+                    <!-- Renders uploaded repository assets flawlessly with fit containment -->
+                    <img id="main-viewer-img" src="1.JPG" alt="Heckscher Ohlin Model Project Chart Analysis 1">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- INTERACTIVE JS LOGIC -->
     <script>
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.body.classList.add('dark'); }
+        // System Auto Dark Mode configuration mapping matching trade1.html
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
+            document.body.classList.add('dark'); 
+        }
+
+        /**
+         * Lightweight Interactive Router Loop
+         * Dynamically updates the main layout image block resource source pointers with containment fixing
+         */
+        function switchImage(imageSrc, buttonElement) {
+            const mainImg = document.getElementById('main-viewer-img');
+            if (mainImg) {
+                mainImg.style.opacity = '0.3';
+                // Trigger asset assignment load with smooth transition fade
+                setTimeout(() => {
+                    mainImg.src = imageSrc;
+                    mainImg.alt = "Heckscher Ohlin Model Project Chart Analysis " + imageSrc.split('.')[0];
+                    mainImg.style.opacity = '1';
+                }, 100);
+            }
+
+            // Clean active classes across control button node lists
+            const controls = document.querySelectorAll('.viewer-controls .toggle-btn');
+            controls.forEach(btn => btn.classList.remove('active'));
+
+            // Map current targeted active state element properties
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+        }
     </script>
 </body>
 </html>
