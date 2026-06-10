@@ -3,88 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading 2: Labor Productivity & Comparative Advantage</title>
+    <title>Academic Portfolio | International Trade & Opportunity Cost</title>
     <style>
+        /* Modern, Professional CSS Custom Properties (Inherited from trade1.html) */
         :root {
-            --bg: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --text-primary: #1d1d1f;
+            --bg-primary: #f5f5f7;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --text-primary: #1e293b; /* Specified Header Color */
+            --text-body: #334155;    /* Specified Body Color */
             --text-secondary: #86868b;
-            --accent: #0071e3;
-            --border: rgba(0, 0, 0, 0.08);
+            --accent-color: #3b82f6;   /* Specified Badge Blue */
+            --accent-hover: #2563eb;   /* Specified Active State Blue */
+            --border-color: rgba(0, 0, 0, 0.08);
+            --card-radius: 20px;
             --blur: saturate(180%) blur(20px);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
         }
+
+        /* Dark Mode Preferences */
         body.dark {
-            --bg: #000000;
-            --card-bg: rgba(28, 28, 30, 0.8);
+            --bg-primary: #000000;
+            --bg-secondary: rgba(28, 28, 30, 0.8);
             --text-primary: #f5f5f7;
+            --text-body: #cbd5e1;
             --text-secondary: #86868b;
-            --accent: #2997ff;
-            --border: rgba(255, 255, 255, 0.15);
+            --border-color: rgba(255, 255, 255, 0.15);
         }
+
+        /* CSS Reset & Global Styling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg); color: var(--text-primary); font-family: -apple-system, sans-serif; padding: 60px 24px; display: flex; justify-content: center; }
-        .container { max-width: 800px; width: 100%; }
-        nav { position: fixed; top: 0; width: 100%; left: 0; background: var(--card-bg); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border); z-index: 100; padding: 12px 24px; }
-        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; }
-        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
-        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
-        h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
-        h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
-        h3 { font-size: 16px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; }
-        p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; text-align: justify; }
-        ul { margin-left: 20px; color: var(--text-secondary); font-size: 15px; }
-        li { margin-bottom: 8px; }
-        .diagram-box { width: 100%; height: 220px; border: 1px solid var(--border); border-radius: 12px; background: rgba(0,0,0,0.01); position: relative; margin: 20px 0; }
-        .axis-line-x { position: absolute; bottom: 30px; left: 40px; right: 40px; height: 1px; background: var(--text-primary); }
-        .axis-line-y { position: absolute; bottom: 30px; left: 40px; top: 30px; width: 1px; background: var(--text-primary); }
-        .ppf-slope { position: absolute; left: 40px; bottom: 30px; width: 70%; height: 140px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); border-radius: 0 100% 0 0; }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-body);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            padding: 80px 24px 60px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navigation Header */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            left: 0;
+            background: var(--bg-secondary);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+            padding: 12px 24px;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand { font-weight: 600; font-size: 13px; color: var(--text-primary); text-decoration: none; }
+        .nav-link { color: var(--accent-color); text-decoration: none; font-size: 13px; font-weight: 500; }
+        .nav-link:hover { text-decoration: underline; }
+
+        /* Master Layout Structure */
+        .main-header {
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .project-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        h1 { font-size: 34px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
+
+        /* Two-Column Split-Screen Grid CSS Architecture */
+        .app-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .column-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: var(--blur);
+        }
+
+        h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        h3 { font-size: 16px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text-primary); }
+        p { margin-bottom: 14px; font-size: 15px; text-align: justify; }
+
+        /* LEFT COLUMN COMPONENTS */
+        /* Concept Card */
+        .concept-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            margin: 20px 0;
+        }
+        body.dark .concept-card {
+            background-color: #1e293b;
+            border-left-color: #3b82f6;
+        }
+        .concept-card h3 { margin-top: 0; color: var(--text-primary); }
+        .concept-card p { margin-bottom: 0; font-size: 14.5px; }
+
+        /* Inline SVG PPF Chart */
+        .chart-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        body.dark .chart-container { background-color: rgba(30, 41, 59, 0.5); }
+        .chart-title { font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* RIGHT COLUMN COMPONENTS */
+        /* QA Blocks */
+        .qa-block { margin-bottom: 20px; }
+        .qa-question {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        .badge {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        .qa-answer {
+            padding-left: 42px;
+            font-size: 14.5px;
+        }
+
+        /* Callout Block */
+        .callout-block {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            margin: 24px 0;
+        }
+        body.dark .callout-block {
+            background-color: rgba(37, 99, 235, 0.15);
+            border-left-color: #2563eb;
+        }
+        .callout-block h3 { margin-top: 0; color: #2563eb; font-size: 15px; text-transform: uppercase; letter-spacing: 0.03em; }
+        .callout-block p { margin-bottom: 0; font-size: 14.5px; }
+
+        /* INTERACTIVE VIEWER PANEL */
+        .viewer-panel {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        .viewer-panel h3 { font-size: 15px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+        .viewer-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .toggle-btn {
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-body);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .toggle-btn:hover {
+            background-color: var(--border-color);
+        }
+        /* Smooth CSS Active-State Toggle Dynamic Utility Class */
+        .toggle-btn.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        .image-frame {
+            width: 100%;
+            height: 320px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        /* RESPONSIVE MEDIA QUERY (Responsive Single Vertical Breakpoint) */
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            .app-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .column-card { padding: 24px; }
+            .qa-answer { padding-left: 0; margin-top: 6px; }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
-            <a href="index.html">← Executive Portfolio Hub</a>
-            <div>
-                <a href="trade1.html">Reading 1</a>
-                <a href="trade2.html" style="color:var(--accent); font-weight:bold;">Reading 2</a>
-                <a href="trade3.html">Reading 3</a>
-            </div>
+
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Academic Portfolio</a>
+            <a href="intro.html" class="nav-link">← Back to Overview Hub</a>
         </div>
     </nav>
 
-    <div class="container" style="margin-top: 40px;">
-        <div class="tag">Reading Assignment 2 • Textbook Chapters 3 & 4 (Partial)</div>
-        <h1>Labor Productivity & Comparative Advantage</h1>
-
-        <div class="section">
-            <h2>1. Comprehensive Reading Notes</h2>
-            <p>The Ricardian architecture isolates labor as the sole input variable to prove that wage variations reflect underlying national productivity trends. When open trade structures emerge, price convergence forces industries to reallocate resources toward activities with the lowest relative opportunity costs.</p>
-        </div>
-
-        <div class="section">
-            <h2>2. Guiding Questions & Core Answers</h2>
-            
-            <h3>Q1: What is the fundamental difference between "absolute advantage" and "comparative advantage," and which one determines trade?</h3>
-            <p><strong>Absolute Advantage</strong> measures absolute raw efficiency—a country requires fewer labor hours to output a unit of a good than its trading partner. <strong>Comparative Advantage</strong> measures relative efficiency—a country's opportunity cost of producing a good is lower than its partner's. **Comparative advantage alone determines international trade patterns.**</p>
-
-            <h3>Q2: How do we prove that a low-productivity country can still compete and benefit from trade with a high-productivity "superpower"?</h3>
-            <p>Even if a superpower is absolutely more efficient at manufacturing everything, it cannot possess a comparative advantage in everything. The superpower faces high opportunity costs to produce lower-value goods. By specializing in its areas of greatest relative advantage and outsourcing others, it creates space for the low-productivity country to successfully export goods where its absolute disadvantage is smallest. This integration maximizes real purchasing power for consumers in both nations.</p>
-
-            <h3>Q3: Interpret the general shape of the PPF model and draw a little picture for me.</h3>
-            <p>In a standard multi-factor economy, the Production Possibility Frontier (PPF) is **concave (bowed-out from the origin)**. This shape reflects increasing opportunity costs: as production expands in one sector, the economy must pull resources that are progressively less suited to it from other sectors, requiring greater sacrifices of alternative goods per unit produced.</p>
-
-            <div class="diagram-box">
-                <div class="axis-line-x"></div><div class="axis-line-y"></div>
-                <div class="ppf-slope"></div>
-                <span style="position:absolute; bottom:10px; right:40px; font-size:11px;">Good X Output</span>
-                <span style="position:absolute; top:15px; left:45px; font-size:11px;">Good Y Output</span>
-                <span style="position:absolute; left:180px; top:60px; font-size:12px; color:var(--accent); font-weight:600;">Bowed-Out PPF (Increasing Costs)</span>
-            </div>
-        </div>
+    <div class="main-header">
+        <span class="project-tag">Reading Assignment 2 • Chapters 3 & 4</span>
+        <h1>Comparative Advantage & Resource Trade-Offs</h1>
     </div>
+
+    <main class="app-container">
+
+        <section class="column-card">
+            <h2>1. Comprehensive Reading Notes</h2>
+            <p>
+                Unlike structural market gravitational constraints, Ricardian frameworks break down international exchange through localized productivity indices. The foundational thesis hinges upon shifting resources relative to internal efficiency limits, asserting that global trading systems optimization depends on minimizing cross-sector asset displacement.
+            </p>
+
+            <div class="concept-card">
+                <h3>Krugman's Opportunity Cost Variant</h3>
+                <p>
+                    Paul Krugman demonstrates opportunity costs through a specialized Valentine's Day Winter Roses trade-off layout. Producing winter roses domestically inside an industrial economy requires diverting immense systemic climate assets, power grids, and specialized manufacturing labor away from high-tech production nodes (such as computers).
+                </p>
+            </div>
+
+            <p style="font-size: 14.5px;">
+                Because resources aren't infinite, producing 1 million units of winter roses requires completely sacrificing a fixed proportion of computer hardware assets.
+            </p>
+
+            <div class="chart-container">
+                <div class="chart-title">Linear Production Possibility Frontier (PPF)</div>
+                <svg viewBox="0 0 400 300" width="100%" height="100%">
+                    <line x1="60" y1="60" x2="340" y2="60" stroke="var(--border-color)" stroke-width="1" />
+                    <line x1="60" y1="150" x2="340" y2="150" stroke="var(--border-color)" stroke-width="1" />
+                    
+                    <line x1="60" y1="240" x2="340" y2="240" stroke="var(--text-primary)" stroke-width="1.5" />
+                    <line x1="60" y1="40" x2="60" y2="240" stroke="var(--text-primary)" stroke-width="1.5" />
+                    
+                    <line x1="60" y1="80" x2="300" y2="240" stroke="#3b82f6" stroke-width="2.5" />
+                    
+                    <circle cx="60" cy="80" r="4.5" fill="#2563eb" />
+                    <circle cx="300" cy="240" r="4.5" fill="#2563eb" />
+                    
+                    <text x="200" y="275" fill="var(--text-primary)" font-size="11" font-weight="600" text-anchor="middle">Quantity of Roses</text>
+                    <text x="20" y="140" fill="var(--text-primary)" font-size="11" font-weight="600" text-anchor="middle" transform="rotate(-90,20,140)">Quantity of Computers</text>
+                    
+                    <text x="72" y="84" fill="var(--text-secondary)" font-size="10" font-weight="600">Computer Specialization Intercept</text>
+                    <text x="290" y="225" fill="var(--text-secondary)" font-size="10" font-weight="600" text-anchor="end">Rose Specialization Intercept</text>
+                </svg>
+            </div>
+        </section>
+
+        <section class="column-card">
+            <h2>2. Guiding Questions & Core Answers</h2>
+
+            <div class="qa-block">
+                <div class="qa-question">
+                    <span class="badge">Q1</span>
+                    <strong>What generates the linear constant vector profile of a Ricardian PPF?</strong>
+                </div>
+                <div class="qa-answer">
+                    The structural linearity signals completely static performance indices across labor pools. Because resource transformation loops draw from uniform labor skill sets, allocating extra operational capacity to roses yields identical trade-off ratios at every stage.
+                </div>
+            </div>
+
+            <div class="qa-block">
+                <div class="qa-question">
+                    <span class="badge">Q2</span>
+                    <strong>Why does Krugman frame winter greenhouse cultivation as a macroeconomic loss?</strong>
+                </div>
+                <div class="qa-answer">
+                    Artificially overriding geographic limitations diverts highly productive capital assets away from naturally competitive sectors (such as software development centers). The absolute output lost outweighs the marginal value generated by localized production.
+                </div>
+            </div>
+
+            <div class="qa-block">
+                <div class="qa-question">
+                    <span class="badge">Q3</span>
+                    <strong>How do production boundaries expand post-integration?</strong>
+                </div>
+                <div class="qa-answer">
+                    Nations escape their individual production limitations by trading at international price vectors that bypass internal resource conversion trade-offs. This allows them to reach consumption capacities that would be impossible under isolated conditions.
+                </div>
+            </div>
+
+            <div class="callout-block">
+                <h3>Gains from Trade Summary</h3>
+                <p>
+                    When operational paths align strictly with competitive advantages, overall global volume output expands. This expansion transforms isolated resource constraints into cross-border consumption possibilities.
+                </p>
+            </div>
+
+            <div class="viewer-panel">
+                <h3>Attached Project Graphics</h3>
+                <div class="viewer-controls">
+                    <button id="btn-0763" class="toggle-btn active" onclick="switchImage('IMG_0763.JPG', this)">View Diagram 0763</button>
+                    <button id="btn-0764" class="toggle-btn" onclick="switchImage('IMG_0764.JPG', this)">View Diagram 0764</button>
+                </div>
+                <div class="image-frame">
+                    <img id="main-viewer-img" src="IMG_0763.JPG" alt="Macroeconomic Assignment Structure Diagram Blueprint">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
     <script>
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.body.classList.add('dark'); }
+        // System Auto Dark Mode configuration mapping matching trade1.html
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
+            document.body.classList.add('dark'); 
+        }
+
+        /**
+         * Lightweight Interactive Router Loop
+         * Dynamically updates the main layout image block resource source pointers
+         */
+        function switchImage(imageSrc, buttonElement) {
+            const mainImg = document.getElementById('main-viewer-img');
+            if (mainImg) {
+                mainImg.style.opacity = '0.3';
+                // Trigger asset assignment load
+                setTimeout(() => {
+                    mainImg.src = imageSrc;
+                    mainImg.style.opacity = '1';
+                }, 100);
+            }
+
+            // Clean active classes across control button node lists
+            const controls = document.querySelectorAll('.viewer-controls .toggle-btn');
+            controls.forEach(btn => btn.classList.remove('active'));
+
+            // Map current targeted active state element properties
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+        }
     </script>
 </body>
 </html>
