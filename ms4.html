@@ -62,7 +62,6 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--apple-border);
             z-index: 100;
-            transition: background 0.3s;
         }
         body.dark .system-nav {
             background: rgba(28, 28, 30, 0.7);
@@ -83,9 +82,6 @@
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .icon-toggle { 
@@ -139,13 +135,11 @@
             margin-top: 2px;
         }
 
-        /* Interactive Canvas Display Wrapper */
+        /* Canvas Wrapper Setup */
         .canvas-wrapper {
-            position: relative;
             background: var(--apple-bg);
             border: 1px solid var(--apple-border);
             border-radius: 14px;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -154,8 +148,6 @@
         }
 
         canvas {
-            max-width: 100%;
-            height: auto;
             background: transparent;
         }
 
@@ -208,7 +200,6 @@
             display: block;
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
             color: var(--text-secondary);
             margin-bottom: 2px;
         }
@@ -217,6 +208,24 @@
             font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
+        }
+
+        /* Video Preview Area Component */
+        .video-preview-card {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid var(--apple-border);
+            aspect-ratio: 16 / 9;
+        }
+
+        .video-preview-card iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
         }
 
         /* Academic Lesson Guides */
@@ -229,7 +238,6 @@
         .concept-card {
             border-left: 3px solid var(--apple-accent);
             padding-left: 14px;
-            margin-bottom: 4px;
         }
 
         .concept-card[data-heuristic="sshape"] { border-left-color: var(--color-s-shape); }
@@ -248,26 +256,6 @@
             color: var(--text-secondary);
         }
 
-        .video-insight-box {
-            background: rgba(var(--apple-accent-rgb), 0.05);
-            border: 1px dashed var(--apple-accent);
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 10px;
-        }
-
-        .video-insight-box p {
-            font-size: 13px;
-            line-height: 1.4;
-            color: var(--text-primary);
-        }
-
-        .video-insight-box a {
-            color: var(--apple-accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
         footer {
             text-align: center;
             font-size: 11px;
@@ -276,13 +264,6 @@
             padding-top: 24px;
         }
     </style>
-    <script>
-        /* Head execution to guarantee flash-free rendering initialization */
-        if (localStorage.getItem('apple-premium-theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-            window.addEventListener('DOMContentLoaded', () => document.body.classList.add('dark'));
-        }
-    </script>
 </head>
 <body>
 
@@ -315,7 +296,7 @@
             <div class="score-board">
                 <div class="stat-card">
                     <span>Items Collected</span>
-                    <strong id="stat-items">12 / 12</strong>
+                    <strong>12 / 12</strong>
                 </div>
                 <div class="stat-card">
                     <span>Total Distance</span>
@@ -331,32 +312,32 @@
         <section class="panel">
             <div class="panel-header">
                 <h2>Heuristics & Spatial Mapping Logic</h2>
-                <p>Why choose heuristic approximations over standard calculations?</p>
+                <p>Learn how physical space converts into network graph variables.</p>
+            </div>
+
+            <div class="video-preview-card">
+                <iframe src="https://www.youtube.com/embed/kS-CGkiPetQ" title="Network Mapping Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
             <div class="lesson-scroller">
                 <div class="concept-card">
-                    <h3>🧩 Why Heuristics Matter</h3>
-                    <p>When solving the Traveling Salesperson Problem (TSP) inside a facility, computing exact mathematical balances takes long data periods. Heuristics give picking staff human-executable instructions that eliminate on-the-floor hesitation.</p>
+                    <h3>🧩 Network Node Strategy</h3>
+                    <p>As demonstrated in the video clip above, optimization apps drop unnecessary floor details, transforming sorting aisles into unified <strong>Nodes</strong> and <strong>Weighted Paths</strong> to solve routing calculations fast.</p>
                 </div>
 
                 <div class="concept-card" data-heuristic="sshape">
                     <h3>🟠 S-Shape (Serpentine Wave) Strategy</h3>
-                    <p><strong>Method:</strong> The driver loops seamlessly through entire aisles, entering from one crossway and leaving from the other. It treats aisles as a continuous fluid line to ensure high speeds.</p>
+                    <p><strong>Method:</strong> Loops seamlessly through entire aisles, entering from one crossway and leaving from the other to ensure continuous high speeds.</p>
                 </div>
 
                 <div class="concept-card" data-heuristic="gap">
                     <h3>🟢 Largest Gap Heuristic</h3>
-                    <p><strong>Method:</strong> Evaluates the single biggest empty space between vertical target coordinates inside an aisle. The picker treats that gap as a dead end, entering from the closest outer boundary wall to reduce useless interior travel.</p>
+                    <p><strong>Method:</strong> Finds the biggest empty space inside an aisle. The picker treats that gap as a dead end, entering from the closest outer boundary wall to reduce useless interior travel.</p>
                 </div>
 
                 <div class="concept-card" data-heuristic="midpoint">
                     <h3>🟣 Midpoint Splitting Heuristic</h3>
-                    <p><strong>Method:</strong> Cuts the facility layout horizontally into upper and lower operational fields. The picker sweeps one complete segment clean before traversing across to finish the opposite half.</p>
-                </div>
-
-                <div class="video-insight-box">
-                    <p>🎬 <strong>Network Graph Mapping Insight:</strong> As modeled in the <a href="https://www.youtube.com/watch?v=kS-CGkiPetQ" target="_blank">Network Analysis Lecture ↗</a>, spatial tracking systems strip away warehouse decoration, changing coordinate points into active <strong>Nodes</strong> and <strong>Weighted Edges</strong> to run pathfinding logic safely.</p>
+                    <p><strong>Method:</strong> Cuts the facility layout horizontally into upper and lower fields. The picker sweeps one half clean before moving across to finish the opposite side.</p>
                 </div>
             </div>
         </section>
@@ -371,5 +352,126 @@
         const canvas = document.getElementById('warehouseCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Layout Coordinate Parameters Table Mapping
-        const depot = {
+        const depot = { x: 250, y: 390 };
+        const itemsList = [
+            { label: 'A', x: 90,  y: 60  },
+            { label: 'B', x: 90,  y: 140 },
+            { label: 'C', x: 90,  y: 220 },
+            { label: 'D', x: 90,  y: 300 },
+            { label: 'E', x: 90,  y: 340 },
+            { label: 'F', x: 250, y: 340 },
+            { label: 'G', x: 250, y: 60  },
+            { label: 'H', x: 250, y: 140 },
+            { label: 'I', x: 250, y: 220 },
+            { label: 'J', x: 250, y: 300 },
+            { label: 'K', x: 410, y: 100 },
+            { label: 'L', x: 410, y: 220 }
+        ];
+
+        const pathsMatrix = {
+            reset: [],
+            sshape: [depot, itemsList[4], itemsList[3], itemsList[2], itemsList[1], itemsList[0], itemsList[6], itemsList[7], itemsList[8], itemsList[9], itemsList[5], itemsList[11], itemsList[10], depot],
+            gap: [depot, itemsList[4], itemsList[3], depot, itemsList[5], itemsList[9], itemsList[8], depot, itemsList[11], depot, {x: 410, y: 60}, itemsList[10], {x: 250, y: 60}, itemsList[6], itemsList[7], {x: 90, y: 60}, itemsList[0], itemsList[1], depot],
+            midpoint: [depot, itemsList[4], itemsList[3], itemsList[2], itemsList[8], itemsList[9], itemsList[5], itemsList[11], itemsList[10], {x: 250, y: 60}, itemsList[6], itemsList[7], {x: 90, y: 60}, itemsList[0], itemsList[1], depot]
+        };
+
+        const distanceMatrix = { reset: "0m", sshape: "940m", gap: "1,180m", midpoint: "1,020m" };
+        const efficiencyMatrix = { reset: "--", sshape: "96%", gap: "74%", midpoint: "88%" };
+
+        function getStyleColor(variableName, fallback) {
+            const color = getComputedStyle(document.body).getPropertyValue(variableName).trim();
+            return color || fallback;
+        }
+
+        function drawBlueprint() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const isDark = document.body.classList.contains('dark');
+            const borderColor = isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)";
+            const textPrimary = isDark ? "#f5f5f7" : "#1d1d1f";
+            const nodeBg = isDark ? "#3a3a3c" : "#e5e5ea";
+
+            // Draw Aisle Tracks
+            ctx.strokeStyle = borderColor;
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]);
+            [90, 250, 410].forEach(col => {
+                ctx.beginPath(); ctx.moveTo(col, 40); ctx.lineTo(col, 360); ctx.stroke();
+            });
+            ctx.setLineDash([]);
+
+            // Draw Depot
+            ctx.fillStyle = "#0071e3";
+            ctx.beginPath(); ctx.arc(depot.x, depot.y, 9, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 9px -apple-system";
+            ctx.fillText("H", depot.x - 3, depot.y + 3);
+
+            // Draw Node Items
+            itemsList.forEach(item => {
+                ctx.fillStyle = nodeBg;
+                ctx.beginPath(); ctx.arc(item.x, item.y, 11, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = textPrimary;
+                ctx.font = "600 10px -apple-system";
+                ctx.fillText(item.label, item.x - 4, item.y + 3);
+            });
+        }
+
+        function renderSimulation(modeKey) {
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-mode="${modeKey}"]`).classList.add('active');
+
+            drawBlueprint();
+            const targetPath = pathsMatrix[modeKey];
+            if (targetPath.length === 0) {
+                updateDashboard("reset");
+                return;
+            }
+
+            ctx.lineWidth = 3;
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+            
+            if (modeKey === 'sshape') ctx.strokeStyle = getStyleColor('--color-s-shape', '#ff9500');
+            if (modeKey === 'gap') ctx.strokeStyle = getStyleColor('--color-gap', '#34c759');
+            if (modeKey === 'midpoint') ctx.strokeStyle = getStyleColor('--color-midpoint', '#af52de');
+
+            ctx.beginPath();
+            ctx.moveTo(targetPath[0].x, targetPath[0].y);
+            for (let i = 1; i < targetPath.length; i++) {
+                ctx.lineTo(targetPath[i].x, targetPath[i].y);
+            }
+            ctx.stroke();
+            
+            updateDashboard(modeKey);
+        }
+
+        function updateDashboard(key) {
+            document.getElementById('stat-distance').innerText = distanceMatrix[key];
+            document.getElementById('stat-score').innerText = efficiencyMatrix[key];
+            
+            const scoreEl = document.getElementById('stat-score');
+            if (key === 'reset') scoreEl.style.color = getStyleColor('--text-primary', '#1d1d1f');
+            if (key === 'sshape') scoreEl.style.color = getStyleColor('--color-s-shape', '#ff9500');
+            if (key === 'gap') scoreEl.style.color = getStyleColor('--color-gap', '#34c759');
+            if (key === 'midpoint') scoreEl.style.color = getStyleColor('--color-midpoint', '#af52de');
+        }
+
+        function toggleLocalTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('apple-premium-theme', isDark ? 'dark' : 'light');
+            const activeMode = document.querySelector('.mode-btn.active').getAttribute('data-mode');
+            renderSimulation(activeMode);
+        }
+
+        // Init layout setups on load sequence execution
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('apple-premium-theme') === 'dark') {
+                document.body.classList.add('dark');
+            }
+            renderSimulation('reset');
+        });
+    </script>
+</body>
+</html>
