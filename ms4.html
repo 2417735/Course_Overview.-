@@ -20,6 +20,11 @@
             --color-s-shape: #ff9500;
             --color-gap: #34c759;
             --color-midpoint: #af52de;
+            
+            /* Theme Navigation Consistency */
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --pill-active: #ffffff;
         }
 
         body.dark {
@@ -31,418 +36,450 @@
             --text-secondary: #86868b;
             --apple-accent: #2997ff;
             --apple-accent-rgb: 41, 151, 255;
-            --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            
+            /* Theme Navigation Consistency Dark */
+            --glass-bg: rgba(22, 22, 26, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --pill-active: rgba(255, 255, 255, 0.12);
         }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-            -webkit-font-smoothing: antialiased; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body { 
-            background: var(--apple-bg); 
-            color: var(--text-primary); 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            transition: background-color 0.3s ease; 
-            padding-bottom: 40px;
+        body {
+            background-color: var(--apple-bg);
+            color: var(--text-primary);
+            padding-top: 74px;
+            padding-bottom: 60px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Nav Interface */
-        .system-nav {
-            position: sticky;
+        /* APPLE NAVIGATION CHASSIS */
+        .apple-nav {
+            position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.7);
+            height: 52px;
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--apple-border);
-            z-index: 100;
-        }
-        body.dark .system-nav {
-            background: rgba(28, 28, 30, 0.7);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
         }
 
         .nav-container {
-            max-width: 1100px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
-            height: 52px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .nav-link {
+        .nav-brand {
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--apple-accent), #34c759);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-item {
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
-        }
-
-        .icon-toggle { 
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 18px; 
-            cursor: pointer; 
-        }
-
-        /* Main Workspace Grid */
-        .workspace-container {
-            max-width: 1100px;
-            margin: 32px auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
-
-        @media (min-width: 900px) {
-            .workspace-container {
-                grid-template-columns: 1.12fr 0.88fr;
-            }
-        }
-
-        /* Core Apple Interface Panels */
-        .panel {
-            background: var(--apple-card);
-            border: 1px solid var(--apple-border);
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: var(--apple-shadow);
-        }
-
-        .panel-header {
-            margin-bottom: 16px;
-            border-bottom: 1px solid var(--apple-border);
-            padding-bottom: 12px;
-        }
-
-        .panel-header h1, .panel-header h2 {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        .panel-header p {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-
-        /* Canvas Wrapper Setup */
-        .canvas-wrapper {
-            background: var(--apple-bg);
-            border: 1px solid var(--apple-border);
-            border-radius: 14px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px 0;
-            margin-bottom: 16px;
-        }
-
-        canvas {
-            background: transparent;
-        }
-
-        /* Dynamic Selector Controls */
-        .controller-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .mode-btn {
-            background: var(--apple-bg);
-            border: 1px solid var(--apple-border);
-            color: var(--text-primary);
-            padding: 12px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
+            padding: 6px 12px;
+            border-radius: 8px;
             transition: all 0.2s ease;
         }
 
+        .nav-item:hover { background: rgba(255, 255, 255, 0.1); }
+
+        .nav-item.active {
+            background: var(--pill-active);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 4px;
+            margin-left: 10px;
+        }
+
+        /* LAYOUT CONTAINER ARCO */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 28px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dashboard-card {
+            background-color: var(--apple-card);
+            border: 1px solid var(--apple-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--apple-shadow);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 24px;
+        }
+
+        /* CONTROLS & INTERACTIVE INTERFACES */
+        .mode-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .mode-btn {
+            background-color: var(--apple-bg);
+            border: 1px solid var(--apple-border);
+            color: var(--text-primary);
+            padding: 12px 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            text-align: center;
+        }
+
         .mode-btn:hover {
+            background-color: rgba(var(--apple-accent-rgb), 0.05);
             border-color: var(--apple-accent);
         }
 
-        .mode-btn.active[data-mode="reset"] { border-color: var(--text-primary); background: var(--text-primary); color: var(--apple-card); }
-        .mode-btn.active[data-mode="sshape"] { border-color: var(--color-s-shape); background: var(--color-s-shape); color: #fff; }
-        .mode-btn.active[data-mode="gap"] { border-color: var(--color-gap); background: var(--color-gap); color: #fff; }
-        .mode-btn.active[data-mode="midpoint"] { border-color: var(--color-midpoint); background: var(--color-midpoint); color: #fff; }
+        .mode-btn.active {
+            background-color: var(--apple-accent);
+            border-color: var(--apple-accent);
+            color: #ffffff;
+        }
 
-        /* Scoring Stats Dashboard */
-        .score-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            background: var(--apple-bg);
-            padding: 14px;
-            border-radius: 12px;
+        /* WAREHOUSE SIMULATION VISUAL SCREEN */
+        .canvas-container {
+            background-color: var(--apple-bg);
             border: 1px solid var(--apple-border);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
         }
 
-        .stat-card {
-            text-align: center;
-        }
-
-        .stat-card span {
+        #warehouseGrid {
             display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 2px;
+            width: 100%;
+            height: auto;
+            background-color: #ffffff;
+            body.dark & { background-color: #151517; }
         }
 
-        .stat-card strong {
-            font-size: 20px;
+        /* GOOGLE MAPS CASE BRIEFING BOXES */
+        .briefing-box {
+            background: rgba(0, 113, 227, 0.05);
+            border-left: 4px solid var(--apple-accent);
+            padding: 20px;
+            border-radius: 0 16px 16px 0;
+            margin-bottom: 20px;
+        }
+
+        .briefing-heading {
+            font-size: 15px;
             font-weight: 700;
+            margin-bottom: 8px;
             color: var(--text-primary);
         }
 
-        /* Video Preview Area Component */
-        .video-preview-card {
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: #000;
-            border: 1px solid var(--apple-border);
-            aspect-ratio: 16 / 9;
+        .briefing-text {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.55;
         }
 
-        .video-preview-card iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
+        .concept-block {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--apple-border);
         }
 
-        /* Academic Lesson Guides */
-        .lesson-scroller {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .concept-card {
-            border-left: 3px solid var(--apple-accent);
-            padding-left: 14px;
-        }
-
-        .concept-card[data-heuristic="sshape"] { border-left-color: var(--color-s-shape); }
-        .concept-card[data-heuristic="gap"] { border-left-color: var(--color-gap); }
-        .concept-card[data-heuristic="midpoint"] { border-left-color: var(--color-midpoint); }
-
-        .concept-card h3 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .concept-card p {
+        .concept-title {
             font-size: 13px;
-            line-height: 1.5;
-            color: var(--text-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        footer {
-            text-align: center;
+        /* STATS FEED BANNER GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .stat-card {
+            background-color: var(--apple-bg);
+            border: 1px solid var(--apple-border);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: left;
+        }
+
+        .stat-label {
             font-size: 11px;
+            font-weight: 600;
             color: var(--text-secondary);
-            margin-top: auto;
-            padding-top: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 4px;
+            transition: color 0.2s ease;
         }
     </style>
 </head>
 <body>
 
-    <nav class="system-nav">
+    <nav class="apple-nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-link">➔ Back to Master Portal</a>
-            <button class="icon-toggle" onclick="toggleLocalTheme()" id="themeBtn" aria-label="Toggle Mode">🌓</button>
+            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-links">
+                <a href="https://2417735.github.io/Study_Cafe/" class="nav-item">Index Hub</a>
+                <a href="ms1.html" class="nav-item">MS 1</a>
+                <a href="ms2.html" class="nav-item">MS 2</a>
+                <a href="ms3.html" class="nav-item">MS 3</a>
+                <a href="ms4.html" class="nav-item active">MS 4</a>
+                <a href="ms5.html" class="nav-item">MS 5</a>
+                <button class="theme-toggle" onclick="toggleLocalTheme()">🌓</button>
+            </div>
         </div>
     </nav>
 
-    <main class="workspace-container">
+    <div class="main-container">
         
-        <section class="panel">
-            <div class="panel-header">
-                <h1>Interactive Warehouse Map Simulator</h1>
-                <p>Select heuristic rules below to see real-time route path calculations.</p>
-            </div>
+        <div>
+            <div class="dashboard-card">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Simulation Dashboard // Module 04</div>
+                <h1>Order Picker Routing Matrix</h1>
+                <p class="subtitle">Evaluate picker path heuristics inside deep-aisle warehouse spaces. Switch layout methodologies to monitor length efficiency results.</p>
 
-            <div class="canvas-wrapper">
-                <canvas id="warehouseCanvas" width="500" height="420"></canvas>
-            </div>
-
-            <div class="controller-group">
-                <button class="mode-btn active" data-mode="reset" onclick="renderSimulation('reset')">Reset Items</button>
-                <button class="mode-btn" data-mode="sshape" onclick="renderSimulation('sshape')">S-Shape Path</button>
-                <button class="mode-btn" data-mode="gap" onclick="renderSimulation('gap')">Largest Gap</button>
-                <button class="mode-btn" data-mode="midpoint" onclick="renderSimulation('midpoint')">Midpoint Run</button>
-            </div>
-
-            <div class="score-board">
-                <div class="stat-card">
-                    <span>Items Collected</span>
-                    <strong>12 / 12</strong>
-                </div>
-                <div class="stat-card">
-                    <span>Total Distance</span>
-                    <strong id="stat-distance">0m</strong>
-                </div>
-                <div class="stat-card">
-                    <span>Efficiency Score</span>
-                    <strong id="stat-score">--</strong>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="panel-header">
-                <h2>Heuristics & Spatial Mapping Logic</h2>
-                <p>Learn how physical space converts into network graph variables.</p>
-            </div>
-
-            <div class="video-preview-card">
-                <iframe src="https://www.youtube.com/embed/kS-CGkiPetQ" title="Network Mapping Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-
-            <div class="lesson-scroller">
-                <div class="concept-card">
-                    <h3>🧩 Network Node Strategy</h3>
-                    <p>As demonstrated in the video clip above, optimization apps drop unnecessary floor details, transforming sorting aisles into unified <strong>Nodes</strong> and <strong>Weighted Paths</strong> to solve routing calculations fast.</p>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="reset" onclick="changeMode('reset', this)">Default</button>
+                    <button class="mode-btn" data-mode="sshape" onclick="changeMode('sshape', this)">S-Shape</button>
+                    <button class="mode-btn" data-mode="gap" onclick="changeMode('gap', this)">Largest Gap</button>
+                    <button class="mode-btn" data-mode="midpoint" onclick="changeMode('midpoint', this)">Midpoint</button>
                 </div>
 
-                <div class="concept-card" data-heuristic="sshape">
-                    <h3>🟠 S-Shape (Serpentine Wave) Strategy</h3>
-                    <p><strong>Method:</strong> Loops seamlessly through entire aisles, entering from one crossway and leaving from the other to ensure continuous high speeds.</p>
-                </div>
-
-                <div class="concept-card" data-heuristic="gap">
-                    <h3>🟢 Largest Gap Heuristic</h3>
-                    <p><strong>Method:</strong> Finds the biggest empty space inside an aisle. The picker treats that gap as a dead end, entering from the closest outer boundary wall to reduce useless interior travel.</p>
-                </div>
-
-                <div class="concept-card" data-heuristic="midpoint">
-                    <h3>🟣 Midpoint Splitting Heuristic</h3>
-                    <p><strong>Method:</strong> Cuts the facility layout horizontally into upper and lower fields. The picker sweeps one half clean before moving across to finish the opposite side.</p>
+                <div class="canvas-container">
+                    <canvas id="warehouseGrid" width="600" height="350"></canvas>
                 </div>
             </div>
-        </section>
 
-    </main>
+            <div class="dashboard-card">
+                <div class="card-title">📍 High-Speed Mathematics: The Google Maps Matrix</div>
+                
+                <div class="briefing-box">
+                    <div class="briefing-heading">How We Move Faster Using Math</div>
+                    <div class="briefing-text">
+                        When you hit "Start" on Google Maps, the app calculates a route in a fraction of a second. This speed is achieved through a combination of classical graph theory, crowdsourced data, and machine learning.
+                        <br><br>
+                        Google Maps converts the entire physical world into a massive digital mathematical graph. Intersections and turns are treated as <b>nodes</b>, while the roads connecting them are <b>edges</b>. Every single edge has a "weight" assigned to it, which essentially represents the time cost it takes to drive down that road.
+                    </div>
+                </div>
 
-    <footer>
-        <p>Management Science Lab Module &bull; Lead Developer: ALAM AL KAHAF &bull; Student ID: 24177375</p>
-    </footer>
+                <div class="concept-block">
+                    <div class="concept-title">1. How It Knows the Traffic (The Data)</div>
+                    <div class="briefing-text">
+                        To figure out how much a road should be "weighted" (delayed), Google continuously pulls from three primary data streams:
+                        <br>• <b>Real-Time Crowdsourcing:</b> Every time an Android or iOS device moves down a street with Google Maps open, it anonymously beams back micro-telemetry (your precise GPS location and speed). If hundreds of phones suddenly drop from 60 mph to 5 mph on a highway, Google instantly flags a slowdown.
+                        <br>• <b>Historical Trends:</b> Google has decades of traffic history. The system understands that a Tuesday at 8:30 AM behaves completely differently than a Sunday at 6:00 AM. It also factors in variables like seasonality, holidays, and school schedules.
+                        <br>• <b>User and Third-Party Reports:</b> Thanks to its acquisition of Waze, Google integrates crowdsourced hazard updates (accidents, construction, speed traps) alongside official data from municipal transit agencies.
+                    </div>
+                </div>
+
+                <div class="concept-block">
+                    <div class="concept-title">2. How It Predicts the Future (The AI)</div>
+                    <div class="briefing-text">
+                        A common driving problem is that a road might be perfectly clear when you leave your house, but jam up by the time you arrive 30 minutes later. To solve this, Google partnered with DeepMind to implement <b>Graph Neural Networks (GNNs)</b>. 
+                        <br><br>
+                        Google groups adjacent streets into "Supersegments" that share traffic flow. The GNN conducts spatiotemporal reasoning—meaning it can predict how a bottleneck at one major intersection will ripple outward into the surrounding suburban side streets over the next hour. This allows the algorithm to route you away from a traffic jam before it even forms.
+                    </div>
+                </div>
+
+                <div class="concept-block">
+                    <div class="concept-title">3. How It Calculates the Route So Fast (The Math)</div>
+                    <div class="briefing-text">
+                        If a computer had to check every single street between New York and Los Angeles, your phone would freeze. Google uses a clever pipeline of algorithms to make it instant:
+                        <br><br>
+                        • <b>Dijkstra’s & A* Search:</b> The baseline of modern navigation is Dijkstra’s Algorithm (a classic 1956 computer science formula that finds the shortest path by checking nodes sequentially). Because Dijkstra checks in all directions equally, Google overlays it with an A* Search Algorithm. A* uses "heuristics" (an educated guess) to give the algorithm a sense of direction, prioritizing paths that move toward your destination instead of exploring dead ends.
+                        <br><br>
+                        • <b>Contraction Hierarchies:</b> To achieve sub-second loading times, Google uses a preprocessing technique called Contraction Hierarchies. You don't need to calculate local neighborhood streets in Ohio if you are driving from Chicago to Washington D.C. The system pre-computes "shortcuts" across major highway networks. The routing engine simply figures out how to get you out of your neighborhood onto the local highway hierarchy, jumps across the country using pre-calculated highway segments, and then maps the final few miles to your destination.
+                        <br><br>
+                        • <b>Dynamic Rerouting:</b> While you are actively driving, this loop never stops. The app continuously runs your path against live GNN telemetry. If an accident occurs ahead or a faster alternative opens up, the weights on the graph instantly update, triggering that familiar prompt: <i>"A faster route is available."</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="dashboard-card">
+                <div class="card-title">📊 Logistics Metrics Real-time Feed</div>
+                <p class="subtitle">Live distance outputs captured based on structural constraints optimization path criteria.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Calculated Path</div>
+                        <div class="stat-value" id="stat-distance" style="color: #0071e3;">0 m</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Route Heuristics</div>
+                        <div class="stat-value" id="stat-score">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-title">📋 Lab Reference Resources</div>
+                <p class="subtitle">Review foundational layout tracking files uploaded directly within your portfolio repository nodes.</p>
+                <div style="font-size: 13.5px; line-height: 1.5; color: var(--text-secondary);">
+                    • Activity Workbook Reference: <a href="rdme.pdf" target="_blank" style="color: var(--apple-accent); text-decoration: none; font-weight: 600;">rdme.pdf (View Guidelines) ↗</a>
+                    <br>• Model Focus: Path Distance Optimization & Space Minimization Modeling.
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        const canvas = document.getElementById('warehouseCanvas');
-        const ctx = canvas.getContext('2d');
-
-        const depot = { x: 250, y: 390 };
-        const itemsList = [
-            { label: 'A', x: 90,  y: 60  },
-            { label: 'B', x: 90,  y: 140 },
-            { label: 'C', x: 90,  y: 220 },
-            { label: 'D', x: 90,  y: 300 },
-            { label: 'E', x: 90,  y: 340 },
-            { label: 'F', x: 250, y: 340 },
-            { label: 'G', x: 250, y: 60  },
-            { label: 'H', x: 250, y: 140 },
-            { label: 'I', x: 250, y: 220 },
-            { label: 'J', x: 250, y: 300 },
-            { label: 'K', x: 410, y: 100 },
-            { label: 'L', x: 410, y: 220 }
-        ];
-
-        const pathsMatrix = {
-            reset: [],
-            sshape: [depot, itemsList[4], itemsList[3], itemsList[2], itemsList[1], itemsList[0], itemsList[6], itemsList[7], itemsList[8], itemsList[9], itemsList[5], itemsList[11], itemsList[10], depot],
-            gap: [depot, itemsList[4], itemsList[3], depot, itemsList[5], itemsList[9], itemsList[8], depot, itemsList[11], depot, {x: 410, y: 60}, itemsList[10], {x: 250, y: 60}, itemsList[6], itemsList[7], {x: 90, y: 60}, itemsList[0], itemsList[1], depot],
-            midpoint: [depot, itemsList[4], itemsList[3], itemsList[2], itemsList[8], itemsList[9], itemsList[5], itemsList[11], itemsList[10], {x: 250, y: 60}, itemsList[6], itemsList[7], {x: 90, y: 60}, itemsList[0], itemsList[1], depot]
-        };
-
-        const distanceMatrix = { reset: "0m", sshape: "940m", gap: "1,180m", midpoint: "1,020m" };
-        const efficiencyMatrix = { reset: "--", sshape: "96%", gap: "74%", midpoint: "88%" };
+        // Warehouse visual mapping parameters setup
+        const distanceMatrix = { reset: "385 m", sshape: "245 m", gap: "210 m", midpoint: "230 m" };
+        const efficiencyMatrix = { reset: "Base Baseline", sshape: "+36.3% Opt", gap: "+45.4% Max", midpoint: "+40.2% Opt" };
 
         function getStyleColor(variableName, fallback) {
-            const color = getComputedStyle(document.body).getPropertyValue(variableName).trim();
-            return color || fallback;
+            const val = getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+            return val || fallback;
         }
 
-        function drawBlueprint() {
+        function renderSimulation(mode) {
+            const canvas = document.getElementById('warehouseGrid');
+            const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             const isDark = document.body.classList.contains('dark');
-            const borderColor = isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)";
-            const textPrimary = isDark ? "#f5f5f7" : "#1d1d1f";
-            const nodeBg = isDark ? "#3a3a3c" : "#e5e5ea";
+            const rackColor = isDark ? '#2c2c2e' : '#e5e5ea';
+            const itemColor = '#ff3b30';
+            const pathColor = mode === 'sshape' ? getStyleColor('--color-s-shape', '#ff9500') :
+                             mode === 'gap' ? getStyleColor('--color-gap', '#34c759') :
+                             mode === 'midpoint' ? getStyleColor('--color-midpoint', '#af52de') : '#0071e3';
 
-            // Draw Aisle Tracks
-            ctx.strokeStyle = borderColor;
-            ctx.lineWidth = 2;
-            ctx.setLineDash([4, 4]);
-            [90, 250, 410].forEach(col => {
-                ctx.beginPath(); ctx.moveTo(col, 40); ctx.lineTo(col, 360); ctx.stroke();
-            });
-            ctx.setLineDash([]);
-
-            // Draw Depot
-            ctx.fillStyle = "#0071e3";
-            ctx.beginPath(); ctx.arc(depot.x, depot.y, 9, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 9px -apple-system";
-            ctx.fillText("H", depot.x - 3, depot.y + 3);
-
-            // Draw Node Items
-            itemsList.forEach(item => {
-                ctx.fillStyle = nodeBg;
-                ctx.beginPath(); ctx.arc(item.x, item.y, 11, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = textPrimary;
-                ctx.font = "600 10px -apple-system";
-                ctx.fillText(item.label, item.x - 4, item.y + 3);
-            });
-        }
-
-        function renderSimulation(modeKey) {
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`[data-mode="${modeKey}"]`).classList.add('active');
-
-            drawBlueprint();
-            const targetPath = pathsMatrix[modeKey];
-            if (targetPath.length === 0) {
-                updateDashboard("reset");
-                return;
+            // Draw Warehouse Structural Racks
+            ctx.fillStyle = rackColor;
+            for (let i = 0; i < 5; i++) {
+                ctx.fillRect(80 + (i * 100), 50, 40, 100);
+                ctx.fillRect(80 + (i * 100), 200, 40, 100);
             }
 
-            ctx.lineWidth = 3;
-            ctx.lineCap = "round";
-            ctx.lineJoin = "round";
-            
-            if (modeKey === 'sshape') ctx.strokeStyle = getStyleColor('--color-s-shape', '#ff9500');
-            if (modeKey === 'gap') ctx.strokeStyle = getStyleColor('--color-gap', '#34c759');
-            if (modeKey === 'midpoint') ctx.strokeStyle = getStyleColor('--color-midpoint', '#af52de');
+            // Target Pick Items Coordinates Dot Indicators
+            ctx.fillStyle = itemColor;
+            const items = [
+                {x: 120, y: 80}, {x: 220, y: 120}, {x: 320, y: 220},
+                {x: 420, y: 260}, {x: 520, y: 90}
+            ];
+            items.forEach(item => {
+                ctx.beginPath();
+                ctx.arc(item.x, item.y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+            });
 
+            // Drawing Optimization Vectors lines paths
+            ctx.strokeStyle = pathColor;
+            ctx.lineWidth = 3;
+            ctx.lineJoin = 'round';
             ctx.beginPath();
-            ctx.moveTo(targetPath[0].x, targetPath[0].y);
-            for (let i = 1; i < targetPath.length; i++) {
-                ctx.lineTo(targetPath[i].x, targetPath[i].y);
+            ctx.moveTo(30, 320); // Depot Start Base Coordinate
+
+            if (mode === 'sshape') {
+                ctx.lineTo(60, 320); ctx.lineTo(60, 30);
+                ctx.lineTo(160, 30); ctx.lineTo(160, 320);
+                ctx.lineTo(260, 320); ctx.lineTo(260, 30);
+                ctx.lineTo(360, 30); ctx.lineTo(360, 320);
+                ctx.lineTo(560, 320); ctx.lineTo(560, 320);
+            } else if (mode === 'gap') {
+                ctx.lineTo(60, 320); ctx.lineTo(60, 60); ctx.lineTo(60, 320);
+                ctx.lineTo(260, 320); ctx.lineTo(260, 100); ctx.lineTo(260, 320);
+                ctx.lineTo(460, 320); ctx.lineTo(460, 240); ctx.lineTo(460, 320);
+            } else if (mode === 'midpoint') {
+                ctx.lineTo(60, 320); ctx.lineTo(60, 150); ctx.lineTo(160, 150);
+                ctx.lineTo(160, 320); ctx.lineTo(360, 320); ctx.lineTo(360, 150);
+            } else {
+                // Default Random/Reset Layout Route Connectors
+                items.forEach(item => ctx.lineTo(item.x, item.y));
             }
             ctx.stroke();
-            
+        }
+
+        function changeMode(modeKey, btnEl) {
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            btnEl.classList.add('active');
+            renderSimulation(modeKey);
             updateDashboard(modeKey);
         }
 
@@ -459,7 +496,6 @@
 
         function toggleLocalTheme() {
             const isDark = document.body.classList.toggle('dark');
-            document.documentElement.classList.toggle('dark', isDark);
             localStorage.setItem('apple-premium-theme', isDark ? 'dark' : 'light');
             const activeMode = document.querySelector('.mode-btn.active').getAttribute('data-mode');
             renderSimulation(activeMode);
