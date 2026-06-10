@@ -3,79 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M/S Project 4 — Picking Heuristics Lab</title>
+    <title>Management Science Lab IV | Interactive Heuristics Game</title>
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-red: #ea4335;
-            --google-yellow: #fbbc05;
-            --google-green: #34a853;
-            --surface-bg: #ffffff;
-            --body-bg: #f8f9fa;
-            --text-main: #202124;
-            --text-sub: #5f6368;
-            --border-color: #dadce0;
+            /* Apple Pro Architectural Palette - Light Mode */
+            --apple-bg: #f5f5f7;
+            --apple-card: #ffffff;
+            --apple-border: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --apple-accent: #0071e3;
+            --apple-accent-rgb: 0, 113, 227;
+            --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            
+            /* Path Specific Colors */
+            --color-s-shape: #ff9500;
+            --color-gap: #34c759;
+            --color-midpoint: #af52de;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--body-bg); color: var(--text-main); font-family: "Roboto", sans-serif; padding: 40px 20px; }
-        .google-container { max-width: 960px; margin: 0 auto; }
-        
-        .color-strip { display: flex; height: 4px; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
-        .strip-b { background: var(--google-blue); flex: 1; }
-        .strip-r { background: var(--google-red); flex: 1; }
-        .strip-y { background: var(--google-yellow); flex: 1; }
-        .strip-g { background: var(--google-green); flex: 1; }
+        body.dark {
+            /* Apple Pro Architectural Palette - Dark Mode */
+            --apple-bg: #000000;
+            --apple-card: #1c1c1e;
+            --apple-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --apple-accent: #2997ff;
+            --apple-accent-rgb: 41, 151, 255;
+            --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
 
-        .project-card { background: var(--surface-bg); border: 1px solid var(--border-color); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 40px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); margin-bottom: 24px; }
-        .back-nav { display: inline-flex; align-items: center; color: var(--google-blue); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; }
-        .back-nav:hover { text-decoration: underline; }
-        
-        h1 { font-size: 32px; font-weight: 400; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
-        .project-meta { font-size: 14px; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
-        h2 { font-size: 20px; font-weight: 500; margin: 24px 0 12px 0; color: var(--google-blue); }
-        p { font-size: 15px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
-        
-        .warehouse-canvas { background: #e8eaed; border: 2px solid var(--border-color); border-radius: 8px; height: 300px; display: flex; align-items: center; justify-content: center; color: var(--text-sub); margin: 20px 0; font-family: monospace; }
-        .btn-action { background-color: var(--google-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 500; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-        .footer-note { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 40px; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        body { 
+            background: var(--apple-bg); 
+            color: var(--text-primary); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            transition: background-color 0.3s ease; 
+            padding-bottom: 40px;
+        }
+
+        /* Nav Interface */
+        .system-nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--apple-border);
+            z-index: 100;
+            transition: background 0.3s;
+        }
+        body.dark .system-nav {
+            background: rgba(28, 28, 30, 0.7);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .icon-toggle { 
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px; 
+            cursor: pointer; 
+        }
+
+        /* Main Workspace Grid */
+        .workspace-container {
+            max-width: 1100px;
+            margin: 32px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 900px) {
+            .workspace-container {
+                grid-template-columns: 1.12fr 0.88fr;
+            }
+        }
+
+        /* Core Apple Interface Panels */
+        .panel {
+            background: var(--apple-card);
+            border: 1px solid var(--apple-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--apple-shadow);
+        }
+
+        .panel-header {
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--apple-border);
+            padding-bottom: 12px;
+        }
+
+        .panel-header h1, .panel-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .panel-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Interactive Canvas Display Wrapper */
+        .canvas-wrapper {
+            position: relative;
+            background: var(--apple-bg);
+            border: 1px solid var(--apple-border);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px 0;
+            margin-bottom: 16px;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            background: transparent;
+        }
+
+        /* Dynamic Selector Controls */
+        .controller-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            background: var(--apple-bg);
+            border: 1px solid var(--apple-border);
+            color: var(--text-primary);
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--apple-accent);
+        }
+
+        .mode-btn.active[data-mode="reset"] { border-color: var(--text-primary); background: var(--text-primary); color: var(--apple-card); }
+        .mode-btn.active[data-mode="sshape"] { border-color: var(--color-s-shape); background: var(--color-s-shape); color: #fff; }
+        .mode-btn.active[data-mode="gap"] { border-color: var(--color-gap); background: var(--color-gap); color: #fff; }
+        .mode-btn.active[data-mode="midpoint"] { border-color: var(--color-midpoint); background: var(--color-midpoint); color: #fff; }
+
+        /* Scoring Stats Dashboard */
+        .score-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: var(--apple-bg);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--apple-border);
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-card span {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .stat-card strong {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Academic Lesson Guides */
+        .lesson-scroller {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .concept-card {
+            border-left: 3px solid var(--apple-accent);
+            padding-left: 14px;
+            margin-bottom: 4px;
+        }
+
+        .concept-card[data-heuristic="sshape"] { border-left-color: var(--color-s-shape); }
+        .concept-card[data-heuristic="gap"] { border-left-color: var(--color-gap); }
+        .concept-card[data-heuristic="midpoint"] { border-left-color: var(--color-midpoint); }
+
+        .concept-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .concept-card p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .video-insight-box {
+            background: rgba(var(--apple-accent-rgb), 0.05);
+            border: 1px dashed var(--apple-accent);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 10px;
+        }
+
+        .video-insight-box p {
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .video-insight-box a {
+            color: var(--apple-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: auto;
+            padding-top: 24px;
+        }
     </style>
+    <script>
+        /* Head execution to guarantee flash-free rendering initialization */
+        if (localStorage.getItem('apple-premium-theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            window.addEventListener('DOMContentLoaded', () => document.body.classList.add('dark'));
+        }
+    </script>
 </head>
 <body>
 
-    <div class="google-container">
-        <a href="index.html" class="back-nav">← Back to Management Hub</a>
-
-        <div class="color-strip">
-            <div class="strip-b"></div>
-            <div class="strip-r"></div>
-            <div class="strip-y"></div>
-            <div class="strip-g"></div>
+    <nav class="system-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">➔ Back to Master Portal</a>
+            <button class="icon-toggle" onclick="toggleLocalTheme()" id="themeBtn" aria-label="Toggle Mode">🌓</button>
         </div>
+    </nav>
 
-        <div class="project-card">
-            <span style="color: var(--google-blue); font-weight: 700; font-size: 12px; text-transform: uppercase;">M/S • Activity Workspace</span>
-            <h1 style="margin-top: 6px;">Picking Heuristic Optimization Lab</h1>
-            <div class="project-meta">Student ID: 2417735 • Warehouse Fulfillment Simulation Matrix</div>
-
-            <h2>1. Operational Scenario</h2>
-            <p>You are a warehouse picker tasked with collecting 12 items located across random, decentralized locations within the structural grid. Optimize fulfillment times while entirely avoiding standard nearest-neighbor algorithms.</p>
-
-            <h2>2. Core Spatial Map Layout</h2>
-            <div class="warehouse-canvas">
-                [ 12-Item Spatial Distribution Canvas Array Map ]
+    <main class="workspace-container">
+        
+        <section class="panel">
+            <div class="panel-header">
+                <h1>Interactive Warehouse Map Simulator</h1>
+                <p>Select heuristic rules below to see real-time route path calculations.</p>
             </div>
 
-            <h2>3. Heuristic Strategies Configuration</h2>
-            <p>• <strong>Heuristic 1:</strong> Systemic Route Mapping Parameter</p>
-            <p>• <strong>Heuristic 2:</strong> Zonal Consolidation Array</p>
-            <p>• <strong>Heuristic 3:</strong> Inverse Geometric Bounding Matrix</p>
-            <br>
-            <button class="btn-action" onclick="alert('Heuristic arrays loaded.')">Simulate Heuristic Models</button>
-        </div>
+            <div class="canvas-wrapper">
+                <canvas id="warehouseCanvas" width="500" height="420"></canvas>
+            </div>
 
-        <div class="footer-note">Alam Al Kahaf • Management Science Laboratory Module</div>
-    </div>
+            <div class="controller-group">
+                <button class="mode-btn active" data-mode="reset" onclick="renderSimulation('reset')">Reset Items</button>
+                <button class="mode-btn" data-mode="sshape" onclick="renderSimulation('sshape')">S-Shape Path</button>
+                <button class="mode-btn" data-mode="gap" onclick="renderSimulation('gap')">Largest Gap</button>
+                <button class="mode-btn" data-mode="midpoint" onclick="renderSimulation('midpoint')">Midpoint Run</button>
+            </div>
 
-</body>
-</html>
+            <div class="score-board">
+                <div class="stat-card">
+                    <span>Items Collected</span>
+                    <strong id="stat-items">12 / 12</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Total Distance</span>
+                    <strong id="stat-distance">0m</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Efficiency Score</span>
+                    <strong id="stat-score">--</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Heuristics & Spatial Mapping Logic</h2>
+                <p>Why choose heuristic approximations over standard calculations?</p>
+            </div>
+
+            <div class="lesson-scroller">
+                <div class="concept-card">
+                    <h3>🧩 Why Heuristics Matter</h3>
+                    <p>When solving the Traveling Salesperson Problem (TSP) inside a facility, computing exact mathematical balances takes long data periods. Heuristics give picking staff human-executable instructions that eliminate on-the-floor hesitation.</p>
+                </div>
+
+                <div class="concept-card" data-heuristic="sshape">
+                    <h3>🟠 S-Shape (Serpentine Wave) Strategy</h3>
+                    <p><strong>Method:</strong> The driver loops seamlessly through entire aisles, entering from one crossway and leaving from the other. It treats aisles as a continuous fluid line to ensure high speeds.</p>
+                </div>
+
+                <div class="concept-card" data-heuristic="gap">
+                    <h3>🟢 Largest Gap Heuristic</h3>
+                    <p><strong>Method:</strong> Evaluates the single biggest empty space between vertical target coordinates inside an aisle. The picker treats that gap as a dead end, entering from the closest outer boundary wall to reduce useless interior travel.</p>
+                </div>
+
+                <div class="concept-card" data-heuristic="midpoint">
+                    <h3>🟣 Midpoint Splitting Heuristic</h3>
+                    <p><strong>Method:</strong> Cuts the facility layout horizontally into upper and lower operational fields. The picker sweeps one complete segment clean before traversing across to finish the opposite half.</p>
+                </div>
+
+                <div class="video-insight-box">
+                    <p>🎬 <strong>Network Graph Mapping Insight:</strong> As modeled in the <a href="https://www.youtube.com/watch?v=kS-CGkiPetQ" target="_blank">Network Analysis Lecture ↗</a>, spatial tracking systems strip away warehouse decoration, changing coordinate points into active <strong>Nodes</strong> and <strong>Weighted Edges</strong> to run pathfinding logic safely.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Management Science Lab Module &bull; Lead Developer: ALAM AL KAHAF &bull; Student ID: 24177375</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('warehouseCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Layout Coordinate Parameters Table Mapping
+        const depot = {
