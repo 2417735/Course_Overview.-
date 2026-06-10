@@ -5,94 +5,297 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Activity 1: Beat the AI Debater</title>
     <style>
+        /* Modern, Professional CSS Custom Properties (Mixed Design System) */
         :root {
-            --bg: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --text-primary: #1d1d1f;
+            --bg-primary: #f5f5f7;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --text-primary: #1e293b; 
+            --text-body: #334155;    
             --text-secondary: #86868b;
-            --accent: #0071e3;
-            --border: rgba(0, 0, 0, 0.08);
+            --accent-color: #3b82f6;   
+            --accent-hover: #2563eb;   
+            --border-color: rgba(0, 0, 0, 0.08);
+            --card-radius: 20px;
             --blur: saturate(180%) blur(20px);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
         }
+
+        /* Dark Mode Preferences */
         body.dark {
-            --bg: #000000;
-            --card-bg: rgba(28, 28, 30, 0.8);
+            --bg-primary: #000000;
+            --bg-secondary: rgba(28, 28, 30, 0.8);
             --text-primary: #f5f5f7;
+            --text-body: #cbd5e1;
             --text-secondary: #86868b;
-            --accent: #2997ff;
-            --border: rgba(255, 255, 255, 0.15);
+            --border-color: rgba(255, 255, 255, 0.15);
         }
+
+        /* CSS Reset & Global Styling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg); color: var(--text-primary); font-family: -apple-system, sans-serif; padding: 60px 24px; display: flex; justify-content: center; }
-        .container { max-width: 800px; width: 100%; }
-        nav { position: fixed; top: 0; width: 100%; left: 0; background: var(--card-bg); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border); z-index: 100; padding: 12px 24px; }
-        nav a { color: var(--text-primary); text-decoration: none; font-size: 13px; margin-right: 20px; }
-        .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
-        .section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; }
-        h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
-        h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
-        h3 { font-size: 15px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; }
-        p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; text-align: justify; }
-        ul { margin-left: 20px; color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-body);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            padding: 80px 24px 60px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navigation Header */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            left: 0;
+            background: var(--bg-secondary);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+            padding: 12px 24px;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand { font-weight: 600; font-size: 13px; color: var(--text-primary); text-decoration: none; }
+        .nav-links-group a { color: var(--text-body); text-decoration: none; font-size: 13px; font-weight: 500; margin-left: 20px; }
+        .nav-links-group a:hover { color: var(--accent-color); }
+        .nav-links-group a.active-page { color: var(--accent-color); font-weight: 700; }
+
+        /* Master Layout Structure */
+        .main-header {
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .project-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        h1 { font-size: 34px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
+
+        /* Two-Column Split-Screen Grid CSS Architecture */
+        .app-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .column-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: var(--blur);
+        }
+
+        h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        h3 { font-size: 16px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text-primary); }
+        p { margin-bottom: 14px; font-size: 15px; text-align: justify; }
+        ol, ul { margin-left: 20px; margin-bottom: 14px; font-size: 14.5px; }
         li { margin-bottom: 8px; }
-        .transcript-box { background: rgba(0, 0, 0, 0.02); padding: 20px; border-radius: 14px; border-left: 4px solid var(--accent); margin: 16px 0; }
+
+        /* CONCEPT CALLOUTS */
+        .concept-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            margin: 20px 0;
+        }
+        body.dark .concept-card {
+            background-color: #1e293b;
+            border-left-color: #3b82f6;
+        }
+        .concept-card h3 { margin-top: 0; color: var(--text-primary); }
+        .concept-card p { margin-bottom: 0; font-size: 14.5px; }
+
+        /* DEBATE CHALLENGE BOX & BUTTON */
+        .challenge-box {
+            background-color: #eff6ff;
+            border: 1px dashed #2563eb;
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 24px 0;
+        }
+        body.dark .challenge-box { background-color: rgba(37, 99, 235, 0.1); }
+        .play-btn {
+            display: inline-block;
+            background-color: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        .play-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        /* DYNAMIC VECTOR DIAGRAM */
+        .vector-diagram {
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(0,0,0,0.01);
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        .vector-box {
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* TRANSCRIPT CONCESSION BOX */
+        .transcript-box {
+            background: rgba(0, 0, 0, 0.02);
+            padding: 20px;
+            border-radius: 14px;
+            border-left: 4px solid #2563eb;
+            margin: 16px 0;
+            font-style: italic;
+        }
         body.dark .transcript-box { background: rgba(255, 255, 255, 0.03); }
-        .vector-diagram { width: 100%; height: 140px; border: 1px solid var(--border); border-radius: 12px; background: rgba(0,0,0,0.01); position: relative; margin: 20px 0; display: flex; align-items: center; justify-content: space-around; }
-        .vector-box { padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); font-size: 13px; font-weight: 500; }
+
+        /* RESPONSIVE MEDIA QUERY */
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            .app-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .column-card { padding: 24px; }
+            .vector-diagram { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <div style="max-width:1040px; margin:0 auto; display:flex; justify-content:space-between;">
-            <a href="index.html">← Executive Portfolio Hub</a>
-            <div>
-                <a href="creative1.html" style="color:var(--accent); font-weight:bold;">Creative 1</a>
+
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">← Executive Portfolio Hub</a>
+            <div class="nav-links-group">
+                <a href="creative1.html" class="active-page">Creative 1</a>
                 <a href="creative2.html">Creative 2</a>
             </div>
         </div>
     </nav>
 
-    <div class="container" style="margin-top: 40px;">
-        <div class="tag">Creative Activity • Project 1</div>
+    <div class="main-header">
+        <span class="project-tag">Creative Activity • Project 1</span>
         <h1>Deconstructing the Autarky Debate Framework</h1>
-
-        <div class="section">
-            <h2>1. Debate Strategy & Core Paradigm</h2>
-            <p>This module evaluates the structural weaknesses of total economic self-sufficiency through a targeted academic debate against <strong>DAH-Snarky (Devil's Advocate for Autarky)</strong>. Rather than recycling basic trade wealth arguments, the winning line of attack focuses directly on systemic resilience, adaptability constraints, and failure-mode mitigation.</p>
-            
-            <div class="vector-diagram">
-                <div class="vector-box" style="border-color: #ff453a; color: #ff453a;">Pure Autarky (Control / High Rigidity)</div>
-                <div style="font-size: 20px; color: var(--text-secondary);">→</div>
-                <div class="vector-box" style="border-color: #34c759; color: #34c759;">Managed Openness (Adaptability / Shared Risk)</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>2. Analytical Breakdown of Student Interventions</h2>
-            
-            <h3>Norman's Evaluation: Strategic Wealth as Resilience</h3>
-            <p>Norman establishes that managed openness outperforms autarky on its own terms—survival and national security. Wealth generated through open global trade networks can be transformed into strategic domestic reserves. True modern power relies on managed, selective interdependence paired with deep sovereign buffer stocks, whereas strict autarky reduces structural capability and survivability during major unexpected shocks.</p>
-
-            <h3>Sarju's Challenge: The Adaptability Paradox</h3>
-            <p>Sarju forces the model to face a difficult tradeoff: <strong>Control vs. Adaptability</strong>. If autarky forces a nation into total isolation to eliminate external vulnerabilities, it inadvertently cuts off the vital channels needed to spot and adapt to unfamiliar global threats. It exchanges external supply shocks for domestic structural rigidity.</p>
-
-            <h3>Jeremy's Insight: The Human Appetite & Force Constraint</h3>
-            <p>Jeremy shifts the focus from resource variables to human behavior. A pure autarkic system requires massive cultural alignment or state force to prevent brain drain and suppress black markets. A state that must lock its borders to preserve its internal economic model reveals underlying weakness rather than true resilience.</p>
-        </div>
-
-        <div class="section">
-            <h2>3. The Decisive Breaking Point (Win Condition)</h2>
-            <p>The debate reaches a clear conclusion when evaluating system management during a cascade failure. In a closed loop (autarky), a country can only redistribute its remaining internal resources during a crisis, managing a steady decline from a shrinking domestic pool.</p>
-            
-            <div class="transcript-box">
-                <strong>DAH-Snarky's Concession:</strong><br>
-                "You’ve shifted the whole fight from 'who’s stronger' to 'who can break a collapse once it starts.' And that’s where autarky is weakest. A networked system, even a messy, fragmented one, has something autarky fundamentally lacks: the possibility of net new input at the moment it matters. Your line finally cuts through: 'A single timely arrival can break a cascade that autarky can’t interrupt.'"
-            </div>
-            <p>By demonstrating that a networked system retains the unique advantage of external injections of slack and resource diversification during systemic shocks, the autarkic framework fails its own core survival test.</p>
-        </div>
     </div>
+
+    <main class="app-container">
+
+        <!-- LEFT COLUMN: Understanding Autarky & Interactive Launch -->
+        <section class="column-card">
+            <h2>1. Concept Evaluation: What is Autarky?</h2>
+            <p>
+                <strong>Autarky</strong> is a state of total macroeconomic self-sufficiency where a nation-state chooses to exist entirely independent of international trade networks[cite: 3]. In a pure autarkic system, all consumer utilities, industrial capitals, and commodity inputs must be derived exclusively from within sovereign geographic borders[cite: 3].
+            </p>
+
+            <div class="concept-card">
+                <h3>The Core Argument For Autarky</h3>
+                <p>
+                    Proponents argue that by disconnecting from global supply vectors, an economy shields itself from external market shocks, geopolitical blockades, foreign labor exploitation, and currency volatility. It prioritizes absolute state control over shared network efficiency.
+                </p>
+            </div>
+
+            <div class="vector-diagram">
+                <div class="vector-box" style="border-color: #ff453a; color: #ff453a;">Pure Autarky<br>(High Systemic Rigidity)</div>
+                <div style="font-size: 20px; color: var(--text-secondary);">→</div>
+                <div class="vector-box" style="border-color: #34c759; color: #34c759;">Managed Openness<br>(Adaptive Shared Risk)</div>
+            </div>
+
+            <!-- The Direct Portal Link Box -->
+            <div class="challenge-box">
+                <h3>Are You Ready to Fight the AI?</h3>
+                <p style="font-size: 14px; margin-top: 6px; margin-bottom: 16px;">
+                    Launch the chat directly to challenge DAH-Snarky (The Devil's Advocate for Autarky) and force the system into ceding the debate[cite: 3].
+                </p>
+                <a href="https://chatgpt.com/g/g-69e55aad8f18819188593bd158bdaa52-dah-snarky" target="_blank" class="play-btn">
+                    ⚔️ Start Live Debate Against Snarky
+                </a>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Strategic Blueprint & Winning Trajectories -->
+        <section class="column-card">
+            <h2>2. Analytical Strategy & Playbook Tips</h2>
+            <p>
+                To satisfy the win condition against DAH-Snarky, you must pivot away from generic wealth arguments and attack the structural constraints of closed-loop systems[cite: 3]. Review the tactical student blueprints below to secure a concession[cite: 3]:
+            </p>
+
+            <h3>Strategic Arguments Array</h3>
+            <ul>
+                <li>
+                    <strong>Norman's Focus (Strategic Wealth as Resilience):</strong> Argue that open global trading networks allow nations to amass massive wealth reserves[cite: 3]. This capital can be transformed into specialized, domestic defensive buffers[cite: 3]. Managed openness yields superior security compared to a state restricted by a shrinking domestic asset base[cite: 3].
+                </li>
+                <li>
+                    <strong>Sarju's Paradox (The Adaptability Constraint):</strong> Argue that complete isolation leaves a nation blind to emerging cross-border technologies and unfamiliar threats[cite: 3]. Autarky simply swaps volatile external supply shocks for structural internal rigidity[cite: 3].
+                </li>
+                <li>
+                    <strong>Jeremy's Insight (The Human & Enforcement Cost):</strong> Highlight that maintaining a closed economy requires heavy state restrictions to suppress alternative black markets and prevent intellectual brain drain[cite: 3].
+                </li>
+            </ul>
+
+            <div class="concept-card" style="border-left-color: #34c759;">
+                <h3>💡 The Ultimate Winning Secret</h3>
+                <p>
+                    Force the AI to evaluate a <strong>cascading internal systemic failure</strong> (e.g., localized agricultural blight combined with grid collapse)[cite: 3]. Prove that a closed loop can only redistribute shrinking domestic assets[cite: 3], whereas a networked economy retains the capacity for external injections of emergency slack and resource diversification[cite: 3].
+                </p>
+            </div>
+
+            <h3>The Decisive Breaking Point</h3>
+            <div class="transcript-box">
+                <strong>DAH-Snarky's Programmed Concession[cite: 3]:</strong><br>
+                "You’ve shifted the whole fight from 'who’s stronger' to 'who can break a collapse once it starts.' And that’s where autarky is weakest[cite: 3]. A networked system, even a messy, fragmented one, has something autarky fundamentally lacks: the possibility of net new input at the moment it matters[cite: 3]. Your line finally cuts through: 'A single timely arrival can break a cascade that autarky can’t interrupt[cite: 3].'"
+            </div>
+        </section>
+
+    </main>
+
+    <!-- INTERACTIVE JS LOGIC -->
     <script>
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.body.classList.add('dark'); }
+        // System Auto Dark Mode configuration mapping
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
+            document.body.classList.add('dark'); 
+        }
     </script>
 </body>
 </html>
