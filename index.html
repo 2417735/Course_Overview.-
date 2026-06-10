@@ -115,7 +115,8 @@
         .trade-tag { background: rgba(0, 113, 227, 0.1); color: var(--accent-trade); }
         .mgmt-tag { background: rgba(134, 134, 139, 0.15); color: var(--text-secondary); }
 
-        .course-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
+        .course-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+        .course-review-sub { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 12px; }
 
         /* Project Track Listing */
         .project-track-list {
@@ -124,16 +125,15 @@
         }
         .project-track-list li {
             font-size: 14px;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--apple-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .project-track-list li:last-child { border-bottom: none; }
-        .project-num { font-weight: 700; color: var(--text-secondary); margin-right: 8px; }
-        .project-status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
-        .status-active { background: rgba(52, 211, 153, 0.15); color: #059669; }
+        .project-num { font-weight: 700; color: var(--accent-trade); margin-right: 8px; }
+        .project-status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: rgba(52, 211, 153, 0.15); color: #059669; }
 
         /* Interactive Launchers */
         .btn-apple {
@@ -204,7 +204,6 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .framework-footer a { color: var(--apple-btn-bg); text-decoration: none; font-weight: 500; }
 
         @media (max-width: 900px) {
             .hero-layout-grid { grid-template-columns: 1fr; gap: 30px; }
@@ -232,30 +231,31 @@
                 <section class="course-card">
                     <span class="course-tag trade-tag">Module 01 • International Trade</span>
                     <h2>Advanced Trade Networks</h2>
+                    <div class="course-review-sub">Course Review & Project Matrix</div>
                     <p style="font-size:14px; color:var(--text-secondary); margin-bottom:8px;">
                         Analytical evaluation of gravity equations, resource endowments, specialized returns, and structural boundary limits.
                     </p>
                     
                     <ul class="project-track-list">
                         <li>
-                            <span><span class="project-num">P1</span> The Gravity Model of Trade (Friction Calculus)</span>
-                            <span class="project-status status-active"> trade1.html</span>
+                            <span><span class="project-num">Project 1:</span> The Gravity Model of Trade (Friction Calculus)</span>
+                            <span class="project-status">Active Pipeline</span>
                         </li>
                         <li>
-                            <span><span class="project-num">P2</span> Comparative Advantage Framework (Ricardo)</span>
-                            <span class="project-status status-active"> trade2.html</span>
+                            <span><span class="project-num">Project 2:</span> Comparative Advantage Framework (Ricardo)</span>
+                            <span class="project-status">Active Pipeline</span>
                         </li>
                         <li>
-                            <span><span class="project-num">P3</span> Resource Endowments Matrix (Heckscher-Ohlin)</span>
-                            <span class="project-status status-active"> trade3.html</span>
+                            <span><span class="project-num">Project 3:</span> Resource Endowments Matrix (Heckscher-Ohlin)</span>
+                            <span class="project-status">Active Pipeline</span>
                         </li>
                         <li>
-                            <span><span class="project-num">P4</span> Deconstructing the Autarky Cascade Debate</span>
-                            <span class="project-status status-active"> creative1.html</span>
+                            <span><span class="project-num">Project 4:</span> Deconstructing the Autarky Cascade Debate</span>
+                            <span class="project-status">Active Pipeline</span>
                         </li>
                         <li>
-                            <span><span class="project-num">P5</span> Systems Thinking & Industrial Scale Constraints</span>
-                            <span class="project-status status-active"> creative2.html</span>
+                            <span><span class="project-num">Project 5:</span> Systems Thinking & Industrial Scale Constraints</span>
+                            <span class="project-status">Active Pipeline</span>
                         </li>
                     </ul>
                     
@@ -301,7 +301,6 @@
 
     <footer class="framework-footer">
         <p>Portfolio Node Matrix &bull; Lead Developer: ALAM AL KAHAF</p>
-        <p><a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank">Syllabus Matrix Document ↗</a></p>
     </footer>
 
     <script>
