@@ -44,6 +44,19 @@
         ul { margin-left: 20px; margin-bottom: 14px; color: var(--text-secondary); font-size: 15px; }
         li { margin-bottom: 8px; }
         .formula-box { background: rgba(0, 113, 227, 0.05); padding: 16px; border-radius: 12px; border: 1px dashed var(--accent); font-family: monospace; font-size: 16px; text-align: center; margin: 16px 0; }
+        
+        /* New Styles for Carousel & Media */
+        .static-image { width: 100%; max-height: 380px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); margin: 12px 0; }
+        .carousel-container { position: relative; width: 100%; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: rgba(0,0,0,0.03); margin-top: 16px; }
+        body.dark .carousel-container { background: rgba(255,255,255,0.03); }
+        .carousel-wrapper { display: flex; justify-content: center; align-items: center; min-height: 450px; padding: 20px; }
+        .carousel-image { max-width: 100%; max-height: 550px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; }
+        .carousel-image.active { display: block; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--card-bg); border: 1px solid var(--border); color: var(--text-primary); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 18px; font-weight: bold; display: flex; justify-content: center; align-items: center; backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); transition: background 0.2s; z-index: 10; }
+        .carousel-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .btn-prev { left: 16px; }
+        .btn-next { right: 16px; }
+        .carousel-meta { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; }
     </style>
 </head>
 <body>
@@ -74,7 +87,7 @@
 
         <div class="section">
             <h2>2. Guiding Questions & Core Answers</h2>
-            
+             
             <h3>Q1: What are the seven recurring themes in international economics?</h3>
             <ul>
                 <li><strong>1. Gains from Trade:</strong> Mutually beneficial expansion of production frontiers via specialized resource utility.</li>
@@ -93,9 +106,70 @@
             <h3>Q3: How has the pattern of trade changed over the course of recorded history?</h3>
             <p>Historically, international trade was dominated by raw commodities, agricultural goods, and minerals due to transport limits. In the modern era, global value chains have shifted trade heavily toward manufactured industrial goods and tradeable services. Trade as a percentage of global GDP surged during the pre-WWI globalization wave, collapsed during the interwar protectionist era, and expanded into highly integrated global supply chains by the late 20th century.</p>
         </div>
+
+        <div class="section">
+            <h2>3. Visual Methodology</h2>
+            <p>The following structural framework visualizes how national economic borders and physical spaces scale global trade interactions over distance thresholds:</p>
+            <img src="trade1_lead.jpeg" alt="Gravity Model System Mapping" class="static-image" onerror="this.style.display='none';">
+        </div>
+
+        <div class="section">
+            <h2>4. Verified Proof (My Notes & Evidence)</h2>
+            <p>Review the chronological archive of my scanned physical notes, computations, and formula proofs validating the reading objectives directly below:</p>
+            
+            <div class="carousel-container">
+                <button class="carousel-btn btn-prev" onclick="changeSlide(-1)">&#10094;</button>
+                <div class="carousel-wrapper" id="carouselWrapper">
+                    <img id="img_a" src="trade1a.jpeg" alt="Notes Page A" class="carousel-image active">
+                    <img id="img_b" src="trade1b.jpeg" alt="Notes Page B" class="carousel-image">
+                    <img id="img_c" src="trade1c.jpeg" alt="Notes Page C" class="carousel-image">
+                    <img id="img_d" src="trade1d.jpeg" alt="Notes Page D" class="carousel-image">
+                    <img id="img_e" src="trade1e.jpeg" alt="Notes Page E" class="carousel-image">
+                    <img id="img_f" src="trade1f.jpeg" alt="Notes Page F" class="carousel-image">
+                    <img id="img_g" src="trade1g.jpeg" alt="Notes Page G" class="carousel-image">
+                </div>
+                <button class="carousel-btn btn-next" onclick="changeSlide(1)">&#10095;</button>
+                <div class="carousel-meta" id="carouselMeta">File: trade1a.jpeg</div>
+            </div>
+        </div>
     </div>
+
     <script>
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.body.classList.add('dark'); }
+
+        // Interactive Carousel Engine
+        let currentIdx = 0;
+        const images = Array.from(document.querySelectorAll('.carousel-image'));
+        const metaText = document.getElementById('carouselMeta');
+
+        // Filter out images that fail to load from your directory
+        images.forEach((img) => {
+            img.onerror = function() {
+                img.dataset.failed = "true";
+                // If the currently active image fails to load, force transition to next available file
+                if(img.classList.contains('active')) {
+                    changeSlide(1);
+                }
+            };
+        });
+
+        function changeSlide(direction) {
+            // Remove active class from current image
+            images[currentIdx].classList.remove('active');
+            
+            let attempts = 0;
+            do {
+                currentIdx = (currentIdx + direction + images.length) % images.length;
+                attempts++;
+            } while (images[currentIdx].dataset.failed === "true" && attempts < images.length);
+
+            // Set next valid image active
+            images[currentIdx].classList.add('active');
+            
+            // Extract suffix name clean to render meta tag info
+            const filename = images[currentIdx].src.split('/').pop();
+            metaText.textContent = `File: ${filename}`;
+        }
     </script>
 </body>
 </html>
