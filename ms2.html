@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS Lab II: Graphical Optimization Modeling</title>
+    <title>MS Lab II: Transportation Optimization Engine</title>
     <style>
+        /* Apple-Inspired High-Fidelity Glassmorphism Interface Theme matching MS1 */
         :root {
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             --glass-bg: rgba(255, 255, 255, 0.45);
             --glass-border: rgba(255, 255, 255, 0.4);
             --text-primary: #1d1d1f;
@@ -14,22 +15,18 @@
             --accent: #0071e3;
             --accent-gradient: linear-gradient(135deg, #0071e3, #34c759);
             --pill-active: #ffffff;
-            --card-success: rgba(52, 199, 89, 0.15);
-            --card-error: rgba(255, 59, 48, 0.15);
             --blur-radius: 20px;
         }
 
         body.dark {
-            --bg-gradient: linear-gradient(135deg, #0a0f1d 0%, #070708 100%);
-            --glass-bg: rgba(22, 22, 26, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.06);
+            --bg-gradient: linear-gradient(135deg, #0d0d0e 0%, #1a1a1e 100%);
+            --glass-bg: rgba(30, 30, 32, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent: #2997ff;
             --accent-gradient: linear-gradient(135deg, #2997ff, #30d158);
-            --pill-active: rgba(255, 255, 255, 0.12);
-            --card-success: rgba(48, 209, 88, 0.2);
-            --card-error: rgba(255, 69, 58, 0.2);
+            --pill-active: rgba(255, 255, 255, 0.15);
         }
 
         * {
@@ -44,18 +41,15 @@
             background: var(--bg-gradient);
             background-attachment: fixed;
             color: var(--text-primary);
-            min-height: 100vh;
-            padding-top: 74px;
+            padding-top: 70px;
             padding-bottom: 40px;
             transition: background 0.4s ease;
         }
 
-        /* NAVIGATION BAR */
+        /* Fixed Navigation Layer */
         .apple-nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 52px;
+            top: 0; width: 100%; height: 52px;
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-radius));
             -webkit-backdrop-filter: blur(var(--blur-radius));
@@ -66,41 +60,24 @@
         }
 
         .nav-container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            width: 100%; max-width: 1300px;
+            margin: 0 auto; padding: 0 24px;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
         .nav-brand {
-            font-weight: 700;
-            font-size: 15px;
-            letter-spacing: -0.02em;
+            font-weight: 700; font-size: 15px; letter-spacing: -0.02em;
             background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
+        .nav-links { display: flex; gap: 8px; align-items: center; }
+        
         .nav-item {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            color: var(--text-primary); text-decoration: none;
+            font-size: 12px; font-weight: 500; padding: 6px 12px;
+            border-radius: 8px; transition: all 0.2s ease;
         }
-
-        .nav-item:hover { background: rgba(255, 255, 255, 0.1); }
 
         .nav-item.active {
             background: var(--pill-active);
@@ -108,352 +85,375 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-primary);
-            font-size: 14px;
-            padding: 4px;
-            margin-left: 10px;
-        }
+        .theme-toggle { background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
 
-        /* TWO COLUMN MAIN CONTENT LAYOUT */
+        /* Multi-Column Layout Grid */
         .wrapper {
-            max-width: 1100px;
-            margin: 20px auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 24px;
+            max-width: 1300px; margin: 20px auto; padding: 0 24px;
+            display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px;
         }
 
-        @media (max-width: 900px) { .wrapper { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) { .wrapper { grid-template-columns: 1fr; } }
 
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-radius));
             -webkit-backdrop-filter: blur(var(--blur-radius));
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+            border-radius: 24px; padding: 28px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
             margin-bottom: 24px;
         }
 
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 6px;
+        .full-width-card { grid-column: 1 / -1; margin-bottom: 4px; }
+
+        h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+        h2 { font-size: 19px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+        .subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4; }
+
+        /* Inline Header Actions Container */
+        .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+        /* Action Link Button Components */
+        .action-link {
+            font-size: 11px; font-weight: 600; color: #ffffff; background: var(--accent);
+            padding: 5px 12px; border-radius: 20px; text-decoration: none;
+            transition: opacity 0.2s ease; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .action-link:hover { opacity: 0.85; }
+        .action-link-activity { background: #34c759; }
+        .action-link-reading { background: #5856d6; }
+        .action-link-book { background: #ff9500; }
+        body.dark .action-link-activity { background: #30d158; color: #000000; }
+
+        .briefing-box {
+            background: rgba(0, 113, 227, 0.06); border-left: 4px solid var(--accent);
+            padding: 16px; border-radius: 0 12px 12px 0; font-size: 13.5px; line-height: 1.5;
         }
 
-        .subtitle {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
+        /* Input Variables Styling */
+        .apple-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+        .apple-table th { text-align: left; padding: 10px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--glass-border); }
+        .apple-table td { padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.03); }
+        body.dark .apple-table td { border-bottom: 1px solid rgba(255,255,255,0.02); }
+
+        .allocation-input {
+            width: 80px; padding: 6px 10px; border-radius: 8px;
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.6);
+            color: var(--text-primary); font-weight: 600; text-align: center; outline: none;
         }
+        body.dark .allocation-input { background: rgba(0,0,0,0.3); }
 
-        /* TEXT INSIGHTS */
-        .theory-block {
-            border-left: 3px solid var(--accent);
-            padding-left: 14px;
-            margin: 16px 0;
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+        .metric-badge {
+            display: flex; flex-direction: column; background: rgba(255,255,255,0.2);
+            border: 1px solid var(--glass-border); padding: 14px; border-radius: 14px;
         }
+        body.dark .metric-badge { background: rgba(255,255,255,0.03); }
+        .metric-val { font-size: 22px; font-weight: 700; margin-top: 4px; }
+        
+        .status-pill { padding: 8px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; text-align: center; display: block; width: 100%; }
+        .status-valid { background: rgba(52, 199, 89, 0.14); color: #248a3d; }
+        .status-invalid { background: rgba(255, 69, 58, 0.14); color: #ff453a; }
 
-        .theory-title {
-            font-size: 14.5px;
-            font-weight: 700;
-            margin-bottom: 2px;
+        .doc-item { border-left: 2px solid var(--text-secondary); padding-left: 12px; margin-bottom: 14px; font-size: 13.5px; }
+        .doc-label { font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+        .doc-body { color: var(--text-secondary); line-height: 1.4; }
+
+        /* VISUAL DEMONSTRATION GRAPH COMPONENTS: Route Network Canvas Map */
+        .network-canvas {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.15); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 24px; position: relative; margin-top: 12px; min-height: 220px;
         }
-
-        .theory-text {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.4;
+        body.dark .network-canvas { background: rgba(0,0,0,0.2); }
+        
+        .network-col { display: flex; flex-direction: column; gap: 40px; justify-content: center; z-index: 2; }
+        
+        .node {
+            background: var(--pill-active); border: 1px solid var(--glass-border);
+            padding: 10px 14px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center; width: 130px; transition: all 0.3s;
         }
+        .node-factory { border-left: 4px solid #0071e3; }
+        .node-shop { border-left: 4px solid #34c759; }
 
-        /* INTERACTIVE BOARD PANELS */
-        .sim-panel {
-            background: rgba(255,255,255,0.15);
-            body.dark & { background: rgba(0,0,0,0.15); }
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-        }
+        .node-title { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+        .node-data { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
-        .slider-row { margin: 16px 0; }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .apple-slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            background: rgba(0,0,0,0.08);
-            body.dark & { background: rgba(255,255,255,0.08); }
-            border-radius: 3px;
-            outline: none;
-        }
-
-        .apple-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.2);
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-        }
-
-        /* GRAPH MATRIX REPRESENTATION */
-        .chart-box {
-            background: rgba(255,255,255,0.4);
-            body.dark & { background: rgba(255,255,255,0.03); }
-            border: 1px solid var(--glass-border);
-            height: 180px;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            margin: 16px 0;
-        }
-
-        .feasible-region {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 135px;
-            height: 120px;
-            background: rgba(52, 199, 89, 0.2);
-            border-top-right-radius: 60px;
-            border-right: 2px dashed #34c759;
-            border-top: 2px dashed #34c759;
-        }
-
-        .coordinate-dot {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #ff3b30;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ff3b30;
-            z-index: 10;
-            bottom: 0px;
-            left: 0px;
-        }
-
-        .live-badge {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            margin-top: 12px;
-        }
-
-        .status-banner {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .status-ok { background: var(--card-success); color: #248a3d; }
-        .status-err { background: var(--card-error); color: #ff3b30; }
-
-        /* REVISION ATTACHMENTS PREVIEW CONTAINER */
-        .preview-item {
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 12px;
-            margin-bottom: 12px;
-        }
-        .preview-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
-
-        .btn-portal {
-            display: block;
-            text-align: center;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: 14px;
-            transition: opacity 0.2s;
-        }
-        .btn-portal:hover { opacity: 0.9; }
+        /* Dynamic SVG Connector Layer Overlay */
+        .network-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .network-path { fill: none; stroke: var(--text-secondary); stroke-width: 1.5; opacity: 0.15; transition: stroke-width 0.3s, opacity 0.3s; }
+        .network-path.active { stroke: var(--accent); stroke-width: 3; opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <nav class="apple-nav">
         <div class="nav-container">
-            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-brand">Management Science Portfolio Node</div>
             <div class="nav-links">
-                <a href="https://2417735.github.io/Study_Cafe/" class="nav-item">Index Hub</a>
-                <a href="ms1.html" class="nav-item">MS 1</a>
-                <a href="ms2.html" class="nav-item active">MS 2</a>
-                <a href="ms3.html" class="nav-item">MS 3</a>
-                <a href="ms4.html" class="nav-item">MS 4</a>
-                <a href="ms5.html" class="nav-item">MS 5</a>
-                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <a href="index.html" class="nav-item">Index Hub</a>
+                <a href="ms1.html" class="nav-item">MS 1 Dashboard</a>
+                <a href="ms2.html" class="nav-item active">MS 2 Dashboard</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
             </div>
         </div>
     </nav>
 
     <div class="wrapper">
         
-        <div>
-            <div class="glass-card">
-                <div style="text-transform: uppercase; font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 4px;">MS Lab Module II</div>
-                <h1>Graphical Optimization</h1>
-                <p class="subtitle">Drag the sliders below to manually find the highest production yield inside your boundaries.</p>
-
-                <div class="theory-block">
-                    <div class="theory-title">1. Bounded Vector Space</div>
-                    <div class="theory-text">The green area on the chart handles tracking your <b>Feasible Region</b>. If your combination moves out of that zone, production breaks down.</div>
-                </div>
-
-                <div class="theory-block">
-                    <div class="theory-title">2. Extreme Optimization Points</div>
-                    <div class="theory-text">According to standard Operations rules, the best possible configuration sits perfectly on a boundary corner intersection.</div>
-                </div>
-
-                <div class="sim-panel">
-                    <h3 style="font-size: 15px; font-weight: 700;">💼 Problem Matrix: High-End Carpentry Unit</h3>
-                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Product X₁ (Trucks) gives $450 profit. Product X₂ (Trains) gives $550 profit. Your constraints: <b>5,000 Carpentry Hours</b> and <b>3,000 Polishing Hours</b> maximum.</p>
-                    
-                    <div class="slider-row">
-                        <div class="slider-label"><span>Quantity X₁ (Trucks)</span><b id="x1-lbl">0</b></div>
-                        <input type="range" class="apple-slider" id="sim-x1" min="0" max="15" step="1" value="0" oninput="calculateSimulator()">
-                    </div>
-                    
-                    <div class="slider-row">
-                        <div class="slider-label"><span>Quantity X₂ (Trains)</span><b id="x2-lbl">0</b></div>
-                        <input type="range" class="apple-slider" id="sim-x2" min="0" max="15" step="1" value="0" oninput="calculateSimulator()">
-                    </div>
-
-                    <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 6px;">Visual Feasible Intersection Map</div>
-                    <div class="chart-box">
-                        <div class="feasible-region"></div>
-                        <div class="coordinate-dot" id="vector-dot"></div>
-                        <span style="position: absolute; bottom: 8px; left: 10px; font-size: 10px; opacity: 0.5; font-weight: bold;">(0,0) Base</span>
-                    </div>
-
-                    <div class="live-badge">
-                        <div>Carpentry Used (400*X₁ + 300*X₂): <b id="carp-status">0 / 5000 hrs</b></div>
-                        <div>Polishing Used (200*X₁ + 250*X₂): <b id="fin-status">0 / 3000 hrs</b></div>
-                        <div id="sim-alert" class="status-banner status-ok">Feasible Configuration</div>
-                    </div>
-                </div>
-            </div>
+        <div class="glass-card full-width-card">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Module 02 // Lab Simulation II</div>
+            <h1>The Silk Road Skyways Transportation Engine</h1>
+            <p class="subtitle">Continuous multi-variable linear modeling configured to route physical commodities across international global freight lanes.</p>
         </div>
 
-        <div>
+        <div class="left-workspace">
+            
             <div class="glass-card">
-                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 14px;">📖 Conceptual Overview Vault</h3>
-                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Core theoretical parameters extracted directly from Chapter 2 structural models:</p>
+                <h2>✈️ Supply Chain Route Allocation Deck</h2>
+                <p class="subtitle">Manually assign shipment counts. The model updates route overheads and constraint boundaries on the fly.</p>
                 
-                <div class="preview-item">
-                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">I. Decision Variables</h4>
-                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">The items or factors you control (X₁ and X₂) to drive business output.</p>
-                </div>
-
-                <div class="preview-item">
-                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">II. Feasible Region Boundaries</h4>
-                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">The total shared space where all parameters match up perfectly without resource strain.</p>
-                </div>
-
-                <div class="preview-item">
-                    <h4 style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">III. Binding Resource Analysis</h4>
-                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">Constraints that run out completely at peak optimization level, creating zero slack.</p>
-                </div>
-
-                <a href="ms2read.html" class="btn-portal">Learn More (Open Reading Room) ➔</a>
+                <table class="apple-table">
+                    <thead>
+                        <tr>
+                            <th>Origin Factory</th>
+                            <th>Destination Market</th>
+                            <th>Cost / Unit</th>
+                            <th>Units Shipped</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">Beijing (PEK)</td>
+                            <td>New York (JFK)</td>
+                            <td>$12.50</td>
+                            <td><input type="number" id="route-pek-jfk" class="allocation-input" value="0" min="0" oninput="updateSimulation()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Beijing (PEK)</td>
+                            <td>London (LHR)</td>
+                            <td>$10.00</td>
+                            <td><input type="number" id="route-pek-lhr" class="allocation-input" value="500" min="0" oninput="updateSimulation()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Beijing (PEK)</td>
+                            <td>Tokyo (NRT)</td>
+                            <td>$3.50</td>
+                            <td><input type="number" id="route-pek-nrt" class="allocation-input" value="700" min="0" oninput="updateSimulation()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Shanghai (PVG)</td>
+                            <td>New York (JFK)</td>
+                            <td>$11.00</td>
+                            <td><input type="number" id="route-pvg-jfk" class="allocation-input" value="800" min="0" oninput="updateSimulation()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Shanghai (PVG)</td>
+                            <td>London (LHR)</td>
+                            <td>$9.50</td>
+                            <td><input type="number" id="route-pvg-lhr" class="allocation-input" value="100" min="0" oninput="updateSimulation()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Shanghai (PVG)</td>
+                            <td>Tokyo (NRT)</td>
+                            <td>$4.00</td>
+                            <td><input type="number" id="route-pvg-nrt" class="allocation-input" value="0" min="0" oninput="updateSimulation()"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="glass-card">
-                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Simulated Output Yield</h3>
+                <h2>📊 Dynamic Route Network Map</h2>
+                <p class="subtitle">Visualizing physical product channels. Active paths glow brightly when units flow across them.</p>
                 
-                <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 12px;">
-                    <span style="font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Total Active Profit Valuation</span>
-                    <div style="font-size: 30px; font-weight: 800; color: #34c759; margin-top: 2px;" id="total-profit-val">$0</div>
-                </div>
+                <div class="network-canvas">
+                    <svg class="network-lines" id="svg-canvas">
+                        <line id="line-pek-jfk" class="network-path" x1="130" y1="55" x2="310" y2="35" />
+                        <line id="line-pek-lhr" class="network-path" x1="130" y1="55" x2="310" y2="110" />
+                        <line id="line-pek-nrt" class="network-path" x1="130" y1="55" x2="310" y2="185" />
+                        <line id="line-pvg-jfk" class="network-path" x1="130" y1="165" x2="310" y2="35" />
+                        <line id="line-pvg-lhr" class="network-path" x1="130" y1="165" x2="310" y2="110" />
+                        <line id="line-pvg-nrt" class="network-path" x1="130" y1="165" x2="310" y2="185" />
+                    </svg>
 
-                <div style="background: rgba(255,255,255,0.2); body.dark & { background: rgba(0,0,0,0.2); } padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 12px;">
-                    <span style="font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase;">Sensitivity Vector State</span>
-                    <div style="font-size: 13px; font-weight: 700; margin-top: 4px;" id="binding-output">No Active Binding Constraints</div>
-                </div>
+                    <div class="network-col">
+                        <div class="node node-factory">
+                            <div class="node-title">Beijing (PEK)</div>
+                            <div class="node-data" id="map-supply-pek">0 / 1200</div>
+                        </div>
+                        <div class="node node-factory">
+                            <div class="node-title">Shanghai (PVG)</div>
+                            <div class="node-data" id="map-supply-pvg">0 / 1000</div>
+                        </div>
+                    </div>
 
-                <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 16px;">
-                    <p>Asset Source File: <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Document Matrix Link ↗</a></p>
+                    <div class="network-col">
+                        <div class="node node-shop">
+                            <div class="node-title">New York (JFK)</div>
+                            <div class="node-data" id="map-demand-jfk">0 / 800</div>
+                        </div>
+                        <div class="node node-shop">
+                            <div class="node-title">London (LHR)</div>
+                            <div class="node-data" id="map-demand-lhr">0 / 600</div>
+                        </div>
+                        <div class="node node-shop">
+                            <div class="node-title">Tokyo (NRT)</div>
+                            <div class="node-data" id="map-demand-nrt">0 / 700</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+        </div>
+
+        <div class="right-workspace">
+            
+            <div class="glass-card">
+                <h2>📖 Simplified System Overview</h2>
+                <div class="briefing-box">
+                    <strong>What are we solving?</strong><br>
+                    Imagine you are running a global smartphone brand. You build your phones inside two massive manufacturing hubs in Asia (**Beijing & Shanghai**). 
+                    <br><br>
+                    Customers across world capitals (**New York, London, Tokyo**) want to buy these phones immediately. Moving boxes by aircraft costs money, and every route has a completely unique tariff code pricing.
+                    <br><br>
+                    <strong>The Logistics Goal:</strong><br>
+                    We want to satisfy every single store order while keeping our global air freight expenditures at the absolute lowest baseline point, all without overloading what each factory is capable of assembling per day.
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>📈 System Expense Verification</h2>
+                <p class="subtitle">Global costs mapping parameters.</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Benchmark Target Minimum</span>
+                        <span class="metric-val" style="color: var(--accent);">$21,250</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Calculated Operational Cost</span>
+                        <span class="metric-val" id="total-freight-cost" style="color: #34c759;">$0</span>
+                    </div>
+                </div>
+
+                <span id="status-tag" class="status-pill status-valid">Feasible Configuration</span>
+            </div>
+
+            <div class="glass-card">
+                <h2>
+                    <span>📋 Activity Resource Portal</span>
+                    <div class="header-actions">
+                        <a href="Pizza Optimizer (slice).pdf" target="_blank" class="action-link">Open PDF ↗</a>
+                        <a href="Copy of Pizza Optimizer - 2417735.xlsx" target="_blank" class="action-link action-link-activity">See Activity 📊</a>
+                        <a href="ms2read.html" class="action-link action-link-reading">Reading Room 📚</a>
+                        <a href="OP theory.pdf" target="_blank" class="action-link action-link-book">Book Readings 📖</a>
+                    </div>
+                </h2>
+                <p class="subtitle">Direct metrics and learning pathways verified within your laboratory tracking portfolio modules.</p>
+                
+                <div class="doc-item">
+                    <div class="doc-label">Operational Math Architecture</div>
+                    <div class="doc-body">
+                        • <strong>Objective Layer:</strong> Minimize Total Freight Costs $\sum (\text{Route Cost} \times \text{Units Shipped})$<br>
+                        • <strong>Supply Rules:</strong> Max Capacity limits set at 1,200 (Beijing) and 1,000 (Shanghai).<br>
+                        • <strong>Market Targets:</strong> Exact delivery demands set at 800 (JFK), 600 (LHR), and 700 (NRT).
+                    </div>
+                </div>
+
+                <div class="doc-item">
+                    <div class="doc-label">Theoretical Reference Base</div>
+                    <div class="doc-body">
+                        See mathematical modeling formulas and network constraints guidelines mapped inside **Main Text Ch. 5 (pdf p.68-78)**.
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
 
     <script>
-        // SIMULATOR RUNTIME CONTROLLER
-        function calculateSimulator() {
-            const x1 = parseInt(document.getElementById('sim-x1').value);
-            const x2 = parseInt(document.getElementById('sim-x2').value);
+        // Real-time calculation logic engine mirroring MS1 functional consistency
+        function updateSimulation() {
+            // Inputs Extract
+            const pek_jfk = Math.max(0, parseInt(document.getElementById('route-pek-jfk').value) || 0);
+            const pek_lhr = Math.max(0, parseInt(document.getElementById('route-pek-lhr').value) || 0);
+            const pek_nrt = Math.max(0, parseInt(document.getElementById('route-pek-nrt').value) || 0);
             
-            document.getElementById('x1-lbl').innerText = x1;
-            document.getElementById('x2-lbl').innerText = x2;
+            const pvg_jfk = Math.max(0, parseInt(document.getElementById('route-pvg-jfk').value) || 0);
+            const pvg_lhr = Math.max(0, parseInt(document.getElementById('route-pvg-lhr').value) || 0);
+            const pvg_nrt = Math.max(0, parseInt(document.getElementById('route-pvg-nrt').value) || 0);
 
-            // Operations Calculations Matrix
-            const carp = (x1 * 400) + (x2 * 300);
-            const polishing = (x1 * 200) + (x2 * 250);
-            const profit = (x1 * 450) + (x2 * 550);
+            // Compute Aggregate Vectors
+            const supply_pek = pek_jfk + pek_lhr + pek_nrt;
+            const supply_pvg = pvg_jfk + pvg_lhr + pvg_nrt;
 
-            document.getElementById('carp-status').innerText = `${carp.toLocaleString()} / 5,000 hrs`;
-            document.getElementById('fin-status').innerText = `${polishing.toLocaleString()} / 3,000 hrs`;
-            document.getElementById('total-profit-val').innerText = `$${profit.toLocaleString()}`;
+            const demand_jfk = pek_jfk + pvg_jfk;
+            const demand_lhr = pek_lhr + pvg_lhr; 
+            const demand_nrt = pek_nrt + pvg_nrt;
 
-            // Fixed Visual Vector Dot Coordinate Physics 
-            const dot = document.getElementById('vector-dot');
-            dot.style.left = `${(x1 * 10)}px`;
-            dot.style.bottom = `${(x2 * 10)}px`;
+            // Compute Matrix Objective Functions Costs
+            const totalCost = (pek_jfk * 12.5) + (pek_lhr * 10.0) + (pek_nrt * 3.5) + 
+                              (pvg_jfk * 11.0) + (pvg_lhr * 9.5) + (pvg_nrt * 4.0);
 
-            const alertBox = document.getElementById('sim-alert');
-            const bindingTxt = document.getElementById('binding-output');
+            // UI Document Injection updates
+            document.getElementById('total-freight-cost').innerText = `$${totalCost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            document.getElementById('map-supply-pek').innerText = `${supply_pek} / 1200`;
+            document.getElementById('map-supply-pvg').innerText = `${supply_pvg} / 1000`;
+            
+            document.getElementById('map-demand-jfk').innerText = `${demand_jfk} / 800`;
+            document.getElementById('map-demand-lhr').innerText = `${demand_lhr} / 600`;
+            document.getElementById('map-demand-nrt').innerText = `${demand_nrt} / 700`;
 
-            if (carp > 5000 || polishing > 3000) {
-                alertBox.innerText = "Infeasible: Resource Boundary Broken!";
-                alertBox.className = "status-banner status-err";
-                bindingTxt.innerText = "Bounds Broken";
-                bindingTxt.style.color = "#ff3b30";
+            // SVG Path Activation Highlights
+            togglePathGlow('line-pek-jfk', pek_jfk);
+            togglePathGlow('line-pek-lhr', pek_lhr);
+            togglePathGlow('line-pek-nrt', pek_nrt);
+            togglePathGlow('line-pvg-jfk', pvg_jfk);
+            togglePathGlow('line-pvg-lhr', pvg_lhr);
+            togglePathGlow('line-pvg-nrt', pvg_nrt);
+
+            // Feasibility Inequality Assessment Rules Check
+            const statusTag = document.getElementById('status-tag');
+            const supplyValid = (supply_pek <= 1200) && (supply_pvg <= 1000);
+            const demandValid = (demand_jfk >= 800) && (demand_lhr >= 600) && (demand_nrt >= 700);
+
+            if (supplyValid && demandValid) {
+                statusTag.innerText = "Feasible Optimization Layout Configuration Balance Achieved";
+                statusTag.className = "status-pill status-valid";
             } else {
-                alertBox.innerText = "Feasible Configuration";
-                alertBox.className = "status-banner status-ok";
-                bindingTxt.style.color = "inherit";
-                
-                let rules = [];
-                if (carp === 5000) rules.push("Carpentry Labor");
-                if (polishing === 3000) rules.push("Polishing Labor");
-                bindingTxt.innerText = rules.length > 0 ? `Binding: ${rules.join(' & ')}` : "No Active Binding Constraints";
+                let errorMessages = [];
+                if (!supplyValid) errorMessages.push("Factory Supply Blown");
+                if (!demandValid) errorMessages.push("Retail Demand Unmet");
+                statusTag.innerText = `Infeasible Matrix Configuration: ${errorMessages.join(' & ')}`;
+                statusTag.className = "status-pill status-invalid";
+            }
+        }
+
+        function togglePathGlow(elementId, volume) {
+            const path = document.getElementById(elementId);
+            if (volume > 0) {
+                path.classList.add('active');
+            } else {
+                path.classList.remove('active');
             }
         }
 
         function toggleTheme() {
-            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('apple-theme', isDark ? 'dark' : 'light');
         }
 
-        // Initialize display setup on window mount
-        window.addEventListener('load', () => {
-            calculateSimulator();
-        });
+        if (localStorage.getItem('apple-theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+
+        // Mount Calculation Matrix
+        window.addEventListener('load', updateSimulation);
     </script>
 </body>
 </html>
