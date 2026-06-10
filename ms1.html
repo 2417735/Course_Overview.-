@@ -106,8 +106,21 @@
         .full-width-card { grid-column: 1 / -1; margin-bottom: 4px; }
 
         h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
-        h2 { font-size: 19px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+        h2 { font-size: 19px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
         .subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4; }
+
+        /* Document Action Button Styles */
+        .pdf-action-link {
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+            background: var(--accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        .pdf-action-link:hover { opacity: 0.85; }
 
         .briefing-box {
             background: rgba(0, 113, 227, 0.06); border-left: 4px solid var(--accent);
@@ -219,7 +232,10 @@
         <div class="right-workspace">
             
             <div class="glass-card">
-                <h2>📋 Document Task Sheet Excerpts</h2>
+                <h2>
+                    <span>📋 Document Task Sheet Excerpts</span>
+                    <a href="Pizza Optimizer (slice).pdf" target="_blank" class="pdf-action-link">Open PDF ↗</a>
+                </h2>
                 <p class="subtitle">Direct constraints and tasks listed within your laboratory tracking syllabus documents.</p>
                 
                 <div class="doc-item">
