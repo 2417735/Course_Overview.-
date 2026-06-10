@@ -3,73 +3,937 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M/S Project 5 — Decision Tree Model</title>
+    <title>Management Science Lab V | Advanced Decision Tree Simulator</title>
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-red: #ea4335;
-            --google-yellow: #fbbc05;
-            --google-green: #34a853;
-            --surface-bg: #ffffff;
-            --body-bg: #f8f9fa;
-            --text-main: #202124;
-            --text-sub: #5f6368;
-            --border-color: #dadce0;
+            /* Apple Pro Architectural Palette - Light Mode */
+            --apple-bg: #f5f5f7;
+            --apple-card: #ffffff;
+            --apple-border: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --apple-accent: #0071e3;
+            --apple-accent-rgb: 0, 113, 227;
+            --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            
+            /* Status Indicators */
+            --color-success: #34c759;
+            --color-warning: #ff9500;
+            --color-danger: #ff3b30;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--body-bg); color: var(--text-main); font-family: "Roboto", sans-serif; padding: 40px 20px; }
-        .google-container { max-width: 960px; margin: 0 auto; }
-        
-        .color-strip { display: flex; height: 4px; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
-        .strip-b { background: var(--google-blue); flex: 1; }
-        .strip-r { background: var(--google-red); flex: 1; }
-        .strip-y { background: var(--google-yellow); flex: 1; }
-        .strip-g { background: var(--google-green); flex: 1; }
+        body.dark {
+            /* Apple Pro Architectural Palette - Dark Mode */
+            --apple-bg: #000000;
+            --apple-card: #1c1c1e;
+            --apple-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --apple-accent: #2997ff;
+            --apple-accent-rgb: 41, 151, 255;
+            --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
 
-        .project-card { background: var(--surface-bg); border: 1px solid var(--border-color); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 40px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); margin-bottom: 24px; }
-        .back-nav { display: inline-flex; align-items: center; color: var(--google-blue); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; }
-        .back-nav:hover { text-decoration: underline; }
-        
-        h1 { font-size: 32px; font-weight: 400; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
-        .project-meta { font-size: 14px; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
-        h2 { font-size: 20px; font-weight: 500; margin: 24px 0 12px 0; color: var(--google-blue); }
-        p { font-size: 15px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
-        
-        .tree-diagram-box { background: #f1f3f4; border: 1px solid var(--border-color); border-radius: 8px; padding: 32px; text-align: center; margin: 20px 0; font-family: monospace; }
-        .btn-action { background-color: var(--google-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 500; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-        .footer-note { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 40px; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        body { 
+            background: var(--apple-bg); 
+            color: var(--text-primary); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            transition: background-color 0.3s ease; 
+            padding-bottom: 40px;
+        }
+
+        /* Top Navigation Interface */
+        .system-nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--apple-border);
+            z-index: 100;
+        }
+        body.dark .system-nav {
+            background: rgba(28, 28, 30, 0.7);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .icon-toggle { 
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px; 
+            cursor: pointer; 
+        }
+
+        /* Context Tabs */
+        .scenario-selector {
+            max-width: 1200px;
+            margin: 24px auto 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .selector-tab {
+            background: var(--apple-card);
+            border: 1px solid var(--apple-border);
+            color: var(--text-secondary);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .selector-tab.active {
+            background: var(--apple-accent);
+            color: #ffffff;
+            border-color: var(--apple-accent);
+        }
+
+        /* Main Workspace Structure */
+        .workspace-container {
+            max-width: 1200px;
+            margin: 16px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 950px) {
+            .workspace-container {
+                grid-template-columns: 1.3fr 0.7fr;
+            }
+        }
+
+        /* Apple UI Panels */
+        .panel {
+            background: var(--apple-card);
+            border: 1px solid var(--apple-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--apple-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--apple-border);
+            padding-bottom: 12px;
+        }
+
+        .panel-header h1, .panel-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .panel-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Dynamic Live Scoreboard/Dashboard Grid */
+        .live-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-metric {
+            background: var(--apple-bg);
+            border: 1px solid var(--apple-border);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .dashboard-metric label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-metric span {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Simulator Interactive Screen Area */
+        .simulator-display {
+            background: var(--apple-bg);
+            border: 1px solid var(--apple-border);
+            border-radius: 14px;
+            padding: 32px 24px;
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .node-level-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--apple-accent);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .node-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            max-width: 550px;
+            letter-spacing: -0.02em;
+        }
+
+        .node-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 28px;
+        }
+
+        /* Branching Layout Options */
+        .options-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .option-branch-btn {
+            background: var(--apple-card);
+            border: 1px solid var(--apple-border);
+            color: var(--text-primary);
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .option-branch-btn:hover {
+            border-color: var(--apple-accent);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .option-branch-btn::after {
+            content: '➔';
+            font-size: 11px;
+            color: var(--apple-accent);
+        }
+
+        /* Reset & Utility Controls */
+        .action-tray {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--apple-border);
+            padding-top: 16px;
+            margin-top: auto;
+        }
+
+        .utility-btn {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Group Rubric Assignment Sidebar Layout */
+        .rubric-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rubric-item {
+            border-left: 3px solid var(--apple-border);
+            padding-left: 14px;
+        }
+
+        .rubric-item.completed {
+            border-left-color: var(--color-success);
+        }
+
+        .rubric-item h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rubric-item p {
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .status-badge.green { background: rgba(52, 199, 89, 0.1); color: var(--color-success); }
+        .status-badge.orange { background: rgba(255, 149, 0, 0.1); color: var(--color-warning); }
+        .status-badge.red { background: rgba(255, 59, 48, 0.1); color: var(--color-danger); }
+
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: auto;
+            padding-top: 24px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="google-container">
-        <a href="index.html" class="back-nav">← Back to Management Hub</a>
-
-        <div class="color-strip">
-            <div class="strip-b"></div>
-            <div class="strip-r"></div>
-            <div class="strip-y"></div>
-            <div class="strip-g"></div>
+    <nav class="system-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">➔ Back to Master Portal</a>
+            <button class="icon-toggle" onclick="toggleLocalTheme()" id="themeBtn" aria-label="Toggle Mode">🌓</button>
         </div>
+    </nav>
 
-        <div class="project-card">
-            <span style="color: var(--google-blue); font-weight: 700; font-size: 12px; text-transform: uppercase;">M/S • Activity Hub</span>
-            <h1 style="margin-top: 6px;">Operational Decision Tree Simulator</h1>
-            <div class="project-meta">Student ID: 2417735 • Sequential Probability & Risk Analysis</div>
-
-            <h2>1. Structural Framework</h2>
-            <p>Model explicit decision chains under volatility parameters, calculating expected monetary values (EMV) along node junctions and structural splits.</p>
-
-            <h2>2. Interactive Node Diagram Sandbox</h2>
-            <div class="tree-diagram-box">
-                [ Decision Node Root ➔ Probability Splits ➔ Expected Monetary Outcomes ]
-            </div>
-            <button class="btn-action" onclick="alert('Decision structures evaluated.')">Calculate Tree Paths</button>
-        </div>
-
-        <div class="footer-note">Alam Al Kahaf • Management Science Laboratory Module</div>
+    <!-- SYSTEM CONTEXT TAB SWITCHER -->
+    <div class="scenario-selector">
+        <button class="selector-tab active" id="tab-hotel" onclick="switchContext('hotel')">🏨 Sandbox: Hotel Optimization Tree</button>
+        <button class="selector-tab" id="tab-tech" onclick="switchContext('tech')">🚀 Scenario 3: Viral Tech Product Launch</button>
     </div>
 
+    <main class="workspace-container">
+        
+        <!-- LEFT WORKSPACE BLOCK: THE SIMULATOR ENGINE -->
+        <section class="panel">
+            <div class="panel-header">
+                <h1 id="engineTitle">Hotel Operations Matrix</h1>
+                <p id="engineSubtitle">Balance rates, wait-times, asset placement, and employee utilization parameters over 10 consecutive depth levels.</p>
+            </div>
+
+            <!-- LIVE SCOREBOARD METRICS GRID -->
+            <div class="live-dashboard" id="scoreBoard">
+                <div class="dashboard-metric">
+                    <label id="lbl-m1">Budget</label>
+                    <span id="val-m1">$50,000</span>
+                </div>
+                <div class="dashboard-metric">
+                    <label id="lbl-m2">Satisfaction</label>
+                    <span id="val-m2">80%</span>
+                </div>
+                <div class="dashboard-metric">
+                    <label id="lbl-m3">Room Quality</label>
+                    <span id="val-m3">85%</span>
+                </div>
+                <div class="dashboard-metric">
+                    <label id="lbl-m4">Staff Burnout</label>
+                    <span id="val-m4">20%</span>
+                </div>
+            </div>
+
+            <!-- SIMULATOR NODE SCREEN HOUSING -->
+            <div class="simulator-display" id="nodeDisplayBox">
+                <div class="node-level-tag" id="nodeLevel">Level 0</div>
+                <h2 class="node-title" id="nodeTitle">Loading Node...</h2>
+                <p class="node-description" id="nodeDesc">Initial operational environment processing...</p>
+                
+                <div class="options-stack" id="optionsContainer"></div>
+            </div>
+
+            <div class="action-tray">
+                <button class="utility-btn" onclick="resetCurrentTree()">↩ Reset Active Tree</button>
+                <span style="font-size: 11px; color: var(--text-secondary); max-width: 70%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" id="pathTracker">Path Stack: root</span>
+            </div>
+        </section>
+
+        <!-- RIGHT WORKSPACE BLOCK: THE CRITERIA EVALUATOR -->
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Tree Construction Tracker</h2>
+                <p>Live programmatic analytical constraints evaluation checks.</p>
+            </div>
+
+            <div class="rubric-list">
+                <div class="rubric-item completed">
+                    <h3>Node 1 Base Core <span class="status-badge green">Verified</span></h3>
+                    <p id="rubricContext">Operations research parameters mapped into structured decision sets.</p>
+                </div>
+
+                <div class="rubric-item completed" id="chk-branch">
+                    <h3>Multi-Branch Path Rules <span class="status-badge green" id="badge-branch">Binary Active</span></h3>
+                    <p>Every active intermediate decision node branches out into alternative logic states.</p>
+                </div>
+
+                <div class="rubric-item" id="chk-depth">
+                    <h3>Minimum Matrix Depth <span class="status-badge orange" id="badge-depth">Level 0</span></h3>
+                    <p id="rubricDepthDesc">Academic rules mandate paths tracking deep consequence vectors.</p>
+                </div>
+
+                <div class="rubric-item">
+                    <h3>System Stability Warning</h3>
+                    <p>If any key dashboard optimization metric falls to 0% (or Burnout reaches 100%), the system experiences structural failure.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Management Science Lab Module &bull; Lead Developer: ALAM AL KAHAF &bull; Student ID: 24177375</p>
+    </footer>
+
+    <script>
+        // --- DATA DICTIONARY 1: 10-LEVEL HOTEL OPTIMIZATION TREE ---
+        const hotelTree = {
+            root: {
+                level: 0, title: "The Weekend Throughput Crisis", desc: "Saturday features a massive bottleneck: 350 scheduled check-ins and 300 check-outs falling within the same 4-hour window. Base labor capacity is insufficient. Choose your configuration.",
+                m1: 50000, m2: 80, m3: 85, m4: 20,
+                branches: [
+                    { text: "Outsource Labor: Hire emergency agency temps (-$5,000)", next: "h_l1_a" },
+                    { text: "Labor Maximization: Mandate internal double overtime (-$3,000)", next: "h_l1_b" }
+                ]
+            },
+            h_l1_a: {
+                level: 1, title: "Uncertified Room Variances", desc: "Temps handle the workload, but uncertified workers miss cleaning details. Room Quality drops. Now, two VIP guests arrive simultaneously, but only one premium Ocean View suite is prepared.",
+                m1: 45000, m2: 80, m3: 70, m4: 20,
+                branches: [
+                    { text: "Prioritize Contracted Cash: Give suite to corporate client", next: "h_l2_corp" },
+                    { text: "Prioritize Publicity: Give suite to social media influencer", next: "h_l2_inf" }
+                ]
+            },
+            h_l1_b: {
+                level: 1, title: "Asset Allocation Dilemma", desc: "Overtime keeps room quality high, but Staff Burnout spikes sharply. Two VIP profiles arrive at the front desk simultaneously, but only one Ocean View suite is prepared.",
+                m1: 47000, m2: 80, m3: 85, m4: 55,
+                branches: [
+                    { text: "Prioritize Contracted Cash: Give suite to corporate client", next: "h_l2_corp" },
+                    { text: "Force-Scale Capacity: Order an emergency 20-min 'Speed Clean'", next: "h_l2_speed" }
+                ]
+            },
+            h_l2_corp: {
+                level: 2, title: "Supply Chain Disturbance", desc: "The influencer leaves a toxic 1-star review about lobby wait times. Guest Satisfaction sinks. Next, a laundry vendor delay leaves you short on clean linen sheets.",
+                m1: 47000, m2: 55, m3: 75, m4: 35,
+                branches: [
+                    { text: "Buy New Linens Emergency Retail (-$4,000)", next: "h_l3_buy" },
+                    { text: "Delay Room Readiness: Force further waiting lines", next: "h_l3_delay" }
+                ]
+            },
+            h_l2_inf: {
+                level: 2, title: "The Disgruntled Corporate Anchor", desc: "The influencer posts positive coverage, but your high-value corporate anchor client cancels their multi-room annual account. Revenue projections dip. Then, the laundry vendor drops clean linen volumes.",
+                m1: 40000, m2: 85, m3: 70, m4: 20,
+                branches: [
+                    { text: "Buy New Linens Emergency Retail (-$4,000)", next: "h_l3_buy" },
+                    { text: "Run In-House Short Cycles: Strain equipment", next: "h_l3_strain" }
+                ]
+            },
+            h_l2_speed: {
+                level: 2, title: "The Quality Control Tax", desc: "Checking both in instantly prevents lobby lines, but the speed-cleaned room missed basic hygiene steps. Guest discovers a dirty bathroom. Concurrently, linen supply runs low.",
+                m1: 47000, m2: 60, m3: 50, m4: 75,
+                branches: [
+                    { text: "Run In-House Short Cycles: Strain equipment", next: "h_l3_strain" },
+                    { text: "Delay Room Readiness: Halt intakes to recover standards", next: "h_l3_delay" }
+                ]
+            },
+            h_l3_buy: {
+                level: 3, title: "Macro Dynamic Pricing Choice", desc: "Linens are resolved via cash, but capital reserves are hit. A major weekend storm hits, canceling all local outdoor events. Foot traffic vanishes.",
+                m1: 36000, m2: 70, m3: 75, m4: 30,
+                branches: [
+                    { text: "Crash Room Prices: Drop rates to $79 to lure locals", next: "h_l4_crash" },
+                    { text: "Hold Rates: Defend the luxury brand price baseline", next: "h_l4_hold" }
+                ]
+            },
+            h_l3_delay: {
+                level: 3, title: "Lobby Line Congestion", desc: "Waiting lines stretch into the parking lot. Front desk agents are taking severe verbal abuse. A storm cancels outdoor events.",
+                m1: 45000, m2: 35, m3: 70, m4: 60,
+                branches: [
+                    { text: "Crash Room Prices: Distribute steep discounts to placate lines", next: "h_l4_crash" },
+                    { text: "Deploy Free Bar Vouchers: Subsidize the queue friction (-$2,000)", next: "h_l4_vouch" }
+                ]
+            },
+            h_l3_strain: {
+                level: 3, title: "Mechanical Equipment Overhead", desc: "Washing machines are overheating from back-to-back fast cycles. Burnout escalates. A major local rainstorm shifts operations indoors.",
+                m1: 40000, m2: 65, m3: 65, m4: 85,
+                branches: [
+                    { text: "Hold Rates: Rely on existing high-yield bookings", next: "h_l4_hold" },
+                    { text: "Deploy Free Bar Vouchers: Move people to indoor zones (-$2,000)", next: "h_l4_vouch" }
+                ]
+            },
+            h_l4_crash: {
+                level: 4, title: "Predictive Maintenance Alarm", desc: "Low-priced rooms attract high volume. The central elevator in the premium view wing starts sparking and rattling. Peak checkout is tomorrow.",
+                m1: 32000, m2: 50, m3: 60, m4: 65,
+                branches: [
+                    { text: "Immediate Shutdown: Pull offline for expert repairs (-$5,000)", next: "h_l5_shut" },
+                    { text: "Run At Risk: Force operation until Monday morning checkout", next: "h_l5_risk" }
+                ]
+            },
+            h_l4_hold: {
+                level: 4, title: "The Revenue Yield Deficit", desc: "Holding luxury pricing leaves 45% of your inventory empty. Profit drops, but operations run quiet. Suddenly, the main elevator begins making a loud structural grinding noise.",
+                m1: 25000, m2: 65, m3: 75, m4: 40,
+                branches: [
+                    { text: "Immediate Shutdown: Pull offline for expert repairs (-$5,000)", next: "h_l5_shut" },
+                    { text: "Run At Risk: Defer maintenance to protect what remains", next: "h_l5_risk" }
+                ]
+            },
+            h_l4_vouch: {
+                level: 4, title: "The Alcohol-Fueled Bottleneck", desc: "Free bar vouchers soothe the lobby waiting queues, but guest intoxication creates rowdy behavior incidents. Staff stress peaks. Then, the wing elevator malfunctions.",
+                m1: 38000, m2: 55, m3: 60, m4: 90,
+                branches: [
+                    { text: "Immediate Shutdown: Stop service and isolate the tower", next: "h_l5_shut" },
+                    { text: "Run At Risk: Bypass safety warnings to avoid chaos", next: "h_l5_risk" }
+                ]
+            },
+            h_l5_shut: {
+                level: 5, title: "Vertical Staircase Bottlenecks", desc: "Shutting the elevator ensures mechanical safety, but senior guests are forced to carry luggage down six flights of stairs. Complaints spike. A booking platform demands data audit access.",
+                m1: 20000, m2: 30, m3: 70, m4: 80,
+                branches: [
+                    { text: "Grant API Access: Allow algorithms to set variable rates", next: "h_l6_api" },
+                    { text: "Deny System Access: Retain manual internal control matrices", next: "h_l6_deny" }
+                ]
+            },
+            h_l5_risk: {
+                level: 5, title: "The Mechanical Failure Catastrophe", desc: "The grinding elevator snaps its secondary drive belt mid-afternoon. Guests are trapped inside for two hours. Fire department intervention is required. Structural lawsuit threats emerge.",
+                m1: 15000, m2: 10, m3: 40, m4: 95,
+                branches: [
+                    { text: "Retain Corporate Crisis Attorneys (-$10,000)", next: "h_l6_legal" },
+                    { text: "Offer Blanket Financial Refunds (-$12,000)", next: "h_l6_refund" }
+                ]
+            },
+            h_l6_api: {
+                level: 6, title: "Algorithmic Control Encroachment", desc: "The external API takes control, slashing your room rates by 40% to force occupancy numbers. Yield efficiency is destroyed. A health inspector arrives unannounced.",
+                m1: 22000, m2: 45, m3: 55, m4: 85,
+                branches: [
+                    { text: "Bribe Inspector/Fast-Track Check (-$3,000)", next: "h_l7_bribe" },
+                    { text: "Accept Full Transparent Review Process", next: "h_l7_inspect" }
+                ]
+            },
+            h_l6_deny: {
+                level: 6, title: "The OTA Platform Delisting Penalty", desc: "Denying automated access causes Expedia/Booking channels to suppress your property ranking position. Online direct traffic plummets. A health inspector rings the back service bell.",
+                m1: 12000, m2: 40, m3: 70, m4: 75,
+                branches: [
+                    { text: "Bribe Inspector/Fast-Track Check (-$3,000)", next: "h_l7_bribe" },
+                    { text: "Accept Full Transparent Review Process", next: "h_l7_inspect" }
+                ]
+            },
+            h_l6_legal: {
+                level: 6, title: "The Legal Firestorm Containment", desc: "Attorneys gag public statements, preventing immediate PR damage. However, remaining cash balances are dangerously thin. The health inspector steps onto the main floor.",
+                m1: 5000, m2: 15, m3: 40, m4: 90,
+                branches: [
+                    { text: "Accept Full Transparent Review Process", next: "h_l7_inspect" },
+                    { text: "Order Emergency Shutdown for Self-Renovation", next: "h_l7_renov" }
+                ]
+            },
+            h_l6_refund: {
+                level: 6, title: "Cash Reserves Near Zero", desc: "Blanket refunds preserve customer goodwill, but your cash accounts face immediate overdraft parameters. The health inspector approaches your station.",
+                m1: 3000, m2: 35, m3: 40, m4: 90,
+                branches: [
+                    { text: "Accept Full Transparent Review Process", next: "h_l7_inspect" },
+                    { text: "Order Emergency Shutdown for Self-Renovation", next: "h_l7_renov" }
+                ]
+            },
+            h_l7_bribe: {
+                level: 7, title: "Ethical Integrity Compromise", desc: "The inspector takes the cash and clears your record, but an internal staff whistleblower records the transaction on a mobile phone.",
+                m1: 9000, m2: 40, m3: 50, m4: 95,
+                branches: [
+                    { text: "Terminated the Whistleblower Immediately", next: "h_l8_fire" },
+                    { text: "Promote Whistleblower to Head Ombudsperson", next: "h_l8_promo" }
+                ]
+            },
+            h_l7_inspect: {
+                level: 7, title: "The Formal Citations Notice", desc: "The transparent review catches structural issues in your speed-cleaned wings. You receive a formal 48-hour compliance improvement notice.",
+                m1: 4000, m2: 30, m3: 35, m4: 80,
+                branches: [
+                    { text: "Deploy All Cash to Facility Overhaul (-$3,000)", next: "h_l8_overhaul" },
+                    { text: "File an Official Administrative Appeal", next: "h_l8_appeal" }
+                ]
+            },
+            h_l7_renov: {
+                level: 7, title: "The Self-Imposed Lockdown", desc: "Voluntary closure prevents citations, but stops all current front-desk cash generation capacity. Labor begins looking elsewhere.",
+                m1: 2000, m2: 30, m3: 65, m4: 50,
+                branches: [
+                    { text: "Secure High-Interest Merchant Cash Advances (+10k)", next: "h_l8_mca" },
+                    { text: "Liquidate Premium On-Site Wine Asset Stocks (+5k)", next: "h_l8_liquid" }
+                ]
+            },
+            h_l8_fire: {
+                level: 8, title: "Retaliatory Lawsuit Filing", desc: "The terminated worker files a wrongful dismissal lawsuit in local civil court. Media handles pick up the labor story.",
+                m1: 9000, m2: 20, m3: 50, m4: 99,
+                branches: [
+                    { text: "Pivot to Digital Ghost Kitchen Operations", next: "h_l9_ghost" },
+                    { text: "Surrender Control to Institutional Debt Holders", next: "h_l9_fail" }
+                ]
+            },
+            h_l8_promo: {
+                level: 8, title: "The Compliance Bureaucracy Grind", desc: "The newly promoted worker implements strict cleaning checklists. Turnover spikes because tasks take twice as long. Throughput collapses.",
+                m1: 9000, m2: 50, m3: 85, m4: 75,
+                branches: [
+                    { text: "Transition Into Premium Extended-Stay Living", next: "h_l9_stay" },
+                    { text: "Pivot to Digital Ghost Kitchen Operations", next: "h_l9_ghost" }
+                ]
+            },
+            h_l8_overhaul: {
+                level: 8, title: "The High-Performance Turnaround", desc: "Physical repairs clear the citations and elevate your structural framework. Capital is spent, but property foundations are clean.",
+                m1: 1000, m2: 55, m3: 90, m4: 60,
+                branches: [
+                    { text: "Launch High-End Wellness Retreat Packages", next: "h_l9_well" },
+                    { text: "Transition Into Premium Extended-Stay Living", next: "h_l9_stay" }
+                ]
+            },
+            h_l8_appeal: {
+                level: 8, title: "The Courtroom Administrative Stay", desc: "Appeals buy time but legal filing costs burn remaining liquidity pools. Operational equipment continues to age without repairs.",
+                m1: 500, m2: 25, m3: 20, m4: 85,
+                branches: [
+                    { text: "Surrender Control to Institutional Debt Holders", next: "h_l9_fail" },
+                    { text: "Execute Emergency Timeshare Conversion", next: "h_l9_time" }
+                ]
+            },
+            h_l8_mca: {
+                level: 8, title: "The Predatory Debt Trap", desc: "The cash advance provides immediate funds, but automatic daily extraction terms slice 20% off all your credit card processing volume.",
+                m1: 12000, m2: 30, m3: 70, m4: 65,
+                branches: [
+                    { text: "Launch High-End Wellness Retreat Packages", next: "h_l9_well" },
+                    { text: "Execute Emergency Timeshare Conversion", next: "h_l9_time" }
+                ]
+            },
+            h_l8_liquid: {
+                level: 8, title: "The Lean Resource Inventory", desc: "Selling the luxury wine cellars generates fast cash, but removes your fine-dining restaurant's highest margin product offering.",
+                m1: 7000, m2: 35, m3: 65, m4: 60,
+                branches: [
+                    { text: "Transition Into Premium Extended-Stay Living", next: "h_l9_stay" },
+                    { text: "Pivot to Digital Ghost Kitchen Operations", next: "h_l9_ghost" }
+                ]
+            },
+            h_l9_ghost: { level: 9, title: "Level 9 Re-engineering Node", desc: "You clear out hotel rooms and rent them to third-party delivery chefs. Final destination path lock-in complete.", branches: [{ text: "Lock Terminal Matrix Level 10 Outcome", next: "h_l10_ghost" }] },
+            h_l9_stay: { level: 9, title: "Level 9 Re-engineering Node", desc: "You transition from nightly check-ins to stable 6-month corporate residential leases.", branches: [{ text: "Lock Terminal Matrix Level 10 Outcome", next: "h_l10_stay" }] },
+            h_l9_well: { level: 9, title: "Level 9 Re-engineering Node", desc: "You convert your ocean view tracks into premium therapeutic recovery wellness facilities.", branches: [{ text: "Lock Terminal Matrix Level 10 Outcome", next: "h_l10_well" }] },
+            h_l9_time: { level: 9, title: "Level 9 Re-engineering Node", desc: "You break the real estate footprint down into distributed fractional holiday timeshares.", branches: [{ text: "Lock Terminal Matrix Level 10 Outcome", next: "h_l10_time" }] },
+            h_l9_fail: { level: 9, title: "Level 9 Re-engineering Node", desc: "Liquidity profiles collapse completely. Receivership algorithms step into ownership.", branches: [{ text: "Lock Terminal Matrix Level 10 Outcome", next: "h_l10_fail" }] },
+
+            h_l10_ghost: { level: 10, title: "🏆 Terminal State: The Automated Ghost Kitchen Network", desc: "Hospitality operations cease entirely. Your building functions as a high-margin, automated urban food delivery node. Cash lines stabilize, guest satisfaction is deprecated, and human burnout hits zero.", branches: [] },
+            h_l10_stay: { level: 10, title: "🏆 Terminal State: Corporate Corporate Housing Hub", desc: "By converting to extended-stay corporate leases, you eliminate weekend check-in lines completely. Overhead metrics drop 60%, revenue remains stable, and your operations achieve optimized equilibrium.", branches: [] },
+            h_l10_well: { level: 10, title: "🏆 Terminal State: Ultra-Premium Clinical Wellness Oasis", desc: "A masterful recovery. By targeting medical tourism and high-end wellness retreats, you command $1,200/night rates. Cleanliness is perfect, service queues disappear, and profitability peaks.", branches: [] },
+            h_l10_time: { level: 10, title: "🏆 Terminal State: Fractional Timeshare Matrix", desc: "The property functions as a fractional holiday real estate play. Long-term brand prestige is lower, but upfront contract injections successfully cleared your debt exposures.", branches: [] },
+            h_l10_fail: { level: 10, title: "💀 Terminal State: Bank Receivership Chapter 7 Liquidation", desc: "Unmanaged compounding trade-offs completely exhausted your capital and operational metrics. Institutional liquidators seize the physical real estate assets at auction.", branches: [] }
+        };
+
+        // --- DATA DICTIONARY 2: ORIGINAL SCENARIO 3 TECH PRODUCT LAUNCH ---
+        const techTree = {
+            root: {
+                level: 0, title: "Viral Demand Spike", desc: "Orders explode by 800% globally following an organic celebrity mention. Supply capacity cannot survive past 48 hours. Choose your architecture path.",
+                m1: 50000, m2: 80, m3: 85, m4: 20,
+                branches: [
+                    { text: "Hyper-Scale Infrastructure: Outsource immediately", next: "t_scale_fast" },
+                    { text: "Controlled Quality Growth: Restrict output volumes", next: "t_scale_slow" }
+                ]
+            },
+            t_scale_fast: {
+                level: 1, title: "Aggressive Factory Ramp-Up", desc: "You contract third-party facilities to scale assembly lines. Forty decentralized hubs begin immediate work.",
+                m1: 35000, m2: 85, m3: 65, m4: 45,
+                branches: [
+                    { text: "Skip component stress testing schedules", next: "t_skip_testing" },
+                    { text: "Maintain baseline verification checks", next: "t_keep_testing" }
+                ]
+            },
+            t_scale_slow: {
+                level: 1, title: "Controlled Phased Shipments", desc: "You restrict manufacturing to certified operations, notifying markets of a 4-week delivery queue window.",
+                m1: 48000, m2: 60, m3: 90, m4: 25,
+                branches: [
+                    { text: "Launch premium pre-order queue structures", next: "t_launch_preorder" },
+                    { text: "Secure external venture funding capital", next: "t_secure_funding" }
+                ]
+            },
+            t_skip_testing: {
+                level: 2, title: "Component Failure Epidemic", desc: "Units ship quickly, but 6% of batteries suffer overheating errors under continuous charging conditions.",
+                m1: 35000, m2: 40, m3: 30, m4: 60,
+                branches: [
+                    { text: "Issue immediate global product recalls", next: "t_recall" },
+                    { text: "Deploy power-throttling firmware patches", next: "t_patch" }
+                ]
+            },
+            t_keep_testing: {
+                level: 2, title: "Logistical Gridlock", desc: "Rigorous testing runs create a 5-day delivery backlog. Freight lines drop contracts due to shifting allocations.",
+                m1: 25000, m2: 65, m3: 85, m4: 55,
+                branches: [
+                    { text: "Pivot entire volume to Premium Air Freight", next: "t_air" },
+                    { text: "Utilize spot-market local fulfillment apps", next: "t_spot" }
+                ]
+            },
+            t_launch_preorder: {
+                level: 2, title: "Competitor Counter-Strike", desc: "Delivery backlogs give competitors breathing room. An aggressive copycat hardware device hits the shelves with next-day delivery guarantees.",
+                m1: 55000, m2: 50, m3: 90, m4: 30,
+                branches: [
+                    { text: "Slash retail prices to matching levels", next: "t_pricewar" },
+                    { text: "Double down on premium luxury marketing", next: "t_luxury" }
+                ]
+            },
+            t_secure_funding: {
+                level: 2, title: "Venture Board Oversight", desc: "Venture networks inject $15,000 into cash books but claim structural control, demanding aggressive near-term profit maximization.",
+                m1: 70000, m2: 60, m3: 85, m4: 40,
+                branches: [
+                    { text: "Outsource fundamental engineering abroad", next: "t_outsource" },
+                    { text: "Monetize user behavioral analytics data", next: "t_data" }
+                ]
+            },
+            t_recall: { level: 3, title: "Level 3 Financial Squeeze", desc: "Recalls exhaust available liquidity pools.", branches: [{ text: "Advance to Level 4 Restructuring Node", next: "t_ch11" }] },
+            t_patch: { level: 3, title: "Level 3 Performance Degradation", desc: "Firmware patches reduce tracking speeds by 30%.", branches: [{ text: "Advance to Level 4 Platform Node", next: "t_app" }] },
+            t_air: { level: 3, title: "Level 3 Margin Compression", desc: "Air cargo preserves timelines but burns profits down to 5%.", branches: [{ text: "Advance to Level 4 Public IPO Node", next: "t_ipo" }] },
+            t_spot: { level: 3, title: "Level 3 Regional Imbalances", desc: "Fulfillment apps yield uneven delivery patterns across key hubs.", branches: [{ text: "Advance to Level 4 Automation Node", next: "t_auto" }] },
+            t_pricewar: { level: 3, title: "Level 3 Value Race to the Bottom", desc: "Price cutting erodes margins and damages brand identity.", branches: [{ text: "Advance to Level 4 Corporate Pivot Node", next: "t_b2b" }] },
+            t_luxury: { level: 3, title: "Level 3 High-Status Cult Following", desc: "Long lines transform the product into an exclusive status symbol.", branches: [{ text: "Advance to Level 4 Ecosystem Node", next: "t_ecosystem" }] },
+            t_outsource: { level: 3, title: "Level 3 IP Vulnerability", desc: "Offshore contracting groups leak technical design schematics.", branches: [{ text: "Advance to Level 4 Defensive Architecture Node", next: "t_closed" }] },
+            t_data: { level: 3, title: "Level 3 Privacy Violations", desc: "Data scraping routines trigger active regulatory compliance audits.", branches: [{ text: "Advance to Level 4 Antitrust Review Node", next: "t_privacy" }] },
+
+            t_ch11: { level: 4, title: "Level 4 Capital Crisis", desc: "Corporate debts require liquidation preparation.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_fail" }] },
+            t_app: { level: 4, title: "Level 4 Ecosystem Shift", desc: "Operations pivot toward application and software layers.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_software" }] },
+            t_ipo: { level: 4, title: "Level 4 Wall Street Integration", desc: "Public market listings clear logistics debt obligations.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_unicorn" }] },
+            t_auto: { level: 4, title: "Level 4 Automated Dark Logistics", desc: "Autonomous sorting layers maximize warehouse performance.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_auto" }] },
+            t_b2b: { level: 4, title: "Level 4 Enterprise Commercial Sales", desc: "Long-term contracts protect volume operations.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_b2b" }] },
+            t_ecosystem: { level: 4, title: "Level 4 Proprietary Interface Standard", desc: "High user lock-in isolates tracking rivals.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_luxury" }] },
+            t_closed: { level: 4, title: "Level 4 Vertical Architecture Shield", desc: "Strict system limits isolate cloning networks.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_closed" }] },
+            t_privacy: { level: 4, title: "Level 4 Structural Divestiture Notice", desc: "Regulatory fines mandate data infrastructure separations.", branches: [{ text: "Trigger Terminal Level 5 Consequence Node", next: "t_l5_divest" }] },
+
+            t_l5_fail: { level: 5, title: "💀 Terminal State: Chapter 7 Asset Liquidation", desc: "Unmanaged warranty claims exhausted all liquidity balances. Competitors buy the core patents at auction values.", branches: [] },
+            t_l5_software: { level: 5, title: "🏆 Terminal State: Software Ecosystem Powerhouse", desc: "Hardware margins disappeared, but you successfully pivoted into a highly profitable SaaS health metrics ecosystem.", branches: [] },
+            t_l5_unicorn: { level: 5, title: "🏆 Terminal State: Publicly Traded Tech Market Leader", desc: "A spectacular funding rollout. Going public secured the massive capital runway required to capture global enterprise markets.", branches: [] },
+            t_l5_auto: { level: 5, title: "🏆 Terminal State: Automated Logistics Matrix", desc: "Supply operations shift to dark, software-driven fulfillment centers, optimizing unit margin run-rates.", branches: [] },
+            t_l5_b2b: { level: 5, title: "🏆 Terminal State: Enterprise Corporate Safety Standard", desc: "The device becomes standard safety equipment for international corporate insurance and industrial frameworks.", branches: [] },
+            t_l5_luxury: { level: 5, title: "🏆 Terminal State: Elite Luxury Lifestyle Brand", desc: "High margins and elite cultural status position your brand alongside high-end luxury watch and fashion houses.", branches: [] },
+            t_l5_closed: { level: 5, title: "🏆 Terminal State: Vertical Ecosystem Wall", desc: "Strict hardware-software integration secures high user retention, establishing a dominant tech monopoly.", branches: [] },
+            t_l5_divest: { level: 5, title: "🏆 Terminal State: Clean Patent Holding Operation", desc: "Manufacturing operations are spun off. The business transforms into a highly focused patent licensing operation.", branches: [] }
+        };
+
+        // --- SIMULATOR CONTROL CORE ENGINE ---
+        let currentContext = 'hotel'; 
+        let currentPathStack = ['root'];
+        let activeDataMap = hotelTree;
+
+        function updateScreenLabels() {
+            if (currentContext === 'hotel') {
+                document.getElementById('engineTitle').innerText = "Hotel Operations Sandbox";
+                document.getElementById('engineSubtitle').innerText = "Balance rates, wait-times, asset placement, and employee utilization parameters over 10 consecutive depth levels.";
+                document.getElementById('lbl-m1').innerText = "Budget";
+                document.getElementById('lbl-m2').innerText = "Satisfaction";
+                document.getElementById('lbl-m3').innerText = "Room Quality";
+                document.getElementById('lbl-m4').innerText = "Staff Burnout";
+                document.getElementById('rubricContext').innerText = "Hotel Operations Optimization Framework structured into sequential node tracking.";
+                document.getElementById('rubricDepthDesc').innerText = "The advanced hotel sandbox scales down to Level 10 to illustrate long-term operational trade-offs.";
+            } else {
+                document.getElementById('engineTitle').innerText = "Operational Decision Tree Engine";
+                document.getElementById('engineSubtitle').innerText = "Group Exercise Matrix • Evaluate supply risks vs. market speed parameters down to Level 5.";
+                document.getElementById('lbl-m1').innerText = "Cash Reserves";
+                document.getElementById('lbl-m2').innerText = "Market Share";
+                document.getElementById('lbl-m3').innerText = "Product Quality";
+                document.getElementById('lbl-m4').innerText = "R&D Fatigue";
+                document.getElementById('rubricContext').innerText = "Scenario 3 (The Viral Product Launch) selected as core structural base element.";
+                document.getElementById('rubricDepthDesc').innerText = "Your current analytical route path execution state must safely scale down to Level 5 depth parameters.";
+            }
+        }
+
+        function switchContext(contextKey) {
+            currentContext = contextKey;
+            activeDataMap = (contextKey === 'hotel') ? hotelTree : techTree;
+            
+            document.querySelectorAll('.selector-tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(`tab-${contextKey}`).classList.add('active');
+            
+            updateScreenLabels();
+            resetToRoot();
+        }
+
+        function drawNodeState(nodeKey) {
+            const node = activeDataMap[nodeKey];
+            if (!node) return;
+
+            // Compute dynamic metric impacts based on the chosen path
+            let runningM1 = activeDataMap.root.m1;
+            let runningM2 = activeDataMap.root.m2;
+            let runningM3 = activeDataMap.root.m3;
+            let runningM4 = activeDataMap.root.m4;
+
+            currentPathStack.forEach(step => {
+                const stepNode = activeDataMap[step];
+                if(stepNode && stepNode !== activeDataMap.root) {
+                    if (stepNode.m1 !== undefined) runningM1 += (stepNode.m1 - activeDataMap.root.m1);
+                    if (stepNode.m2 !== undefined) runningM2 += (stepNode.m2 - activeDataMap.root.m2);
+                    if (stepNode.m3 !== undefined) runningM3 += (stepNode.m3 - activeDataMap.root.m3);
+                    if (stepNode.m4 !== undefined) runningM4 += (stepNode.m4 - activeDataMap.root.m4);
+                }
+            });
+
+            // Enforce metric constraints
+            if (node === activeDataMap.root) {
+                runningM1 = node.m1; runningM2 = node.m2; runningM3 = node.m3; runningM4 = node.m4;
+            }
+            if (runningM2 < 0) runningM2 = 0; if (runningM2 > 100) runningM2 = 100;
+            if (runningM3 < 0) runningM3 = 0; if (runningM3 > 100) runningM3 = 100;
+            if (runningM4 < 0) runningM4 = 0; if (runningM4 > 100) runningM4 = 100;
+
+            // Render Dashboard Values
+            document.getElementById('val-m1').innerText = (currentContext === 'hotel') ? `$${runningM1.toLocaleString()}` : `$${runningM1.toLocaleString()}`;
+            document.getElementById('val-m2').innerText = `${runningM2}%`;
+            document.getElementById('val-m3').innerText = `${runningM3}%`;
+            document.getElementById('val-m4').innerText = `${runningM4}%`;
+
+            // Check for System Failures
+            let failureTriggered = false;
+            let failureMessage = "";
+
+            if (runningM1 <= 0) { failureTriggered = true; failureMessage = "Financial Liquidity Exhausted (Budget ≤ 0). Operations halted."; }
+            else if (runningM2 <= 0) { failureTriggered = true; failureMessage = "Public Backlash Collapse (Satisfaction ≤ 0). Brand terminated."; }
+            else if (runningM3 <= 0) { failureTriggered = true; failureMessage = "Regulatory/Asset Breakdown (Quality ≤ 0). Closure ordered."; }
+            else if (runningM4 >= 100) { failureTriggered = true; failureMessage = "Human Capital Strike (Burnout ≥ 100%). Labor abandoned the enterprise."; }
+
+            // Render Node Details
+            document.getElementById('nodeLevel').innerText = `Level ${node.level} • ${node.branches.length === 0 ? 'Terminal State' : 'Intermediate Node'}`;
+            
+            if (failureTriggered && node.level !== 5 && node.level !== 10) {
+                document.getElementById('nodeTitle').innerText = "⚠️ System Optimization Failure";
+                document.getElementById('nodeDesc').innerText = failureMessage;
+                const container = document.getElementById('optionsContainer');
+                container.innerHTML = `<div style="padding: 14px; background: rgba(255,59,48,0.1); border: 1px solid var(--color-danger); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--color-danger);">Operational stability broken. Click 'Reset Active Tree' to refine your strategy models.</div>`;
+                updateRubricUi(node.level, true);
+                return;
+            }
+
+            document.getElementById('nodeTitle').innerText = node.title;
+            document.getElementById('nodeDesc').innerText = node.desc;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            node.branches.forEach(branch => {
+                const button = document.createElement('button');
+                button.className = 'option-branch-btn';
+                button.innerText = branch.text;
+                button.onclick = () => {
+                    currentPathStack.push(branch.next);
+                    drawNodeState(branch.next);
+                };
+                container.appendChild(button);
+            });
+
+            if (node.branches.length === 0) {
+                container.innerHTML = `<div style="padding: 14px; background: rgba(52,199,89,0.1); border: 1px solid var(--color-success); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--color-success);">🎯 Terminal Node Verified. Consequence Path Evaluation Matrix Complete.</div>`;
+            }
+
+            updateRubricUi(node.level, false);
+            document.getElementById('pathTracker').innerText = `Path Stack: ${currentPathStack.join(' ➔ ')}`;
+        }
+
+        function resetCurrentTree() {
+            currentPathStack = ['root'];
+            drawNodeState('root');
+        }
+
+        function resetToRoot() {
+            resetCurrentTree();
+        }
+
+        function updateRubricUi(level, failed) {
+            const depthBadge = document.getElementById('badge-depth');
+            const depthItem = document.getElementById('chk-depth');
+            const branchBadge = document.getElementById('badge-branch');
+            const branchItem = document.getElementById('chk-branch');
+
+            depthBadge.innerText = `Level ${level}`;
+
+            if (failed) {
+                depthBadge.className = "status-badge red";
+                depthBadge.innerText = "Failed";
+                depthItem.className = "rubric-item";
+                branchBadge.className = "status-badge red";
+                branchBadge.innerText = "Broken";
+                branchItem.className = "rubric-item";
+                return;
+            }
+
+            branchBadge.className = "status-badge green";
+            branchBadge.innerText = "Verified";
+            branchItem.className = "rubric-item completed";
+
+            const targetDepth = (currentContext === 'hotel') ? 10 : 5;
+            if (level === targetDepth) {
+                depthBadge.className = "status-badge green";
+                depthBadge.innerText = `Level ${level}/${targetDepth} Max`;
+                depthItem.className = "rubric-item completed";
+            } else {
+                depthBadge.className = "status-badge orange";
+                depthBadge.innerText = `Level ${level}/${targetDepth}`;
+                depthItem.className = "rubric-item";
+            }
+        }
+
+        function toggleLocalTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('apple-premium-theme', isDark ? 'dark' : 'light');
+        }
+
+        // Window Initialization Hook
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('apple-premium-theme') === 'dark') {
+                document.body.classList.add('dark');
+            }
+            updateScreenLabels();
+            drawNodeState('root');
+        });
+    </script>
 </body>
 </html>
