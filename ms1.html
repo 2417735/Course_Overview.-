@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.45);
             --glass-border: rgba(255, 255, 255, 0.4);
             --text-primary: #1d1d1f;
             --text-secondary: #6e6e73;
@@ -19,7 +19,7 @@
 
         body.dark {
             --bg-gradient: linear-gradient(135deg, #0d0d0e 0%, #1a1a1e 100%);
-            --glass-bg: rgba(30, 30, 32, 0.45);
+            --glass-bg: rgba(30, 30, 32, 0.55);
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
@@ -32,7 +32,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -58,7 +58,7 @@
         }
 
         .nav-container {
-            width: 100%; max-width: 1100px;
+            width: 100%; max-width: 1300px;
             margin: 0 auto; padding: 0 24px;
             display: flex; justify-content: space-between; align-items: center;
         }
@@ -85,145 +85,183 @@
 
         .theme-toggle { background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
 
+        /* Unified Dual Column Work Matrix */
         .wrapper {
-            max-width: 1100px; margin: 20px auto; padding: 0 24px;
-            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px;
+            max-width: 1300px; margin: 20px auto; padding: 0 24px;
+            display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px;
         }
 
-        @media (max-width: 900px) { .wrapper { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) { .wrapper { grid-template-columns: 1fr; } }
 
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-radius));
             -webkit-backdrop-filter: blur(var(--blur-radius));
             border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 32px;
+            border-radius: 24px; padding: 28px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
         }
 
-        .full-width-card { grid-column: 1 / -1; margin-bottom: 8px; }
+        .full-width-card { grid-column: 1 / -1; margin-bottom: 4px; }
 
-        h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
-        h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
-        .subtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; }
+        h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+        h2 { font-size: 19px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+        .subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4; }
 
         .briefing-box {
-            background: rgba(0, 113, 227, 0.08); border-left: 4px solid var(--accent);
-            padding: 16px; border-radius: 0 12px 12px 0; font-size: 14px; line-height: 1.5;
+            background: rgba(0, 113, 227, 0.06); border-left: 4px solid var(--accent);
+            padding: 16px; border-radius: 0 12px 12px 0; font-size: 13.5px; line-height: 1.5;
         }
 
-        .apple-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-        .apple-table th { text-align: left; padding: 12px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--glass-border); }
-        .apple-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.03); }
+        .apple-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+        .apple-table th { text-align: left; padding: 10px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--glass-border); }
+        .apple-table td { padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.03); }
         body.dark .apple-table td { border-bottom: 1px solid rgba(255,255,255,0.02); }
 
         .switch-input {
-            appearance: none; width: 44px; height: 24px; background: rgba(0,0,0,0.1);
-            border-radius: 12px; position: relative; cursor: pointer; outline: none; transition: background 0.2s;
+            appearance: none; width: 40px; height: 22px; background: rgba(0,0,0,0.1);
+            border-radius: 11px; position: relative; cursor: pointer; outline: none; transition: background 0.2s;
         }
         body.dark .switch-input { background: rgba(255, 255, 255, 0.1); }
         .switch-input:checked { background: #34c759; }
         .switch-input::before {
-            content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%;
+            content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%;
             top: 2px; left: 2px; background: #ffffff; transition: transform 0.2s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
-        .switch-input:checked::before { transform: translateX(20px); }
+        .switch-input:checked::before { transform: translateX(18px); }
 
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
         .metric-badge {
-            display: flex; flex-direction: column; background: rgba(255,255,255,0.25);
-            border: 1px solid var(--glass-border); padding: 16px; border-radius: 16px; margin-bottom: 16px;
+            display: flex; flex-direction: column; background: rgba(255,255,255,0.2);
+            border: 1px solid var(--glass-border); padding: 14px; border-radius: 14px;
         }
-        body.dark .metric-badge { background: rgba(255,255,255,0.04); }
-        .metric-val { font-size: 26px; font-weight: 700; margin-top: 4px; }
+        body.dark .metric-badge { background: rgba(255,255,255,0.03); }
+        .metric-val { font-size: 22px; font-weight: 700; margin-top: 4px; }
         
-        .status-pill { padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; text-align: center; display: block; width: 100%; }
-        .status-valid { background: rgba(52, 199, 89, 0.15); color: #248a3d; }
-        .status-invalid { background: rgba(255, 69, 58, 0.15); color: #ff3b30; }
+        .status-pill { padding: 8px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; text-align: center; display: block; width: 100%; }
+        .status-valid { background: rgba(52, 199, 89, 0.14); color: #248a3d; }
+        .status-invalid { background: rgba(255, 69, 58, 0.14); color: #ff453a; }
+
+        /* Document Representation Items */
+        .doc-item {
+            border-left: 2px solid var(--text-secondary); padding-left: 12px; margin-bottom: 14px; font-size: 13.5px;
+        }
+        .doc-label { font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+        .doc-body { color: var(--text-secondary); line-height: 1.4; }
     </style>
 </head>
 <body>
 
     <nav class="apple-nav">
         <div class="nav-container">
-            <div class="nav-brand">Management Science Engine</div>
+            <div class="nav-brand">Management Science Portfolio Node</div>
             <div class="nav-links">
                 <a href="index.html" class="nav-item">Index Hub</a>
-                <a href="ms1.html" class="nav-item active">MS 1</a>
-                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <a href="ms1.html" class="nav-item active">MS 1 Dashboard</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
             </div>
         </div>
     </nav>
 
     <div class="wrapper">
         
-        <!-- STEP 1: CONTEXT & LEARNING MODULE -->
         <div class="glass-card full-width-card">
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Part 1 // Learn First</div>
-            <h1>Understanding the Knapsack Optimization Model</h1>
-            <p class="subtitle">Why model a pizza quantitatively? To turn subjective intuition into systematic resource allocation.</p>
-            <div class="briefing-box">
-                <strong>The Scarcity Problem:</strong> You want to build a premium pizza that maximizes total satisfaction. However, you face a strict constraint of <strong>exactly $7.00</strong>. Choosing toppings at random leads to budget overruns or low-value combinations. Using <strong>Binary Variables (1 = select, 0 = drop)</strong>, you can create a mathematical model to find the absolute optimal choice under scarcity.
-            </div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Module 02 // Lab Simulation I</div>
+            <h1>The Pizza Optimizer Engine</h1>
+            <p class="subtitle">An introductory entry into integer optimization programming using discrete selection metrics under strict system limits.</p>
         </div>
 
-        <!-- STEP 2: THE INTERACTIVE OPTIMIZER SWITCHBOARD -->
-        <div class="glass-card">
-            <h2>Ingredient Switchboard (Decision Matrix)</h2>
-            <p class="subtitle" style="margin-bottom: 10px;">Toggle items on or off to make your decision selections.</p>
-            
-            <table class="apple-table">
-                <thead>
-                    <tr>
-                        <th>Topping Item</th>
-                        <th>Cost</th>
-                        <th>Satisfaction</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="topping-rows">
-                    <!-- Dynamic Rows Injected via JS -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- STEP 3: RUNTIME OUTPUT & METRICS -->
-        <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-                <h2>Allocation Evaluation</h2>
-                <p class="subtitle">Live verification against linear constraint rules.</p>
+        <div class="left-workspace">
+            <div class="glass-card">
+                <h2>🍕 Ingredient Decision switchboard</h2>
+                <p class="subtitle">Flip parameters on or off. The calculator dynamically solves the objective equations in real-time.</p>
                 
-                <div class="metric-badge">
-                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Upper Budget Target</span>
-                    <span class="metric-val" style="color: var(--accent);">$7.00</span>
+                <table class="apple-table">
+                    <thead>
+                        <tr>
+                            <th>Topping Choice</th>
+                            <th>Cost</th>
+                            <th>Satisfaction (Sat)</th>
+                            <th>Selection (x)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topping-rows">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="glass-card">
+                <h2>📊 Dynamic Allocation Verification</h2>
+                <p class="subtitle">Live output testing the constraints inequality rules.</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Budget Capacity Bounds</span>
+                        <span class="metric-val" style="color: var(--accent);">$7.00</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Accumulated Cost</span>
+                        <span class="metric-val" id="total-cost">$0.00</span>
+                    </div>
                 </div>
 
-                <div class="metric-badge">
-                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Combined Cost</span>
-                    <span class="metric-val" id="total-cost">$0.00</span>
-                </div>
-
-                <div class="metric-badge">
-                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Total Score ($Z$)</span>
+                <div class="metric-badge" style="margin-bottom: 16px;">
+                    <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Calculated Objective Function Value ($Z$)</span>
                     <span class="metric-val" id="total-score" style="color: #34c759;">0.0</span>
                 </div>
 
-                <div style="margin-top: 10px;">
-                    <span id="status-tag" class="status-pill status-valid">Optimal/Feasible</span>
+                <span id="status-tag" class="status-pill status-valid">Feasible Solution</span>
+            </div>
+        </div>
+
+        <div class="right-workspace">
+            
+            <div class="glass-card">
+                <h2>📋 Document Task Sheet Excerpts</h2>
+                <p class="subtitle">Direct constraints and tasks listed within your laboratory tracking syllabus documents.</p>
+                
+                <div class="doc-item">
+                    <div class="doc-label">Part 4: Test Feasible Solutions manually</div>
+                    <div class="doc-body">
+                        Toggle combinations on the matrix switchboard to pinpoint the exact historical configurations:<br>
+                        🎯 <strong>Top optimization set benchmark:</strong> 26.0 satisfaction rating.<br>
+                        🥈 <strong>Secondary runner-up benchmark:</strong> 25.6 satisfaction rating.
+                    </div>
+                </div>
+
+                <div class="doc-item">
+                    <div class="doc-label">Part 5: Standard Model Components</div>
+                    <div class="doc-body">
+                        <strong>Set:</strong> toppings $T$<br>
+                        <strong>Parameters:</strong> price $Pr$ and satisfaction value $Sat$<br>
+                        <strong>Decision Variables:</strong> buy or skip option $x_j \in \{0,1\}$<br>
+                        <strong>Objective Function:</strong> Maximize total satisfaction score $\sum (Sat_j \cdot x_j)$<br>
+                        <strong>Constraint:</strong> $\sum (Pr_j \cdot x_j) \le 7.00$
+                    </div>
                 </div>
             </div>
 
-            <div style="margin-top: 30px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.45; border-top: 1px solid var(--glass-border); padding-top: 15px;">
-                <strong>Can you find the two historic targets?</strong><br>
-                🥇 Highest Target Set: <strong>26.0 Utility Score</strong><br>
-                🥈 Runner Up Set: <strong>25.6 Utility Score</strong>
+            <div class="glass-card">
+                <h2>💾 Similar Operational Problem: Server Cluster Optimization</h2>
+                <p class="subtitle">How this exact binary integer model works within corporate technology platforms.</p>
+                <div class="briefing-box" style="background: rgba(52, 199, 89, 0.05); border-left-color: #34c759; font-size: 13px;">
+                    <strong>The Infrastructure Scenario:</strong><br>
+                    An engineering department needs to activate application features inside an isolated cloud environment. They have a strict power configuration constraint of **7.0 kW**. 
+                    <br><br>
+                    Each individual server micro-service node requires a certain amount of power (Cost) and returns an exact query throughput speed (Satisfaction). 
+                    <br><br>
+                    Instead of toppings on a pizza, a system analytics engineer sets binary variables to determine which computer tasks get launched to ensure the system processes maximum requests without blowing out the electrical grid breakers.
+                </div>
             </div>
+
         </div>
 
     </div>
 
     <script>
-        // Full Dataset containing all 10 toppings from the assignment table
+        // Standardized table metrics from the activity framework mapping all 10 inputs
         const toppings = [
             { name: "Buffalo mozzarella", cost: 2.00, score: 5.0 },
             { name: "Gorgonzola", cost: 1.50, score: 3.1 },
@@ -237,7 +275,6 @@
             { name: "Fried eggplant", cost: 2.00, score: 5.2 }
         ];
 
-        // Track your game selections dynamically
         let selections = {};
         toppings.forEach(t => { selections[t.name] = false; });
 
@@ -247,9 +284,9 @@
             toppings.forEach((t, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-weight: 500;">${t.name}</td>
+                    <td style="font-weight: 600;">${t.name}</td>
                     <td>$${t.cost.toFixed(2)}</td>
-                    <td style="color: var(--text-secondary); font-weight: 600;">${t.score.toFixed(1)}</td>
+                    <td style="color: var(--text-secondary); font-weight: 700;">${t.score.toFixed(1)}</td>
                     <td>
                         <input type="checkbox" class="switch-input" id="check-${index}" onchange="toggleTopping('${t.name}', ${index})">
                     </td>
@@ -281,10 +318,10 @@
 
             const statusTag = document.getElementById('status-tag');
             if (currentCost <= targetBudget) {
-                statusTag.innerText = "Feasible Under Budget Bounds";
+                statusTag.innerText = "Feasible Solution Within Constraints Boundary";
                 statusTag.className = "status-pill status-valid";
             } else {
-                statusTag.innerText = "Infeasible Budget Constraint Breach";
+                statusTag.innerText = "Infeasible Solution: Budget Constraint Breached";
                 statusTag.className = "status-pill status-invalid";
             }
         }
