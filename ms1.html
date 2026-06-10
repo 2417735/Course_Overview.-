@@ -108,24 +108,40 @@
         .full-width-card { grid-column: 1 / -1; margin-bottom: 4px; }
 
         h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
-        h2 { font-size: 19px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        h2 { font-size: 19px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
         .subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4; }
 
-        /* PDF Shortcut Trigger Element Button */
-        .pdf-action-link {
-            font-size: 12px;
+        /* Inline Header Actions Container */
+        .header-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        /* Action Trigger Button Styles */
+        .action-link {
+            font-size: 11px;
             font-weight: 600;
             color: #ffffff;
             background: var(--accent);
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
             text-decoration: none;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, background-color 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 4px;
         }
-        .pdf-action-link:hover { opacity: 0.85; }
+        .action-link:hover { opacity: 0.85; }
+        
+        /* Secondary Activity Styling variant */
+        .action-link-activity {
+            background: #34c759;
+        }
+        body.dark .action-link-activity {
+            background: #30d158;
+            color: #000000;
+        }
 
         .briefing-box {
             background: rgba(0, 113, 227, 0.06); border-left: 4px solid var(--accent);
@@ -185,12 +201,14 @@
 
     <div class="wrapper">
         
+        <!-- MODULE BANNER HEADER -->
         <div class="glass-card full-width-card">
             <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Module 02 // Lab Simulation I</div>
             <h1>The Pizza Optimizer Engine</h1>
             <p class="subtitle">An introductory entry into integer optimization programming using discrete selection metrics under strict system limits.</p>
         </div>
 
+        <!-- LEFT WORKSPACE COLUMN: THE SWITCHBOARD CONTROL DECK -->
         <div class="left-workspace">
             <div class="glass-card">
                 <h2>🍕 Ingredient Decision Switchboard</h2>
@@ -206,7 +224,8 @@
                         </tr>
                     </thead>
                     <tbody id="topping-rows">
-                        </tbody>
+                        <!-- Javascript Engine Injects Content Dynamic Array Here -->
+                    </tbody>
                 </table>
             </div>
 
@@ -234,12 +253,16 @@
             </div>
         </div>
 
+        <!-- RIGHT WORKSPACE COLUMN: EXCERPTS SHEET + DUAL DOCUMENT TRIGGERS -->
         <div class="right-workspace">
             
             <div class="glass-card">
                 <h2>
                     <span>📋 Document Task Sheet Excerpts</span>
-                    <a href="Pizza Optimizer (slice).pdf" target="_blank" class="pdf-action-link">Open PDF ↗</a>
+                    <div class="header-actions">
+                        <a href="Pizza Optimizer (slice).pdf" target="_blank" class="action-link">Open PDF ↗</a>
+                        <a href="Copy of Pizza Optimizer - 2417735.xlsx" target="_blank" class="action-link action-link-activity">See Activity 📊</a>
+                    </div>
                 </h2>
                 <p class="subtitle">Direct constraints and tasks listed within your laboratory tracking syllabus documents.</p>
                 
@@ -264,6 +287,7 @@
                 </div>
             </div>
 
+            <!-- ANALOGOUS STRUCTURAL PROBLEM NODE -->
             <div class="glass-card">
                 <h2>💾 Similar Operational Problem: Server Cluster Optimization</h2>
                 <p class="subtitle">How this exact binary integer model works within corporate technology platforms.</p>
