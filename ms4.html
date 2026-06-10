@@ -16,10 +16,10 @@
             --apple-accent-rgb: 0, 113, 227;
             --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
             
-            /* Path Specific Colors */
-            --color-s-shape: #ff9500;
-            --color-gap: #34c759;
-            --color-midpoint: #af52de;
+            /* Path Specific Theme Colors */
+            --color-shortest: #ff3b30;    /* Red for exact calculation */
+            --color-shortcut: #34c759;    /* Green for hierarchical shortcuts */
+            --color-easy: #ff9500;        /* Orange for long but smooth traffic bypass */
             
             /* Theme Navigation Consistency */
             --glass-bg: rgba(255, 255, 255, 0.45);
@@ -139,9 +139,7 @@
         }
 
         @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
+            .main-container { grid-template-columns: 1fr; }
         }
 
         .dashboard-card {
@@ -209,7 +207,7 @@
             color: #ffffff;
         }
 
-        /* WAREHOUSE SIMULATION VISUAL SCREEN */
+        /* GPS SIMULATION VISUAL MOUNT PANEL */
         .canvas-container {
             background-color: var(--apple-bg);
             border: 1px solid var(--apple-border);
@@ -289,7 +287,7 @@
         }
 
         .stat-value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             margin-top: 4px;
             transition: color 0.2s ease;
@@ -318,18 +316,18 @@
         <div>
             <div class="dashboard-card">
                 <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Simulation Dashboard // Module 04</div>
-                <h1>Order Picker Routing Matrix</h1>
-                <p class="subtitle">Evaluate picker path heuristics inside deep-aisle warehouse spaces. Switch layout methodologies to monitor length efficiency results.</p>
+                <h1>Google Maps Route Optimizer</h1>
+                <p class="subtitle">Find the best mathematical path from Origin <b>Node A</b> to Destination <b>Node L</b>. Compare shortest, pre-calculated, and easy traffic-avoidance models.</p>
 
                 <div class="mode-selector">
-                    <button class="mode-btn active" data-mode="reset" onclick="changeMode('reset', this)">Default</button>
-                    <button class="mode-btn" data-mode="sshape" onclick="changeMode('sshape', this)">S-Shape</button>
-                    <button class="mode-btn" data-mode="gap" onclick="changeMode('gap', this)">Largest Gap</button>
-                    <button class="mode-btn" data-mode="midpoint" onclick="changeMode('midpoint', this)">Midpoint</button>
+                    <button class="mode-btn active" data-mode="reset" onclick="changeMode('reset', this)">All Paths</button>
+                    <button class="mode-btn" data-mode="shortest" onclick="changeMode('shortest', this)">Shortest Path</button>
+                    <button class="mode-btn" data-mode="shortcut" onclick="changeMode('shortcut', this)">CH Shortcut</button>
+                    <button class="mode-btn" data-mode="easy" onclick="changeMode('easy', this)">Long but Easy</button>
                 </div>
 
                 <div class="canvas-container">
-                    <canvas id="warehouseGrid" width="600" height="350"></canvas>
+                    <canvas id="warehouseGrid" width="600" height="360"></canvas>
                 </div>
             </div>
 
@@ -387,11 +385,11 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">Calculated Path</div>
-                        <div class="stat-value" id="stat-distance" style="color: #0071e3;">0 m</div>
+                        <div class="stat-value" id="stat-distance" style="color: #0071e3;">Select Mode</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Route Heuristics</div>
-                        <div class="stat-value" id="stat-score">0%</div>
+                        <div class="stat-value" id="stat-score">--</div>
                     </div>
                 </div>
             </div>
@@ -409,13 +407,50 @@
     </div>
 
     <script>
-        // Warehouse visual mapping parameters setup
-        const distanceMatrix = { reset: "385 m", sshape: "245 m", gap: "210 m", midpoint: "230 m" };
-        const efficiencyMatrix = { reset: "Base Baseline", sshape: "+36.3% Opt", gap: "+45.4% Max", midpoint: "+40.2% Opt" };
+        // High fidelity geographic node structure array (A to L)
+        const nodes = {
+            A: {x: 50,  y: 180, label: "A (Origin)"},
+            B: {x: 130, y: 100, label: "B"},
+            C: {x: 130, y: 260, label: "C"},
+            D: {x: 230, y: 70,  label: "D (Jam)"},
+            E: {x: 230, y: 180, label: "E (Highway)"},
+            F: {x: 230, y: 290, label: "F"},
+            G: {x: 370, y: 70,  label: "G"},
+            H: {x: 370, y: 180, label: "H (Highway)"},
+            I: {x: 370, y: 290, label: "I"},
+            J: {x: 470, y: 100, label: "J"},
+            K: {x: 470, y: 260, label: "K"},
+            L: {x: 550, y: 180, label: "L (Target)"}
+        };
+
+        const distanceMatrix = { 
+            reset: "A ➔ L Networks", 
+            shortest: "12.4 km (Dijkstra)", 
+            shortcut: "14.1 km (Pre-computed)", 
+            easy: "16.8 km (Open Flow)" 
+        };
+        const efficiencyMatrix = { 
+            reset: "Compare Layouts", 
+            shortest: "14 min (Slow Traffic)", 
+            shortcut: "9 min (Sub-second)", 
+            easy: "11 min (No Delays)" 
+        };
 
         function getStyleColor(variableName, fallback) {
             const val = getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
             return val || fallback;
+        }
+
+        // Dedicated helper to clean background canvas draws
+        function drawEdge(ctx, n1, n2, color, width, dashed = false) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.setLineDash(dashed ? [4, 4] : []);
+            ctx.beginPath();
+            ctx.moveTo(n1.x, n1.y);
+            ctx.lineTo(n2.x, n2.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
         }
 
         function renderSimulation(mode) {
@@ -424,56 +459,90 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const isDark = document.body.classList.contains('dark');
-            const rackColor = isDark ? '#2c2c2e' : '#e5e5ea';
-            const itemColor = '#ff3b30';
-            const pathColor = mode === 'sshape' ? getStyleColor('--color-s-shape', '#ff9500') :
-                             mode === 'gap' ? getStyleColor('--color-gap', '#34c759') :
-                             mode === 'midpoint' ? getStyleColor('--color-midpoint', '#af52de') : '#0071e3';
-
-            // Draw Warehouse Structural Racks
-            ctx.fillStyle = rackColor;
-            for (let i = 0; i < 5; i++) {
-                ctx.fillRect(80 + (i * 100), 50, 40, 100);
-                ctx.fillRect(80 + (i * 100), 200, 40, 100);
-            }
-
-            // Target Pick Items Coordinates Dot Indicators
-            ctx.fillStyle = itemColor;
-            const items = [
-                {x: 120, y: 80}, {x: 220, y: 120}, {x: 320, y: 220},
-                {x: 420, y: 260}, {x: 520, y: 90}
+            const baseEdgeColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+            
+            // 1. Draw Global Base Connective Topology Map Grid
+            const structuralEdges = [
+                ['A','B'], ['A','C'], ['B','D'], ['B','E'], ['C','E'], ['C','F'],
+                ['D','G'], ['E','H'], ['F','I'], ['G','J'], ['H','J'], ['H','K'],
+                ['I','K'], ['J','L'], ['K','L']
             ];
-            items.forEach(item => {
-                ctx.beginPath();
-                ctx.arc(item.x, item.y, 5, 0, 2 * Math.PI);
-                ctx.fill();
+            structuralEdges.forEach(([from, to]) => {
+                drawEdge(ctx, nodes[from], nodes[to], baseEdgeColor, 2);
             });
 
-            // Drawing Optimization Vectors lines paths
-            ctx.strokeStyle = pathColor;
-            ctx.lineWidth = 3;
-            ctx.lineJoin = 'round';
-            ctx.beginPath();
-            ctx.moveTo(30, 320); // Depot Start Base Coordinate
-
-            if (mode === 'sshape') {
-                ctx.lineTo(60, 320); ctx.lineTo(60, 30);
-                ctx.lineTo(160, 30); ctx.lineTo(160, 320);
-                ctx.lineTo(260, 320); ctx.lineTo(260, 30);
-                ctx.lineTo(360, 30); ctx.lineTo(360, 320);
-                ctx.lineTo(560, 320); ctx.lineTo(560, 320);
-            } else if (mode === 'gap') {
-                ctx.lineTo(60, 320); ctx.lineTo(60, 60); ctx.lineTo(60, 320);
-                ctx.lineTo(260, 320); ctx.lineTo(260, 100); ctx.lineTo(260, 320);
-                ctx.lineTo(460, 320); ctx.lineTo(460, 240); ctx.lineTo(460, 320);
-            } else if (mode === 'midpoint') {
-                ctx.lineTo(60, 320); ctx.lineTo(60, 150); ctx.lineTo(160, 150);
-                ctx.lineTo(160, 320); ctx.lineTo(360, 320); ctx.lineTo(360, 150);
-            } else {
-                // Default Random/Reset Layout Route Connectors
-                items.forEach(item => ctx.lineTo(item.x, item.y));
+            // 2. Highlighting Active Path Selection Filters
+            if (mode === 'reset' || mode === 'shortest') {
+                // Shortest physical path but experiences standard suburban node intersection traffic
+                ctx.shadowBlur = mode === 'shortest' ? 8 : 0;
+                ctx.shadowColor = getStyleColor('--color-shortest', '#ff3b30');
+                const path = ['A', 'B', 'D', 'G', 'J', 'L'];
+                for(let i=0; i<path.length-1; i++) {
+                    drawEdge(ctx, nodes[path[i]], nodes[path[i+1]], getStyleColor('--color-shortest', '#ff3b30'), 4);
+                }
+                ctx.shadowBlur = 0;
             }
-            ctx.stroke();
+            
+            if (mode === 'reset' || mode === 'shortcut') {
+                // Contraction Hierarchies Pre-computed Highway Segment
+                ctx.shadowBlur = mode === 'shortcut' ? 8 : 0;
+                ctx.shadowColor = getStyleColor('--color-shortcut', '#34c759');
+                // Express link between main arterial nodes E and H
+                drawEdge(ctx, nodes['E'], nodes['H'], getStyleColor('--color-shortcut', '#34c759'), 5);
+                const feedPath = ['A', 'B', 'E'];
+                const exitPath = ['H', 'J', 'L'];
+                for(let i=0; i<feedPath.length-1; i++) drawEdge(ctx, nodes[feedPath[i]], nodes[feedPath[i+1]], getStyleColor('--color-shortcut', '#34c759'), 3);
+                for(let i=0; i<exitPath.length-1; i++) drawEdge(ctx, nodes[exitPath[i]], nodes[exitPath[i+1]], getStyleColor('--color-shortcut', '#34c759'), 3);
+                ctx.shadowBlur = 0;
+            }
+            
+            if (mode === 'reset' || mode === 'easy') {
+                // Predictive GNN routes loop entirely around traffic bottlenecks
+                ctx.shadowBlur = mode === 'easy' ? 8 : 0;
+                ctx.shadowColor = getStyleColor('--color-easy', '#ff9500');
+                const path = ['A', 'C', 'F', 'I', 'K', 'L'];
+                for(let i=0; i<path.length-1; i++) {
+                    drawEdge(ctx, nodes[path[i]], nodes[path[i+1]], getStyleColor('--color-easy', '#ff9500'), 4);
+                }
+                ctx.shadowBlur = 0;
+            }
+
+            // 3. Render Nodes Vector Points Circular Canvas Seals
+            Object.keys(nodes).forEach(key => {
+                const node = nodes[key];
+                
+                // Draw Node Outer Ring Glow Frame
+                ctx.fillStyle = isDark ? '#1c1c1e' : '#ffffff';
+                ctx.strokeStyle = isDark ? '#86868b' : '#1d1d1f';
+                ctx.lineWidth = 2;
+                
+                if(key === 'A' || key === 'L') {
+                    ctx.strokeStyle = '#0071e3';
+                    ctx.lineWidth = 3;
+                }
+                if(key === 'D' && (mode === 'reset' || mode === 'shortest')) {
+                    ctx.strokeStyle = '#ff3b30'; // Highlight bottleneck incident
+                }
+
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 14, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                // Typography labels centering
+                ctx.fillStyle = varColor = isDark ? '#f5f5f7' : '#1d1d1f';
+                ctx.font = "bold 11px -apple-system, BlinkMacSystemFont, sans-serif";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(key, node.x, node.y);
+
+                // Meta detail subtitles alignment adjustments
+                ctx.fillStyle = getStyleColor('--text-secondary', '#6e6e73');
+                ctx.font = "9px -apple-system, BlinkMacSystemFont, sans-serif";
+                if(key === 'A' || key === 'L' || key === 'D') {
+                    ctx.fillText(node.label.includes(" ") ? node.label.split(" ")[1] : "", node.x, node.y + 24);
+                }
+            });
         }
 
         function changeMode(modeKey, btnEl) {
@@ -487,11 +556,11 @@
             document.getElementById('stat-distance').innerText = distanceMatrix[key];
             document.getElementById('stat-score').innerText = efficiencyMatrix[key];
             
-            const scoreEl = document.getElementById('stat-score');
-            if (key === 'reset') scoreEl.style.color = getStyleColor('--text-primary', '#1d1d1f');
-            if (key === 'sshape') scoreEl.style.color = getStyleColor('--color-s-shape', '#ff9500');
-            if (key === 'gap') scoreEl.style.color = getStyleColor('--color-gap', '#34c759');
-            if (key === 'midpoint') scoreEl.style.color = getStyleColor('--color-midpoint', '#af52de');
+            const distEl = document.getElementById('stat-distance');
+            if (key === 'reset') distEl.style.color = getStyleColor('--text-primary', '#1d1d1f');
+            if (key === 'shortest') distEl.style.color = getStyleColor('--color-shortest', '#ff3b30');
+            if (key === 'shortcut') distEl.style.color = getStyleColor('--color-shortcut', '#34c759');
+            if (key === 'easy') distEl.style.color = getStyleColor('--color-easy', '#ff9500');
         }
 
         function toggleLocalTheme() {
@@ -501,7 +570,6 @@
             renderSimulation(activeMode);
         }
 
-        // Init layout setups on load sequence execution
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('apple-premium-theme') === 'dark') {
                 document.body.classList.add('dark');
