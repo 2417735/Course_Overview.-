@@ -127,6 +127,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 24px;
+            width: 100%;
         }
 
         @media (min-width: 950px) {
@@ -144,6 +145,7 @@
             box-shadow: var(--apple-shadow);
             display: flex;
             flex-direction: column;
+            overflow: hidden; /* Prevents text overflow breaks */
         }
 
         .panel-header {
@@ -195,8 +197,8 @@
             color: var(--text-primary);
         }
 
-        /* History Ribbon */
-        .decision-history-ribbon {
+        /* Anti-Stretch History Ribbon Container Fixed */
+        .history-wrapper {
             background: var(--apple-bg);
             border: 1px solid var(--apple-border);
             border-radius: 12px;
@@ -204,18 +206,36 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            overflow-x: auto;
-            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
         }
 
-        .decision-history-ribbon label {
+        .history-wrapper label {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.04em;
             color: var(--text-secondary);
             font-weight: 700;
-            margin-right: 4px;
+            margin-right: 12px;
+            white-space: nowrap;
+        }
+
+        .decision-history-ribbon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 100%;
+            scrollbar-width: thin; /* Clean layout for modern engines */
+        }
+
+        .decision-history-ribbon::-webkit-scrollbar {
+            height: 4px;
+        }
+        .decision-history-ribbon::-webkit-scrollbar-thumb {
+            background: var(--apple-border);
+            border-radius: 2px;
         }
 
         .history-node-pill {
@@ -225,7 +245,7 @@
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             color: var(--text-primary);
         }
@@ -254,7 +274,7 @@
         }
 
         .video-thumbnail-placeholder {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #2b5298 0%, #1e3c72 100%);
             height: 140px;
             display: flex;
             align-items: center;
@@ -396,10 +416,6 @@
             transition: transform 0.1s ease;
         }
 
-        .volume-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-
         /* Success Suggestion Banner */
         .success-audio-callout {
             background: linear-gradient(135deg, rgba(52, 199, 89, 0.15) 0%, rgba(0, 113, 227, 0.1) 100%);
@@ -409,19 +425,6 @@
             margin-bottom: 20px;
             display: none;
             animation: fadeIn 0.4s ease forwards;
-        }
-
-        .success-audio-callout h4 {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--color-success);
-            margin-bottom: 2px;
-        }
-
-        .success-audio-callout p {
-            font-size: 12px;
-            color: var(--text-primary);
-            line-height: 1.4;
         }
 
         /* Simulator Terminal Screen Workspace */
@@ -450,11 +453,12 @@
         }
 
         .node-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 14px;
             max-width: 550px;
             letter-spacing: -0.02em;
+            line-height: 1.25;
         }
 
         .node-description {
@@ -489,6 +493,7 @@
             align-items: center;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            line-height: 1.4;
         }
 
         .option-branch-btn:hover {
@@ -501,6 +506,8 @@
             content: '➔';
             font-size: 11px;
             color: var(--apple-accent);
+            margin-left: 12px;
+            flex-shrink: 0;
         }
 
         /* Utility Tray */
@@ -631,14 +638,16 @@
                 </div>
             </div>
 
-            <div class="decision-history-ribbon" id="historyRibbon">
-                <label>History Trail:</label>
-                <span class="history-node-pill">Root</span>
+            <div class="history-wrapper">
+                <label>History:</label>
+                <div class="decision-history-ribbon" id="historyRibbon">
+                    <span class="history-node-pill">Root</span>
+                </div>
             </div>
 
             <div class="success-audio-callout" id="completionAudioBanner">
-                <h4>🎉 Matrix Architecture Successfully Built!</h4>
-                <p>You have navigated all operational dependencies safely. Excellent strategy work. Now that you've finished, unwind and listen to the ambient audio track in the right panel.</p>
+                <h4 style="font-size:13px; font-weight:700; color:var(--color-success); margin-bottom:2px;">🎉 Matrix Architecture Successfully Built!</h4>
+                <p style="font-size:12px; color:var(--text-primary); line-height:1.4;">You have navigated all operational dependencies safely. Excellent strategy work. Now that you've finished, unwind and listen to the ambient audio track in the right panel.</p>
             </div>
 
             <div class="simulator-display" id="nodeDisplayBox">
@@ -673,15 +682,14 @@
                 <p>Visualizing Machine Learning Framework Foundations</p>
             </div>
 
-            <a href="https://www.youtube.com/watch?v=9IVTOh0TkkQ&list=RD9IVTOh0TkkQ&start_radio=1" target="_blank" class="video-resource-card">
+            <a href="https://www.youtube.com/watch?v=_L39rN6gz7Y" target="_blank" class="video-resource-card">
                 <div class="video-thumbnail-placeholder">
                     <div class="video-play-btn">▶</div>
-                    <div class="video-duration-badge">LIVE</div>
-                    <div style="position: absolute; top: 12px; left: 12px; font-weight: 800; font-size: 11px; tracking: 0.05em; text-transform: uppercase; background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px;">Stream Link</div>
+                    <div class="video-duration-badge">CONCEPT VIDEO</div>
                 </div>
                 <div class="video-card-meta">
-                    <h4>Operational Study Stream Session</h4>
-                    <p>Click here to launch your visual workspace resource matrix layer in an external browser tab layout.</p>
+                    <h4>Decision Tree Classification Induction</h4>
+                    <p>Click to open the core concept study lecture in a secure external browsing partition layer.</p>
                 </div>
             </a>
 
@@ -698,7 +706,7 @@
                         <h5 id="audioTrackName">Lo-fi Study Session</h5>
                         <p id="audioTrackStatus">Paused • aud.mp3</p>
                     </div>
-                    <a href="https://www.youtube.com/watch?v=9IVTOh0TkkQ&list=RD9IVTOh0TkkQ&start_radio=1" target="_blank" style="font-size: 11px; color: var(--apple-accent); text-decoration: none; font-weight: 500;">Open External ↗</a>
+                    <a href="https://www.youtube.com/watch?v=9IVTOh0TkkQ&list=RD9IVTOh0TkkQ&start_radio=1" target="_blank" style="font-size: 11px; color: var(--apple-accent); text-decoration: none; font-weight: 500;">Open YouTube Stream ↗</a>
                 </div>
 
                 <div class="audio-controls-row">
@@ -1103,10 +1111,10 @@
             document.getElementById(`tab-${contextKey}`).classList.add('active');
             
             updateScreenLabels();
-            resetToRoot();
+            resetCurrentTree();
         }
 
-        function resetToRoot() {
+        function resetCurrentTree() {
             currentPathStack = ['root'];
             drawNodeState('root');
         }
@@ -1193,7 +1201,7 @@
 
         function renderHistoryRibbon() {
             const ribbon = document.getElementById('historyRibbon');
-            ribbon.innerHTML = '<label>History Trail:</label>';
+            ribbon.innerHTML = '';
             
             currentPathStack.forEach((step, index) => {
                 const targetNode = activeDataMap[step];
@@ -1211,6 +1219,11 @@
                     ribbon.appendChild(sep);
                 }
             });
+
+            // Auto-scrolling feature keeps the last item within view boundaries
+            setTimeout(() => {
+                ribbon.scrollLeft = ribbon.scrollWidth;
+            }, 50);
         }
 
         function undoLastDecision() {
@@ -1262,8 +1275,8 @@
                     playPauseBtn.innerText = "⏸";
                     audioStatusText.innerText = "Playing Now... • aud.mp3";
                 }).catch(err => {
-                    console.log("Audio target note:", err);
-                    audioStatusText.innerText = "Error locating 'aud.mp3'";
+                    console.log("Audio pipeline state:", err);
+                    audioStatusText.innerText = "Locating Local 'aud.mp3'...";
                 });
             } else {
                 audioEngine.pause();
