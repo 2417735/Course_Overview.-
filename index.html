@@ -6,7 +6,7 @@
     <title>ALAM AL KAHAF | Trade & Management Science Portal</title>
     <style>
         :root {
-            /* Apple Design System - Light Palette */
+            /* Apple Pro Palette - Light Environment */
             --apple-bg: #f5f5f7;
             --apple-card: rgba(255, 255, 255, 0.75);
             --apple-border: rgba(0, 0, 0, 0.08);
@@ -19,7 +19,7 @@
         }
 
         body.dark {
-            /* Apple Design System - Dark Palette */
+            /* Apple Pro Palette - Dark Environment */
             --apple-bg: #000000;
             --apple-card: rgba(22, 22, 23, 0.8);
             --apple-border: rgba(255, 255, 255, 0.1);
@@ -51,15 +51,14 @@
         /* Top Utility Bar */
         .system-topbar { 
             width: 100%; 
-            max-width: 640px; 
+            max-width: 800px; 
             margin: 0 auto; 
-            padding: 24px 24px 0 24px; 
+            padding: 24px; 
             display: flex; 
             justify-content: flex-end; 
-            align-items: center;
         }
 
-        .icon-btn { 
+        .icon-toggle { 
             background: transparent;
             border: none;
             color: var(--text-primary);
@@ -70,20 +69,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
             transition: opacity 0.2s ease;
         }
-        
-        .icon-btn:hover {
+        .icon-toggle:hover {
             opacity: 0.7;
         }
 
-        /* Portal Card Layout */
+        /* Content Container */
         .main-portal-container { 
             width: 100%; 
             max-width: 640px; 
             margin: auto; 
-            padding: 16px 24px; 
+            padding: 0 24px; 
         }
 
         .apple-glass-card { 
@@ -98,7 +95,7 @@
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Monochromatic Identity Crest */
+        /* Monochromatic Identity Ring */
         .avatar-ring { 
             width: 72px; 
             height: 72px; 
@@ -136,22 +133,12 @@
             margin: 0 auto 24px; 
         }
 
-        .course-synopsis { 
-            font-size: 15px; 
-            line-height: 1.6; 
-            color: var(--text-secondary); 
-            max-width: 480px; 
-            margin: 0 auto 36px; 
-            font-weight: 400;
-            letter-spacing: -0.01em;
-        }
-
-        /* Interactive Launch Action Interface */
+        /* Interactive Action Launcher (Responsive Grid Layout) */
         .pipeline-launcher { 
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-width: 400px; 
+            max-width: 440px; 
             margin: 0 auto; 
         }
 
@@ -192,15 +179,74 @@
             opacity: 0.85;
             transform: scale(1.01);
         }
-        
         .btn-apple:active {
             transform: scale(0.99);
         }
 
-        /* Minimalist System Footer */
+        /* Apple Clean Footer */
         .framework-footer { 
             width: 100%; 
             max-width: 800px; 
             margin: 40px auto 24px; 
             padding: 0 24px; 
-            text-align
+            text-align: center; 
+            font-size: 12px; 
+            color: var(--text-secondary); 
+            line-height: 1.5;
+        }
+        .framework-footer a { 
+            color: var(--text-primary); 
+            text-decoration: underline; 
+        }
+    </style>
+    <script>
+        /* Immediate execution directly inside head prevents white background flash on dark mode setups */
+        if (localStorage.getItem('apple-premium-theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            window.addEventListener('DOMContentLoaded', () => document.body.classList.add('dark'));
+        }
+    </script>
+</head>
+<body>
+
+    <header class="system-topbar">
+        <button class="icon-toggle" onclick="toggleSystemTheme()" id="themeBtn" aria-label="Toggle Environment">🌓</button>
+    </header>
+
+    <main class="main-portal-container">
+        <div class="apple-glass-card">
+            <div class="avatar-ring">AK</div>
+            <h1 class="student-name">ALAM AL KAHAF</h1>
+            <p class="student-id-tag">Student Portfolio • ID: 24177375</p>
+            
+            <div class="divider-line"></div>
+            
+            <div class="pipeline-launcher">
+                <!-- Connects directly to intro.html -->
+                <a href="intro.html" class="btn-apple btn-apple-primary">
+                    <span>Explore Projects</span>
+                    <span>➔</span>
+                </a>
+                
+                <!-- Connects directly to local vv.html resource nodes -->
+                <a href="vv.html" class="btn-apple btn-apple-secondary">
+                    <span>Course Resources</span>
+                    <span>📂</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="framework-footer">
+        <p>Portfolio Node Matrix &bull; Lead Developer: ALAM AL KAHAF &bull; <a href="https://docs.google.com/document/d/16d2q52FPrVg_NAe8F3OvEnjbI7PiTKm7riiz8aLLRAA/edit?usp=sharing" target="_blank">Syllabus Matrix Document ↗</a></p>
+    </footer>
+
+    <script>
+        function toggleSystemTheme() {
+            const turningDark = document.body.classList.toggle('dark');
+            document.documentElement.classList.toggle('dark', turningDark);
+            localStorage.setItem('apple-premium-theme', turningDark ? 'dark' : 'light');
+        }
+    </script>
+</body>
+</html>
