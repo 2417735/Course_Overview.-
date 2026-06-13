@@ -218,6 +218,30 @@
         .outcome-col h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
         .outcome-col ul { list-style-position: inside; color: var(--text-secondary); font-size: 14px; }
         .outcome-col li { margin-bottom: 6px; }
+
+        /* Download Link Button styling */
+        .download-box {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--bg-primary);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .download-link:hover {
+            background-color: var(--border-color);
+            color: var(--accent-hover);
+        }
     </style>
 </head>
 <body>
@@ -270,7 +294,7 @@
             <div class="simulator-grid">
                 <div class="control-panel">
                     <div class="input-group">
-                        <label for="pairPresets">Load Coursework Dataset Pairs</label>
+                        <label for="pairPresets">Class Activity Presets (kahaf 2417735)</label>
                         <select id="pairPresets" onchange="loadPresetPair()">
                             <option value="custom" selected>-- Custom Entry / Manual Mode --</option>
                             <option value="0">India vs. Bangladesh</option>
@@ -289,15 +313,15 @@
                     </div>
                     <div class="input-group">
                         <label for="gdpHome">Country A GDP ($ Billions)</label>
-                        <input type="number" id="gdpHome" value="500" min="1" step="any">
+                        <input type="number" id="gdpHome" value="4130" min="1" step="any">
                     </div>
                     <div class="input-group">
                         <label for="gdpForeign">Country B GDP ($ Billions)</label>
-                        <input type="number" id="gdpForeign" value="400" min="1" step="any">
+                        <input type="number" id="gdpForeign" value="519.29" min="1" step="any">
                     </div>
                     <div class="input-group">
                         <label for="distance">Geographic Distance (km)</label>
-                        <input type="number" id="distance" value="1200" min="1" step="any">
+                        <input type="number" id="distance" value="1420" min="1" step="any">
                     </div>
                     <div class="input-group">
                         <label for="tradeFriction">Trade Friction Coefficient (α)</label>
@@ -312,7 +336,7 @@
                 
                 <div class="output-panel">
                     <span class="output-label">Predicted Bilateral Trade Velocity</span>
-                    <div class="output-value" id="tradeOutput">166.67</div>
+                    <div class="output-value" id="tradeOutput">51.20</div>
                     <p style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 10px;">
                         Formula Applied: <br><code style="font-family: monospace;">T = A * (GDP_A * GDP_B) / (Distance^α)</code>
                     </p>
@@ -329,35 +353,59 @@
                     <thead>
                         <tr>
                             <th>Trading Pair Array</th>
-                            <th>Combined GDP Factor</th>
+                            <th>GDP Country A ($bn)</th>
+                            <th>GDP Country B ($bn)</th>
                             <th>Spatial Distance</th>
                             <th>Observed Trade Index</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Region Alpha vs. Beta</td>
-                            <td>2.50M</td>
-                            <td>450 km</td>
-                            <td>5,555.56</td>
+                            <td>India vs. Bangladesh</td>
+                            <td>4,130.00</td>
+                            <td>519.29</td>
+                            <td>1,420 km</td>
+                            <td>13.16</td>
                         </tr>
                         <tr>
-                            <td>Region Alpha vs. Gamma</td>
-                            <td>4.10M</td>
-                            <td>1,800 km</td>
-                            <td>2,277.78</td>
+                            <td>India vs. Nepal</td>
+                            <td>4,130.00</td>
+                            <td>49.11</td>
+                            <td>806 km</td>
+                            <td>8.20</td>
                         </tr>
                         <tr>
-                            <td>Region Delta vs. Epsilon</td>
-                            <td>0.95M</td>
-                            <td>3,200 km</td>
-                            <td>296.88</td>
+                            <td>India vs. Pakistan</td>
+                            <td>4,130.00</td>
+                            <td>410.50</td>
+                            <td>689 km</td>
+                            <td>2.40</td>
+                        </tr>
+                        <tr>
+                            <td>Russia vs. Kazakhstan</td>
+                            <td>2,540.66</td>
+                            <td>300.05</td>
+                            <td>2,270 km</td>
+                            <td>28.50</td>
+                        </tr>
+                        <tr>
+                            <td>Kazakhstan vs. Uzbekistan</td>
+                            <td>300.05</td>
+                            <td>159.20</td>
+                            <td>1,240 km</td>
+                            <td>4.60</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <h3>My Notes</h3>
+            <div class="download-box">
+                <a href="Gravity Model - kahaf 2417735.xlsx" class="download-link" download>
+                    📊 Download Full Class Activity Spreadsheet (Excel)
+                </a>
+            </div>
+
+            <h3 style="margin-top: 24px;">My Notes</h3>
             <div class="notes-grid">
                 <div class="notes-card">
                     <img src="trade1a.jpeg" alt="Course Notes Part A" class="notes-image" onerror="this.parentElement.style.display='none';">
@@ -410,7 +458,7 @@
             document.body.classList.add('dark'); 
         }
 
-        // Verified empirical dataset array directly from "Gravity Model - kahaf 2417735.xlsx"
+        // Exact verified dataset array compiled directly from "Gravity Model - kahaf 2417735.xlsx"
         const excelDataset = [
             { countryA: "India", countryB: "Bangladesh", gdpA: 4130.00, gdpB: 519.29, distance: 1420.0, trueA: 0.257030 },
             { countryA: "India", countryB: "Nepal", gdpA: 4130.00, gdpB: 49.11, distance: 806.0, trueA: 0.961234 },
@@ -426,7 +474,7 @@
             { countryA: "Uzbekistan", countryB: "India", gdpA: 159.20, gdpB: 4130.00, distance: 1575.0, trueA: 0.055117 }
         ];
 
-        // Systemic average baseline weight coefficient computed across your worksheet solution
+        // Systemic average baseline weight coefficient computed from the coursework
         const empiricalA = 1.000961;
 
         function loadPresetPair() {
@@ -460,13 +508,13 @@
             let workingA = empiricalA;
             if (selectedValue !== "custom") {
                 const targetPair = excelDataset[parseInt(selectedValue)];
-                // If custom modifiers are default, align dynamically with specific workbook constant weights
+                // If inputs match the row exactly, use the precise custom constant A derived for that pair
                 if (alpha === 1.0 && gdpA === targetPair.gdpA && gdpB === targetPair.gdpB && dist === targetPair.distance) {
                     workingA = targetPair.trueA;
                 }
             }
 
-            // Execute programmatic gravity physics layout calculation
+            // Execute gravity physics calculation (scaled by target constant parameter)
             const tradeFlow = workingA * (gdpA * gdpB) / Math.pow(dist, alpha);
 
             document.getElementById('tradeOutput').textContent = tradeFlow.toLocaleString(undefined, {
@@ -474,6 +522,12 @@
                 maximumFractionDigits: 2
             });
         }
+        
+        // Initialize default view to the first row of your sheet on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('pairPresets').value = "0";
+            loadPresetPair();
+        });
     </script>
 </body>
 </html>
