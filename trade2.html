@@ -264,14 +264,12 @@
 
     <main class="app-container">
 
-        <!-- LEFT COLUMN: Comprehensive Reading Notes & Theory -->
         <section class="column-card">
             <h2>1. Comprehensive Reading Notes</h2>
             <p>
                 Unlike structural market gravitational constraints, Ricardian frameworks break down international exchange through localized productivity indices. The foundational thesis hinges upon shifting resources relative to internal efficiency limits, asserting that global trading systems optimization depends on minimizing cross-sector asset displacement.
             </p>
 
-            <!-- Specialized Blue Border Concept Card -->
             <div class="concept-card">
                 <h3>Krugman's Opportunity Cost Variant</h3>
                 <p>
@@ -283,41 +281,32 @@
                 Because resources aren't infinite, producing 1 million units of winter roses requires completely sacrificing a fixed proportion of computer hardware assets.
             </p>
 
-            <!-- Inline SVG Responsive Linear Ricardian PPF Chart -->
             <div class="chart-container">
                 <div class="chart-title">Linear Production Possibility Frontier (PPF)</div>
                 <svg viewBox="0 0 400 300" width="100%" height="100%">
-                    <!-- Soft Alignment Grid Lines -->
                     <line x1="60" y1="60" x2="340" y2="60" stroke="var(--border-color)" stroke-width="1" />
                     <line x1="60" y1="150" x2="340" y2="150" stroke="var(--border-color)" stroke-width="1" />
                     
-                    <!-- Structural Axis Layout -->
                     <line x1="60" y1="240" x2="340" y2="240" stroke="var(--text-primary)" stroke-width="1.5" />
                     <line x1="60" y1="40" x2="60" y2="240" stroke="var(--text-primary)" stroke-width="1.5" />
                     
-                    <!-- Constant Opportunity Cost Curve (Linear Slope) -->
                     <line x1="60" y1="80" x2="300" y2="240" stroke="#3b82f6" stroke-width="2.5" />
                     
-                    <!-- Specialization Intercept Points plotting -->
                     <circle cx="60" cy="80" r="4.5" fill="#2563eb" />
                     <circle cx="300" cy="240" r="4.5" fill="#2563eb" />
                     
-                    <!-- Labels Map -->
                     <text x="200" y="275" fill="var(--text-primary)" font-size="11" font-weight="600" text-anchor="middle">Quantity of Roses</text>
                     <text x="20" y="140" fill="var(--text-primary)" font-size="11" font-weight="600" text-anchor="middle" transform="rotate(-90,20,140)">Quantity of Computers</text>
                     
-                    <!-- Intercept Specific Text Node Array -->
                     <text x="72" y="84" fill="var(--text-secondary)" font-size="10" font-weight="600">Computer Specialization Intercept</text>
                     <text x="290" y="225" fill="var(--text-secondary)" font-size="10" font-weight="600" text-anchor="end">Rose Specialization Intercept</text>
                 </svg>
             </div>
         </section>
 
-        <!-- RIGHT COLUMN: Guiding Questions, Answers, & Interactive Viewer -->
         <section class="column-card">
             <h2>2. Guiding Questions & Core Answers</h2>
 
-            <!-- Q1 Block Component -->
             <div class="qa-block">
                 <div class="qa-question">
                     <span class="badge">Q1</span>
@@ -328,7 +317,6 @@
                 </div>
             </div>
 
-            <!-- Q2 Block Component -->
             <div class="qa-block">
                 <div class="qa-question">
                     <span class="badge">Q2</span>
@@ -339,7 +327,6 @@
                 </div>
             </div>
 
-            <!-- Q3 Block Component -->
             <div class="qa-block">
                 <div class="qa-question">
                     <span class="badge">Q3</span>
@@ -350,7 +337,6 @@
                 </div>
             </div>
 
-            <!-- Highlighted Gains from Trade Callout Block -->
             <div class="callout-block">
                 <h3>Gains from Trade Summary</h3>
                 <p>
@@ -358,25 +344,22 @@
                 </p>
             </div>
 
-            <!-- Attached Project Graphics Interactive Viewer Panel -->
             <div class="viewer-panel">
                 <h3>Attached Project Graphics</h3>
                 <div class="viewer-controls">
-                    <button id="btn-0763" class="toggle-btn active" onclick="switchImage('IMG_0763.JPG', this)">View Diagram 0763</button>
-                    <button id="btn-0764" class="toggle-btn" onclick="switchImage('IMG_0764.JPG', this)">View Diagram 0764</button>
+                    <button id="btn-1" class="toggle-btn active" onclick="switchImage('IMG1.JPG', this)">View Diagram 1</button>
+                    <button id="btn-2" class="toggle-btn" onclick="switchImage('IMG2.JPG', this)">View Diagram 2</button>
                 </div>
                 <div class="image-frame">
-                    <!-- Renders layout blueprints flawlessly from local repository workspace asset files -->
-                    <img id="main-viewer-img" src="IMG_0763.JPG" alt="Macroeconomic Assignment Structure Diagram Blueprint">
+                    <img id="main-viewer-img" src="IMG1.JPG" alt="Macroeconomic Assignment Structure Diagram Blueprint">
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- INTERACTIVE JS & CSS LOGIC -->
     <script>
-        // System Auto Dark Mode configuration mapping matching trade1.html[cite: 1]
+        // System Auto Dark Mode configuration mapping matching trade1.html
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
             document.body.classList.add('dark'); 
         }
